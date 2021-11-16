@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2020.2.4\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\SpaceGrantOldPi.dir/objects.a
+C:\minGW\bin\ar.exe cr CMakeFiles\SpaceGrantOldPi.dir/objects.a @CMakeFiles\SpaceGrantOldPi.dir\objects1.rsp
+C:\minGW\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\SpaceGrantOldPi.dir/objects.a -Wl,--no-whole-archive  -o SpaceGrantOldPi.exe -Wl,--out-implib,libSpaceGrantOldPi.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\SpaceGrantOldPi.dir\linklibs.rsp
