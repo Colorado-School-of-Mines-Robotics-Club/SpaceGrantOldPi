@@ -63,4 +63,3 @@ void robotControl::setup() {
     //check beacon heading
 }
 
-int main
