@@ -3,11 +3,14 @@
 //
 
 #include "robotControl.h"
+#include "SensorLib.h"
+
 //
 // Created by colin on 2/10/2022.
 //
 
 #include "robotControl.h"
+
 
 
 
@@ -22,7 +25,7 @@ void robotControl::maintain() {
 void robotControl::sensorCheck() {
     askBump();
     askGyro();
-    askLaser();
+    sensor->scan(askLaser);
 }
 
 //uses I2C and if something is wrong gets a vector with values and passes to problem
@@ -46,9 +49,8 @@ void robotControl::problemBumper(int bumper) {
 
 //Asks Laser and gets a vector of clumps
 //if clumps is not empty sends to problem laser
-void robotControl::askLaser(){
-    std::vector<int> tester;
-    problemLaser(tester);
+void askLaser(std::vector<RangeFinderPacket>& packets){
+    //Put a call to your function here
 }
 //adjusts path to avoid obstacle shown by clumps
 void robotControl::problemLaser(std::vector<int> clumps) {
