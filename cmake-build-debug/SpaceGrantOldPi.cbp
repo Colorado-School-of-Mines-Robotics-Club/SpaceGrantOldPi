@@ -8,84 +8,88 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug"/>
+				<Option working_dir="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="SpaceGrantOldPi">
-				<Option output="C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/SpaceGrantOldPi.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug"/>
+				<Option output="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/SpaceGrantOldPi.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/minGW/include"/>
-					<Add directory="c:\mingw\bin\../lib/gcc/i686-w64-mingw32/4.8.3/../../../../include/c++/4.8.3"/>
-					<Add directory="c:\mingw\bin\../lib/gcc/i686-w64-mingw32/4.8.3/../../../../include/c++/4.8.3/i686-w64-mingw32"/>
-					<Add directory="c:\mingw\bin\../lib/gcc/i686-w64-mingw32/4.8.3/../../../../include/c++/4.8.3/backward"/>
-					<Add directory="c:\mingw\bin\../lib/gcc/i686-w64-mingw32/4.8.3/include"/>
-					<Add directory="c:\mingw\bin\../lib/gcc/i686-w64-mingw32/4.8.3/include-fixed"/>
-					<Add directory="c:\mingw\bin\../lib/gcc/i686-w64-mingw32/4.8.3/../../../../i686-w64-mingw32/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 SpaceGrantOldPi"/>
-					<CompileFile command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 SpaceGrantOldPi"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="SpaceGrantOldPi/fast">
-				<Option output="C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/SpaceGrantOldPi.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug"/>
+				<Option output="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/SpaceGrantOldPi.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/minGW/include"/>
-					<Add directory="c:\mingw\bin\../lib/gcc/i686-w64-mingw32/4.8.3/../../../../include/c++/4.8.3"/>
-					<Add directory="c:\mingw\bin\../lib/gcc/i686-w64-mingw32/4.8.3/../../../../include/c++/4.8.3/i686-w64-mingw32"/>
-					<Add directory="c:\mingw\bin\../lib/gcc/i686-w64-mingw32/4.8.3/../../../../include/c++/4.8.3/backward"/>
-					<Add directory="c:\mingw\bin\../lib/gcc/i686-w64-mingw32/4.8.3/include"/>
-					<Add directory="c:\mingw\bin\../lib/gcc/i686-w64-mingw32/4.8.3/include-fixed"/>
-					<Add directory="c:\mingw\bin\../lib/gcc/i686-w64-mingw32/4.8.3/../../../../i686-w64-mingw32/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 SpaceGrantOldPi/fast"/>
-					<CompileFile command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 SpaceGrantOldPi/fast"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug"/>
+				<Option working_dir="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug"/>
+				<Option working_dir="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/minGW/bin/mingw32-make.exe -f &quot;C:/Users/copen/Desktop/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/copen/Desktop/SpaceGrantOldPi/main.cpp">
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/main.cpp">
 			<Option target="SpaceGrantOldPi"/>
 		</Unit>
-		<Unit filename="C:/Users/copen/Desktop/SpaceGrantOldPi/CMakeLists.txt">
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/robotControl.cpp">
+			<Option target="SpaceGrantOldPi"/>
+		</Unit>
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/robotControl.h">
+			<Option target="SpaceGrantOldPi"/>
+		</Unit>
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

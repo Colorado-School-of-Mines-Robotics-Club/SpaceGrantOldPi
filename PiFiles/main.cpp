@@ -38,7 +38,7 @@ int main(){
 	sensor = new Sensor();
 
 	// Also init wheel
-	Wheel1 = new Wheel(0x1A, 1, 17);
+	wheel1 = new Wheel(0x1A, 1, 17);
 
 	// Get distance from angle 50 degrees and print the result
 	std::cout << "Sending Angle Command..." << std::endl;
