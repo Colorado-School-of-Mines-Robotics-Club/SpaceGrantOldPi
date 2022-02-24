@@ -1,0 +1,4 @@
+"D:\CLion 2020.2\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=D:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake -G "CodeBlocks - MinGW Makefiles" D:\Documents\GitHub\PiFiles\Tester
+-- Configuring done
+-- Generating done
+-- Build files have been written to: D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug
