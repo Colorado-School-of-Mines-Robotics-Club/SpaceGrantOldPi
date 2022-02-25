@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.obj"
   "CMakeFiles/SpaceGrantOldPi.dir/main.cpp.obj"
-  "CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.obj"
   "SpaceGrantOldPi.exe"
   "SpaceGrantOldPi.exe.manifest"
   "SpaceGrantOldPi.pdb"

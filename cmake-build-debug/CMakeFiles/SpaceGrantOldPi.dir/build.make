@@ -89,29 +89,29 @@ CMakeFiles/SpaceGrantOldPi.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SpaceGrantOldPi.dir/main.cpp.s"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\main.cpp -o CMakeFiles\SpaceGrantOldPi.dir\main.cpp.s
 
-CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.obj: CMakeFiles/SpaceGrantOldPi.dir/flags.make
-CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.obj: ../robotControl.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.obj"
-	C:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SpaceGrantOldPi.dir\robotControl.cpp.obj -c C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\robotControl.cpp
+CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.obj: CMakeFiles/SpaceGrantOldPi.dir/flags.make
+CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.obj: ../PiFiles/robotControl.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.obj"
+	C:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SpaceGrantOldPi.dir\PiFiles\robotControl.cpp.obj -c C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\robotControl.cpp
 
-CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.i"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\robotControl.cpp > CMakeFiles\SpaceGrantOldPi.dir\robotControl.cpp.i
+CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\robotControl.cpp > CMakeFiles\SpaceGrantOldPi.dir\PiFiles\robotControl.cpp.i
 
-CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.s"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\robotControl.cpp -o CMakeFiles\SpaceGrantOldPi.dir\robotControl.cpp.s
+CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\robotControl.cpp -o CMakeFiles\SpaceGrantOldPi.dir\PiFiles\robotControl.cpp.s
 
 # Object files for target SpaceGrantOldPi
 SpaceGrantOldPi_OBJECTS = \
 "CMakeFiles/SpaceGrantOldPi.dir/main.cpp.obj" \
-"CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.obj"
+"CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.obj"
 
 # External object files for target SpaceGrantOldPi
 SpaceGrantOldPi_EXTERNAL_OBJECTS =
 
 SpaceGrantOldPi.exe: CMakeFiles/SpaceGrantOldPi.dir/main.cpp.obj
-SpaceGrantOldPi.exe: CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.obj
+SpaceGrantOldPi.exe: CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.obj
 SpaceGrantOldPi.exe: CMakeFiles/SpaceGrantOldPi.dir/build.make
 SpaceGrantOldPi.exe: CMakeFiles/SpaceGrantOldPi.dir/linklibs.rsp
 SpaceGrantOldPi.exe: CMakeFiles/SpaceGrantOldPi.dir/objects1.rsp

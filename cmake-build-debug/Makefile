@@ -142,6 +142,33 @@ SpaceGrantOldPi/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/build
 .PHONY : SpaceGrantOldPi/fast
 
+PiFiles/robotControl.obj: PiFiles/robotControl.cpp.obj
+
+.PHONY : PiFiles/robotControl.obj
+
+# target to build an object file
+PiFiles/robotControl.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.obj
+.PHONY : PiFiles/robotControl.cpp.obj
+
+PiFiles/robotControl.i: PiFiles/robotControl.cpp.i
+
+.PHONY : PiFiles/robotControl.i
+
+# target to preprocess a source file
+PiFiles/robotControl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.i
+.PHONY : PiFiles/robotControl.cpp.i
+
+PiFiles/robotControl.s: PiFiles/robotControl.cpp.s
+
+.PHONY : PiFiles/robotControl.s
+
+# target to generate assembly for a file
+PiFiles/robotControl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.s
+.PHONY : PiFiles/robotControl.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -169,33 +196,6 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-robotControl.obj: robotControl.cpp.obj
-
-.PHONY : robotControl.obj
-
-# target to build an object file
-robotControl.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.obj
-.PHONY : robotControl.cpp.obj
-
-robotControl.i: robotControl.cpp.i
-
-.PHONY : robotControl.i
-
-# target to preprocess a source file
-robotControl.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.i
-.PHONY : robotControl.cpp.i
-
-robotControl.s: robotControl.cpp.s
-
-.PHONY : robotControl.s
-
-# target to generate assembly for a file
-robotControl.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/robotControl.cpp.s
-.PHONY : robotControl.cpp.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -205,12 +205,12 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... SpaceGrantOldPi
+	@echo ... PiFiles/robotControl.obj
+	@echo ... PiFiles/robotControl.i
+	@echo ... PiFiles/robotControl.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
-	@echo ... robotControl.obj
-	@echo ... robotControl.i
-	@echo ... robotControl.s
 .PHONY : help
 
 
