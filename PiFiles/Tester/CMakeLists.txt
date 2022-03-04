@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.17)
 project(Tester)
 
-include_directories("D:/mingw64/include")
-
+include_directories("C:/mingw64/include")
 set(CMAKE_CXX_STANDARD 20)
 
 find_package(nlohmann_json CONFIG REQUIRED)

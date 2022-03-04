@@ -5,115 +5,115 @@
 		<Option title="Tester"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\vcpkg\;CMake Files\..\..\..\..\vcpkg\vcpkg\;CMake Files\..\..\..\..\vcpkg\vcpkg\scripts\;CMake Files\..\..\..\..\vcpkg\vcpkg\scripts\buildsystems\;CMake Files\..\..\..\..\vcpkg\vcpkg\installed\;CMake Files\..\..\..\..\vcpkg\vcpkg\installed\x64-windows\;CMake Files\..\..\..\..\vcpkg\vcpkg\installed\x64-windows\share\;CMake Files\..\..\..\..\vcpkg\vcpkg\installed\x64-windows\share\nlohmann_json\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\src\;CMake Files\..\..\..\..\..\..\..\..\src\vcpkg\;CMake Files\..\..\..\..\..\..\..\..\src\vcpkg\vcpkg\;CMake Files\..\..\..\..\..\..\..\..\src\vcpkg\vcpkg\scripts\;CMake Files\..\..\..\..\..\..\..\..\src\vcpkg\vcpkg\scripts\buildsystems\;CMake Files\..\..\..\..\..\..\..\..\src\vcpkg\vcpkg\installed\;CMake Files\..\..\..\..\..\..\..\..\src\vcpkg\vcpkg\installed\x64-windows\;CMake Files\..\..\..\..\..\..\..\..\src\vcpkg\vcpkg\installed\x64-windows\share\;CMake Files\..\..\..\..\..\..\..\..\src\vcpkg\vcpkg\installed\x64-windows\share\nlohmann_json\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug"/>
+				<Option working_dir="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Tester">
-				<Option output="D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Tester.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug"/>
+				<Option output="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Tester.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add option="-DJSON_USE_IMPLICIT_CONVERSIONS=1"/>
 					<Add option="-DJSON_DIAGNOSTICS=0"/>
-					<Add directory="D:/mingw64/include"/>
-					<Add directory="D:/vcpkg/vcpkg/installed/x64-windows/include"/>
-					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/6.1.0/include/c++"/>
-					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/6.1.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/6.1.0/include/c++/backward"/>
-					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/6.1.0/include"/>
-					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/6.1.0/include-fixed"/>
-					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/6.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="C:/mingw64/include"/>
+					<Add directory="C:/src/vcpkg/vcpkg/installed/x64-windows/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 Tester"/>
-					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 Tester"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Tester/fast">
-				<Option output="D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Tester.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug"/>
+				<Option output="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Tester.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add option="-DJSON_USE_IMPLICIT_CONVERSIONS=1"/>
 					<Add option="-DJSON_DIAGNOSTICS=0"/>
-					<Add directory="D:/mingw64/include"/>
-					<Add directory="D:/vcpkg/vcpkg/installed/x64-windows/include"/>
-					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/6.1.0/include/c++"/>
-					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/6.1.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/6.1.0/include/c++/backward"/>
-					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/6.1.0/include"/>
-					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/6.1.0/include-fixed"/>
-					<Add directory="D:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/6.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="C:/mingw64/include"/>
+					<Add directory="C:/src/vcpkg/vcpkg/installed/x64-windows/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 Tester/fast"/>
-					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 Tester/fast"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug"/>
+				<Option working_dir="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug"/>
+				<Option working_dir="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/mingw64/bin/mingw32-make.exe -f &quot;D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/Documents/GitHub/PiFiles/Tester/TestSensorLib.cpp">
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/TestSensorLib.cpp">
 			<Option target="Tester"/>
 		</Unit>
-		<Unit filename="D:/Documents/GitHub/PiFiles/Tester/TestSensorLib.h">
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/TestSensorLib.h">
 			<Option target="Tester"/>
 		</Unit>
-		<Unit filename="D:/Documents/GitHub/PiFiles/Tester/main.cpp">
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/main.cpp">
 			<Option target="Tester"/>
 		</Unit>
-		<Unit filename="D:/vcpkg/vcpkg/installed/x64-windows/share/nlohmann_json/nlohmann_json.natvis">
+		<Unit filename="C:/src/vcpkg/vcpkg/installed/x64-windows/share/nlohmann_json/nlohmann_json.natvis">
 			<Option target="Tester"/>
 		</Unit>
-		<Unit filename="D:/Documents/GitHub/PiFiles/Tester/CMakeLists.txt">
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
-		<Unit filename="D:/Documents/GitHub/PiFiles/Tester/../../../../vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\vcpkg\vcpkg\scripts\buildsystems\"/>
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/../../../../../../../../src/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\src\vcpkg\vcpkg\scripts\buildsystems\"/>
 		</Unit>
-		<Unit filename="D:/Documents/GitHub/PiFiles/Tester/../../../../vcpkg/vcpkg/installed/x64-windows/share/nlohmann_json/nlohmann_jsonConfig.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\vcpkg\vcpkg\installed\x64-windows\share\nlohmann_json\"/>
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/../../../../../../../../src/vcpkg/vcpkg/installed/x64-windows/share/nlohmann_json/nlohmann_jsonConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\src\vcpkg\vcpkg\installed\x64-windows\share\nlohmann_json\"/>
 		</Unit>
-		<Unit filename="D:/Documents/GitHub/PiFiles/Tester/../../../../vcpkg/vcpkg/installed/x64-windows/share/nlohmann_json/nlohmann_jsonConfigVersion.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\vcpkg\vcpkg\installed\x64-windows\share\nlohmann_json\"/>
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/../../../../../../../../src/vcpkg/vcpkg/installed/x64-windows/share/nlohmann_json/nlohmann_jsonConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\src\vcpkg\vcpkg\installed\x64-windows\share\nlohmann_json\"/>
 		</Unit>
-		<Unit filename="D:/Documents/GitHub/PiFiles/Tester/../../../../vcpkg/vcpkg/installed/x64-windows/share/nlohmann_json/nlohmann_jsonTargets.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\vcpkg\vcpkg\installed\x64-windows\share\nlohmann_json\"/>
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/../../../../../../../../src/vcpkg/vcpkg/installed/x64-windows/share/nlohmann_json/nlohmann_jsonTargets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\src\vcpkg\vcpkg\installed\x64-windows\share\nlohmann_json\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

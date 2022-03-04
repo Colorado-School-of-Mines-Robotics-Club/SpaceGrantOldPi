@@ -6,13 +6,7 @@
 
 #IncludeRegexTransform: 
 
-D:/Documents/GitHub/PiFiles/Tester/TestSensorLib.cpp
-TestSensorLib.h
-D:/Documents/GitHub/PiFiles/Tester/TestSensorLib.h
-utility
--
-
-D:/Documents/GitHub/PiFiles/Tester/TestSensorLib.h
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/TestSensorLib.h
 SFML/Graphics.hpp
 -
 iostream
@@ -34,17 +28,17 @@ fstream
 thread
 -
 
-D:/Documents/GitHub/PiFiles/Tester/main.cpp
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/main.cpp
 iostream
 -
 TestSensorLib.h
-D:/Documents/GitHub/PiFiles/Tester/TestSensorLib.h
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/TestSensorLib.h
 
-D:/mingw64/include/SFML/Config.hpp
+C:/mingw64/include/SFML/Config.hpp
 TargetConditionals.h
-D:/mingw64/include/SFML/TargetConditionals.h
+C:/mingw64/include/SFML/TargetConditionals.h
 
-D:/mingw64/include/SFML/Graphics.hpp
+C:/mingw64/include/SFML/Graphics.hpp
 SFML/Window.hpp
 -
 SFML/Graphics/BlendMode.hpp
@@ -100,21 +94,21 @@ SFML/Graphics/VertexBuffer.hpp
 SFML/Graphics/View.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/BlendMode.hpp
+C:/mingw64/include/SFML/Graphics/BlendMode.hpp
 SFML/Graphics/Export.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/CircleShape.hpp
+C:/mingw64/include/SFML/Graphics/CircleShape.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Shape.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/Color.hpp
+C:/mingw64/include/SFML/Graphics/Color.hpp
 SFML/Graphics/Export.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/ConvexShape.hpp
+C:/mingw64/include/SFML/Graphics/ConvexShape.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Shape.hpp
@@ -122,17 +116,17 @@ SFML/Graphics/Shape.hpp
 vector
 -
 
-D:/mingw64/include/SFML/Graphics/Drawable.hpp
+C:/mingw64/include/SFML/Graphics/Drawable.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/RenderStates.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/Export.hpp
+C:/mingw64/include/SFML/Graphics/Export.hpp
 SFML/Config.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/Font.hpp
+C:/mingw64/include/SFML/Graphics/Font.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Glyph.hpp
@@ -152,7 +146,7 @@ string
 vector
 -
 
-D:/mingw64/include/SFML/Graphics/Glsl.hpp
+C:/mingw64/include/SFML/Graphics/Glsl.hpp
 SFML/Graphics/Transform.hpp
 -
 SFML/Graphics/Color.hpp
@@ -164,15 +158,15 @@ SFML/System/Vector3.hpp
 SFML/Graphics/Glsl.inl
 -
 
-D:/mingw64/include/SFML/Graphics/Glsl.inl
+C:/mingw64/include/SFML/Graphics/Glsl.inl
 
-D:/mingw64/include/SFML/Graphics/Glyph.hpp
+C:/mingw64/include/SFML/Graphics/Glyph.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Rect.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/Image.hpp
+C:/mingw64/include/SFML/Graphics/Image.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Color.hpp
@@ -184,9 +178,9 @@ string
 vector
 -
 
-D:/mingw64/include/SFML/Graphics/PrimitiveType.hpp
+C:/mingw64/include/SFML/Graphics/PrimitiveType.hpp
 
-D:/mingw64/include/SFML/Graphics/Rect.hpp
+C:/mingw64/include/SFML/Graphics/Rect.hpp
 SFML/System/Vector2.hpp
 -
 algorithm
@@ -194,15 +188,15 @@ algorithm
 SFML/Graphics/Rect.inl
 -
 
-D:/mingw64/include/SFML/Graphics/Rect.inl
+C:/mingw64/include/SFML/Graphics/Rect.inl
 
-D:/mingw64/include/SFML/Graphics/RectangleShape.hpp
+C:/mingw64/include/SFML/Graphics/RectangleShape.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Shape.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/RenderStates.hpp
+C:/mingw64/include/SFML/Graphics/RenderStates.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/BlendMode.hpp
@@ -210,7 +204,7 @@ SFML/Graphics/BlendMode.hpp
 SFML/Graphics/Transform.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/RenderTarget.hpp
+C:/mingw64/include/SFML/Graphics/RenderTarget.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Color.hpp
@@ -232,7 +226,7 @@ SFML/Graphics/Vertex.hpp
 SFML/System/NonCopyable.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/RenderTexture.hpp
+C:/mingw64/include/SFML/Graphics/RenderTexture.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Texture.hpp
@@ -242,7 +236,7 @@ SFML/Graphics/RenderTarget.hpp
 SFML/Window/ContextSettings.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/RenderWindow.hpp
+C:/mingw64/include/SFML/Graphics/RenderWindow.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/RenderTarget.hpp
@@ -254,7 +248,7 @@ SFML/Window/Window.hpp
 string
 -
 
-D:/mingw64/include/SFML/Graphics/Shader.hpp
+C:/mingw64/include/SFML/Graphics/Shader.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Glsl.hpp
@@ -272,7 +266,7 @@ map
 string
 -
 
-D:/mingw64/include/SFML/Graphics/Shape.hpp
+C:/mingw64/include/SFML/Graphics/Shape.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Drawable.hpp
@@ -284,7 +278,7 @@ SFML/Graphics/VertexArray.hpp
 SFML/System/Vector2.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/Sprite.hpp
+C:/mingw64/include/SFML/Graphics/Sprite.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Drawable.hpp
@@ -296,7 +290,7 @@ SFML/Graphics/Vertex.hpp
 SFML/Graphics/Rect.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/Text.hpp
+C:/mingw64/include/SFML/Graphics/Text.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Drawable.hpp
@@ -316,7 +310,7 @@ string
 vector
 -
 
-D:/mingw64/include/SFML/Graphics/Texture.hpp
+C:/mingw64/include/SFML/Graphics/Texture.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Image.hpp
@@ -324,7 +318,7 @@ SFML/Graphics/Image.hpp
 SFML/Window/GlResource.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/Transform.hpp
+C:/mingw64/include/SFML/Graphics/Transform.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Rect.hpp
@@ -332,13 +326,13 @@ SFML/Graphics/Rect.hpp
 SFML/System/Vector2.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/Transformable.hpp
+C:/mingw64/include/SFML/Graphics/Transformable.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Transform.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/Vertex.hpp
+C:/mingw64/include/SFML/Graphics/Vertex.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Color.hpp
@@ -346,7 +340,7 @@ SFML/Graphics/Color.hpp
 SFML/System/Vector2.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/VertexArray.hpp
+C:/mingw64/include/SFML/Graphics/VertexArray.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Vertex.hpp
@@ -360,7 +354,7 @@ SFML/Graphics/Drawable.hpp
 vector
 -
 
-D:/mingw64/include/SFML/Graphics/VertexBuffer.hpp
+C:/mingw64/include/SFML/Graphics/VertexBuffer.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/PrimitiveType.hpp
@@ -370,7 +364,7 @@ SFML/Graphics/Drawable.hpp
 SFML/Window/GlResource.hpp
 -
 
-D:/mingw64/include/SFML/Graphics/View.hpp
+C:/mingw64/include/SFML/Graphics/View.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Rect.hpp
@@ -380,7 +374,7 @@ SFML/Graphics/Transform.hpp
 SFML/System/Vector2.hpp
 -
 
-D:/mingw64/include/SFML/System.hpp
+C:/mingw64/include/SFML/System.hpp
 SFML/Config.hpp
 -
 SFML/System/Clock.hpp
@@ -418,23 +412,23 @@ SFML/System/Vector2.hpp
 SFML/System/Vector3.hpp
 -
 
-D:/mingw64/include/SFML/System/Clock.hpp
+C:/mingw64/include/SFML/System/Clock.hpp
 SFML/System/Export.hpp
 -
 SFML/System/Time.hpp
 -
 
-D:/mingw64/include/SFML/System/Err.hpp
+C:/mingw64/include/SFML/System/Err.hpp
 SFML/System/Export.hpp
 -
 ostream
 -
 
-D:/mingw64/include/SFML/System/Export.hpp
+C:/mingw64/include/SFML/System/Export.hpp
 SFML/Config.hpp
 -
 
-D:/mingw64/include/SFML/System/FileInputStream.hpp
+C:/mingw64/include/SFML/System/FileInputStream.hpp
 SFML/Config.hpp
 -
 SFML/System/Export.hpp
@@ -448,19 +442,19 @@ cstdio
 string
 -
 
-D:/mingw64/include/SFML/System/InputStream.hpp
+C:/mingw64/include/SFML/System/InputStream.hpp
 SFML/Config.hpp
 -
 SFML/System/Export.hpp
 -
 
-D:/mingw64/include/SFML/System/Lock.hpp
+C:/mingw64/include/SFML/System/Lock.hpp
 SFML/System/Export.hpp
 -
 SFML/System/NonCopyable.hpp
 -
 
-D:/mingw64/include/SFML/System/MemoryInputStream.hpp
+C:/mingw64/include/SFML/System/MemoryInputStream.hpp
 SFML/Config.hpp
 -
 SFML/System/InputStream.hpp
@@ -470,23 +464,23 @@ SFML/System/Export.hpp
 cstdlib
 -
 
-D:/mingw64/include/SFML/System/Mutex.hpp
+C:/mingw64/include/SFML/System/Mutex.hpp
 SFML/System/Export.hpp
 -
 SFML/System/NonCopyable.hpp
 -
 
-D:/mingw64/include/SFML/System/NonCopyable.hpp
+C:/mingw64/include/SFML/System/NonCopyable.hpp
 SFML/System/Export.hpp
 -
 
-D:/mingw64/include/SFML/System/Sleep.hpp
+C:/mingw64/include/SFML/System/Sleep.hpp
 SFML/System/Export.hpp
 -
 SFML/System/Time.hpp
 -
 
-D:/mingw64/include/SFML/System/String.hpp
+C:/mingw64/include/SFML/System/String.hpp
 SFML/System/Export.hpp
 -
 SFML/System/Utf.hpp
@@ -500,9 +494,9 @@ string
 SFML/System/String.inl
 -
 
-D:/mingw64/include/SFML/System/String.inl
+C:/mingw64/include/SFML/System/String.inl
 
-D:/mingw64/include/SFML/System/Thread.hpp
+C:/mingw64/include/SFML/System/Thread.hpp
 SFML/System/Export.hpp
 -
 SFML/System/NonCopyable.hpp
@@ -512,9 +506,9 @@ cstdlib
 SFML/System/Thread.inl
 -
 
-D:/mingw64/include/SFML/System/Thread.inl
+C:/mingw64/include/SFML/System/Thread.inl
 
-D:/mingw64/include/SFML/System/ThreadLocal.hpp
+C:/mingw64/include/SFML/System/ThreadLocal.hpp
 SFML/System/Export.hpp
 -
 SFML/System/NonCopyable.hpp
@@ -522,19 +516,19 @@ SFML/System/NonCopyable.hpp
 cstdlib
 -
 
-D:/mingw64/include/SFML/System/ThreadLocalPtr.hpp
+C:/mingw64/include/SFML/System/ThreadLocalPtr.hpp
 SFML/System/ThreadLocal.hpp
 -
 SFML/System/ThreadLocalPtr.inl
 -
 
-D:/mingw64/include/SFML/System/ThreadLocalPtr.inl
+C:/mingw64/include/SFML/System/ThreadLocalPtr.inl
 
-D:/mingw64/include/SFML/System/Time.hpp
+C:/mingw64/include/SFML/System/Time.hpp
 SFML/System/Export.hpp
 -
 
-D:/mingw64/include/SFML/System/Utf.hpp
+C:/mingw64/include/SFML/System/Utf.hpp
 SFML/Config.hpp
 -
 algorithm
@@ -548,21 +542,21 @@ cstdlib
 SFML/System/Utf.inl
 -
 
-D:/mingw64/include/SFML/System/Utf.inl
+C:/mingw64/include/SFML/System/Utf.inl
 
-D:/mingw64/include/SFML/System/Vector2.hpp
+C:/mingw64/include/SFML/System/Vector2.hpp
 SFML/System/Vector2.inl
 -
 
-D:/mingw64/include/SFML/System/Vector2.inl
+C:/mingw64/include/SFML/System/Vector2.inl
 
-D:/mingw64/include/SFML/System/Vector3.hpp
+C:/mingw64/include/SFML/System/Vector3.hpp
 SFML/System/Vector3.inl
 -
 
-D:/mingw64/include/SFML/System/Vector3.inl
+C:/mingw64/include/SFML/System/Vector3.inl
 
-D:/mingw64/include/SFML/Window.hpp
+C:/mingw64/include/SFML/Window.hpp
 SFML/System.hpp
 -
 SFML/Window/Clipboard.hpp
@@ -594,13 +588,13 @@ SFML/Window/WindowHandle.hpp
 SFML/Window/WindowStyle.hpp
 -
 
-D:/mingw64/include/SFML/Window/Clipboard.hpp
+C:/mingw64/include/SFML/Window/Clipboard.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/String.hpp
 -
 
-D:/mingw64/include/SFML/Window/Context.hpp
+C:/mingw64/include/SFML/Window/Context.hpp
 SFML/Window/Export.hpp
 -
 SFML/Window/GlResource.hpp
@@ -610,11 +604,11 @@ SFML/Window/ContextSettings.hpp
 SFML/System/NonCopyable.hpp
 -
 
-D:/mingw64/include/SFML/Window/ContextSettings.hpp
+C:/mingw64/include/SFML/Window/ContextSettings.hpp
 SFML/Config.hpp
 -
 
-D:/mingw64/include/SFML/Window/Cursor.hpp
+C:/mingw64/include/SFML/Window/Cursor.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/NonCopyable.hpp
@@ -622,7 +616,7 @@ SFML/System/NonCopyable.hpp
 SFML/System/Vector2.hpp
 -
 
-D:/mingw64/include/SFML/Window/Event.hpp
+C:/mingw64/include/SFML/Window/Event.hpp
 SFML/Config.hpp
 -
 SFML/Window/Joystick.hpp
@@ -634,33 +628,33 @@ SFML/Window/Mouse.hpp
 SFML/Window/Sensor.hpp
 -
 
-D:/mingw64/include/SFML/Window/Export.hpp
+C:/mingw64/include/SFML/Window/Export.hpp
 SFML/Config.hpp
 -
 
-D:/mingw64/include/SFML/Window/GlResource.hpp
+C:/mingw64/include/SFML/Window/GlResource.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/NonCopyable.hpp
 -
 
-D:/mingw64/include/SFML/Window/Joystick.hpp
+C:/mingw64/include/SFML/Window/Joystick.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/String.hpp
 -
 
-D:/mingw64/include/SFML/Window/Keyboard.hpp
+C:/mingw64/include/SFML/Window/Keyboard.hpp
 SFML/Window/Export.hpp
 -
 
-D:/mingw64/include/SFML/Window/Mouse.hpp
+C:/mingw64/include/SFML/Window/Mouse.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/Vector2.hpp
 -
 
-D:/mingw64/include/SFML/Window/Sensor.hpp
+C:/mingw64/include/SFML/Window/Sensor.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/Vector3.hpp
@@ -668,19 +662,19 @@ SFML/System/Vector3.hpp
 SFML/System/Time.hpp
 -
 
-D:/mingw64/include/SFML/Window/Touch.hpp
+C:/mingw64/include/SFML/Window/Touch.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/Vector2.hpp
 -
 
-D:/mingw64/include/SFML/Window/VideoMode.hpp
+C:/mingw64/include/SFML/Window/VideoMode.hpp
 SFML/Window/Export.hpp
 -
 vector
 -
 
-D:/mingw64/include/SFML/Window/Window.hpp
+C:/mingw64/include/SFML/Window/Window.hpp
 SFML/Window/ContextSettings.hpp
 -
 SFML/Window/Cursor.hpp
@@ -704,13 +698,13 @@ SFML/System/String.hpp
 SFML/System/Vector2.hpp
 -
 
-D:/mingw64/include/SFML/Window/WindowHandle.hpp
+C:/mingw64/include/SFML/Window/WindowHandle.hpp
 SFML/Config.hpp
 -
 
-D:/mingw64/include/SFML/Window/WindowStyle.hpp
+C:/mingw64/include/SFML/Window/WindowStyle.hpp
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/adl_serializer.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/adl_serializer.hpp
 type_traits
 -
 utility
@@ -724,7 +718,7 @@ nlohmann/detail/meta/identity_tag.hpp
 nlohmann/detail/meta/type_traits.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/byte_container_with_subtype.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/byte_container_with_subtype.hpp
 cstdint
 -
 tuple
@@ -732,7 +726,7 @@ tuple
 utility
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/conversions/from_json.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/conversions/from_json.hpp
 algorithm
 -
 array
@@ -772,7 +766,7 @@ experimental/filesystem
 filesystem
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/conversions/to_chars.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/conversions/to_chars.hpp
 array
 -
 cmath
@@ -788,7 +782,7 @@ type_traits
 nlohmann/detail/macro_scope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/conversions/to_json.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/conversions/to_json.hpp
 algorithm
 -
 iterator
@@ -820,7 +814,7 @@ experimental/filesystem
 filesystem
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/exceptions.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/exceptions.hpp
 exception
 -
 stdexcept
@@ -838,7 +832,7 @@ nlohmann/detail/input/position_t.hpp
 nlohmann/detail/macro_scope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/hash.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/hash.hpp
 cstdint
 -
 cstddef
@@ -850,7 +844,7 @@ nlohmann/detail/macro_scope.hpp
 nlohmann/detail/value_t.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/input/binary_reader.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/input/binary_reader.hpp
 algorithm
 -
 array
@@ -892,7 +886,7 @@ nlohmann/detail/meta/type_traits.hpp
 nlohmann/detail/value_t.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/input/input_adapters.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/input/input_adapters.hpp
 array
 -
 cstddef
@@ -920,7 +914,7 @@ nlohmann/detail/iterators/iterator_traits.hpp
 nlohmann/detail/macro_scope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/input/json_sax.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/input/json_sax.hpp
 cstddef
 -
 string
@@ -934,7 +928,7 @@ nlohmann/detail/exceptions.hpp
 nlohmann/detail/macro_scope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/input/lexer.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/input/lexer.hpp
 array
 -
 clocale
@@ -960,7 +954,7 @@ nlohmann/detail/input/position_t.hpp
 nlohmann/detail/macro_scope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/input/parser.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/input/parser.hpp
 cmath
 -
 cstdint
@@ -988,15 +982,15 @@ nlohmann/detail/meta/is_sax.hpp
 nlohmann/detail/value_t.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/input/position_t.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/input/position_t.hpp
 cstddef
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/iterators/internal_iterator.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/iterators/internal_iterator.hpp
 nlohmann/detail/iterators/primitive_iterator.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/iterators/iter_impl.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/iterators/iter_impl.hpp
 iterator
 -
 type_traits
@@ -1016,7 +1010,7 @@ nlohmann/detail/meta/type_traits.hpp
 nlohmann/detail/value_t.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/iterators/iteration_proxy.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/iterators/iteration_proxy.hpp
 cstddef
 -
 iterator
@@ -1032,7 +1026,7 @@ nlohmann/detail/meta/type_traits.hpp
 nlohmann/detail/value_t.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/iterators/iterator_traits.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/iterators/iterator_traits.hpp
 iterator
 -
 nlohmann/detail/meta/void_t.hpp
@@ -1040,7 +1034,7 @@ nlohmann/detail/meta/void_t.hpp
 nlohmann/detail/meta/cpp_future.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/iterators/json_reverse_iterator.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/iterators/json_reverse_iterator.hpp
 cstddef
 -
 iterator
@@ -1048,7 +1042,7 @@ iterator
 utility
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/iterators/primitive_iterator.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/iterators/primitive_iterator.hpp
 cstddef
 -
 limits
@@ -1056,7 +1050,7 @@ limits
 nlohmann/detail/macro_scope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/json_pointer.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/json_pointer.hpp
 algorithm
 -
 cctype
@@ -1080,7 +1074,7 @@ nlohmann/detail/string_escape.hpp
 nlohmann/detail/value_t.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/json_ref.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/json_ref.hpp
 initializer_list
 -
 utility
@@ -1088,7 +1082,7 @@ utility
 nlohmann/detail/meta/type_traits.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/macro_scope.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/macro_scope.hpp
 utility
 -
 nlohmann/thirdparty/hedley/hedley.hpp
@@ -1100,19 +1094,19 @@ cstdlib
 cassert
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/macro_unscope.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/macro_unscope.hpp
 nlohmann/thirdparty/hedley/hedley_undef.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/call_std/begin.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/call_std/begin.hpp
 nlohmann/detail/macro_scope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/call_std/end.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/call_std/end.hpp
 nlohmann/detail/macro_scope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/cpp_future.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/cpp_future.hpp
 cstddef
 -
 type_traits
@@ -1122,15 +1116,15 @@ utility
 nlohmann/detail/macro_scope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/detected.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/detected.hpp
 type_traits
 -
 nlohmann/detail/meta/void_t.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/identity_tag.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/identity_tag.hpp
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/is_sax.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/is_sax.hpp
 cstdint
 -
 utility
@@ -1142,7 +1136,7 @@ nlohmann/detail/meta/detected.hpp
 nlohmann/detail/meta/type_traits.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/type_traits.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/type_traits.hpp
 limits
 -
 type_traits
@@ -1166,9 +1160,9 @@ nlohmann/detail/meta/detected.hpp
 nlohmann/json_fwd.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/void_t.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/meta/void_t.hpp
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/output/binary_writer.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/output/binary_writer.hpp
 algorithm
 -
 array
@@ -1192,7 +1186,7 @@ nlohmann/detail/macro_scope.hpp
 nlohmann/detail/output/output_adapters.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/output/output_adapters.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/output/output_adapters.hpp
 algorithm
 -
 cstddef
@@ -1212,7 +1206,7 @@ ostream
 nlohmann/detail/macro_scope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/output/serializer.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/output/serializer.hpp
 algorithm
 -
 array
@@ -1254,13 +1248,13 @@ nlohmann/detail/output/output_adapters.hpp
 nlohmann/detail/value_t.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/string_escape.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/string_escape.hpp
 string
 -
 nlohmann/detail/macro_scope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/value_t.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/detail/value_t.hpp
 array
 -
 cstddef
@@ -1270,7 +1264,7 @@ cstdint
 string
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/json.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/json.hpp
 algorithm
 -
 cstddef
@@ -1352,7 +1346,7 @@ string_view
 nlohmann/detail/macro_unscope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/json_fwd.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/json_fwd.hpp
 cstdint
 -
 map
@@ -1364,7 +1358,7 @@ string
 vector
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/ordered_map.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/ordered_map.hpp
 functional
 -
 initializer_list
@@ -1384,11 +1378,11 @@ vector
 nlohmann/detail/macro_scope.hpp
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/thirdparty/hedley/hedley.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/thirdparty/hedley/hedley.hpp
 stdint.h
 -
 stdint.h
 -
 
-D:/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
+C:/src/vcpkg/vcpkg/installed/x64-windows/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
 

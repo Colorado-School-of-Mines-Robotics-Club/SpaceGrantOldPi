@@ -33,7 +33,7 @@ int main() {
     //Wheel3->setRotation(0, [](int8_t a){std::cout << "Stopped Turning" << std::endl;});
     //Wheel4->setRotation(-90, [](int8_t a){std::cout << "Stopped Turning" << std::endl;});
 
-    std::this_thread::sleep_for(std::chrono::seconds(10));
+    std::this_thread::sleep_for(std::chrono::seconds(2));
 
     Wheel1->move(4, [](int8_t a){std::cout << "Stopped 1" << std::endl;});
     Wheel2->move(4, [](int8_t a){std::cout << "Stopped 1" << std::endl;});

@@ -1,1 +1,1 @@
--ID:/mingw64/include -isystem D:/vcpkg/vcpkg/installed/x64-windows/include 
+-IC:/mingw64/include -isystem C:/src/vcpkg/vcpkg/installed/x64-windows/include 

@@ -1,4 +1,4 @@
-ToolSet: w64 5.0 (local)@D:\mingw64
+ToolSet: w64 6.0 (local)@C:\mingw64
 Options: 
 
-Options:-DCMAKE_TOOLCHAIN_FILE=D:/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake
+Options:-DCMAKE_TOOLCHAIN_FILE=C:/src/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake

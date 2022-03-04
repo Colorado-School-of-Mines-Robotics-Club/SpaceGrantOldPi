@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/SensorLib.h
+iostream
+-
+vector
+-
+functional
+-
+cmath
+-
+bitset
+-
+functional
+-
+
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/robotControl.cpp
+robotControl.h
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/robotControl.h
+robotControl.h
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/robotControl.h
+
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/robotControl.h
+vector
+-
+SensorLib.h
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/SensorLib.h
+
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/main.cpp
+iostream
+-
+

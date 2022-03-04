@@ -53,19 +53,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = "D:\CLion 2020.2\bin\cmake\win\bin\cmake.exe"
+CMAKE_COMMAND = "C:\Program Files\JetBrains\CLion 2020.3.1\bin\cmake\win\bin\cmake.exe"
 
 # The command to remove a file.
-RM = "D:\CLion 2020.2\bin\cmake\win\bin\cmake.exe" -E rm -f
+RM = "C:\Program Files\JetBrains\CLion 2020.3.1\bin\cmake\win\bin\cmake.exe" -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\Documents\GitHub\PiFiles\Tester
+CMAKE_SOURCE_DIR = C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\Documents\GitHub\PiFiles\Tester\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Tester.dir/depend.make
@@ -79,30 +79,30 @@ include CMakeFiles/Tester.dir/flags.make
 CMakeFiles/Tester.dir/main.cpp.obj: CMakeFiles/Tester.dir/flags.make
 CMakeFiles/Tester.dir/main.cpp.obj: CMakeFiles/Tester.dir/includes_CXX.rsp
 CMakeFiles/Tester.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Documents\GitHub\PiFiles\Tester\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Tester.dir/main.cpp.obj"
-	D:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Tester.dir\main.cpp.obj -c D:\Documents\GitHub\PiFiles\Tester\main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Tester.dir/main.cpp.obj"
+	C:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Tester.dir\main.cpp.obj -c C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\main.cpp
 
 CMakeFiles/Tester.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Tester.dir/main.cpp.i"
-	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Documents\GitHub\PiFiles\Tester\main.cpp > CMakeFiles\Tester.dir\main.cpp.i
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\main.cpp > CMakeFiles\Tester.dir\main.cpp.i
 
 CMakeFiles/Tester.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Tester.dir/main.cpp.s"
-	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Documents\GitHub\PiFiles\Tester\main.cpp -o CMakeFiles\Tester.dir\main.cpp.s
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\main.cpp -o CMakeFiles\Tester.dir\main.cpp.s
 
 CMakeFiles/Tester.dir/TestSensorLib.cpp.obj: CMakeFiles/Tester.dir/flags.make
 CMakeFiles/Tester.dir/TestSensorLib.cpp.obj: CMakeFiles/Tester.dir/includes_CXX.rsp
 CMakeFiles/Tester.dir/TestSensorLib.cpp.obj: ../TestSensorLib.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Documents\GitHub\PiFiles\Tester\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Tester.dir/TestSensorLib.cpp.obj"
-	D:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Tester.dir\TestSensorLib.cpp.obj -c D:\Documents\GitHub\PiFiles\Tester\TestSensorLib.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Tester.dir/TestSensorLib.cpp.obj"
+	C:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Tester.dir\TestSensorLib.cpp.obj -c C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\TestSensorLib.cpp
 
 CMakeFiles/Tester.dir/TestSensorLib.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Tester.dir/TestSensorLib.cpp.i"
-	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Documents\GitHub\PiFiles\Tester\TestSensorLib.cpp > CMakeFiles\Tester.dir\TestSensorLib.cpp.i
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\TestSensorLib.cpp > CMakeFiles\Tester.dir\TestSensorLib.cpp.i
 
 CMakeFiles/Tester.dir/TestSensorLib.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Tester.dir/TestSensorLib.cpp.s"
-	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Documents\GitHub\PiFiles\Tester\TestSensorLib.cpp -o CMakeFiles\Tester.dir\TestSensorLib.cpp.s
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\TestSensorLib.cpp -o CMakeFiles\Tester.dir\TestSensorLib.cpp.s
 
 # Object files for target Tester
 Tester_OBJECTS = \
@@ -118,9 +118,9 @@ Tester.exe: CMakeFiles/Tester.dir/build.make
 Tester.exe: CMakeFiles/Tester.dir/linklibs.rsp
 Tester.exe: CMakeFiles/Tester.dir/objects1.rsp
 Tester.exe: CMakeFiles/Tester.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\Documents\GitHub\PiFiles\Tester\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Tester.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Tester.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Tester.dir\link.txt --verbose=$(VERBOSE)
-	C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file D:/vcpkg/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/Tester.exe -installedDir D:/vcpkg/vcpkg/installed/x64-windows/debug/bin -OutVariable out
+	C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/src/vcpkg/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/Tester.exe -installedDir C:/src/vcpkg/vcpkg/installed/x64-windows/debug/bin -OutVariable out
 
 # Rule to build all files generated by this target.
 CMakeFiles/Tester.dir/build: Tester.exe
@@ -132,6 +132,6 @@ CMakeFiles/Tester.dir/clean:
 .PHONY : CMakeFiles/Tester.dir/clean
 
 CMakeFiles/Tester.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\Documents\GitHub\PiFiles\Tester D:\Documents\GitHub\PiFiles\Tester D:\Documents\GitHub\PiFiles\Tester\cmake-build-debug D:\Documents\GitHub\PiFiles\Tester\cmake-build-debug D:\Documents\GitHub\PiFiles\Tester\cmake-build-debug\CMakeFiles\Tester.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\cmake-build-debug C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\cmake-build-debug C:\Users\colin\OneDrive\Documents\GitHub\SpaceGrantOldPi\PiFiles\Tester\cmake-build-debug\CMakeFiles\Tester.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Tester.dir/depend
 

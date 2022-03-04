@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "D:/Documents/GitHub/PiFiles/Tester/TestSensorLib.cpp" "D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/CMakeFiles/Tester.dir/TestSensorLib.cpp.obj"
-  "D:/Documents/GitHub/PiFiles/Tester/main.cpp" "D:/Documents/GitHub/PiFiles/Tester/cmake-build-debug/CMakeFiles/Tester.dir/main.cpp.obj"
+  "C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/TestSensorLib.cpp" "C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/CMakeFiles/Tester.dir/TestSensorLib.cpp.obj"
+  "C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/main.cpp" "C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/Tester/cmake-build-debug/CMakeFiles/Tester.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -17,8 +17,8 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "D:/mingw64/include"
-  "D:/vcpkg/vcpkg/installed/x64-windows/include"
+  "C:/mingw64/include"
+  "C:/src/vcpkg/vcpkg/installed/x64-windows/include"
   )
 
 # Targets to which this target links.
