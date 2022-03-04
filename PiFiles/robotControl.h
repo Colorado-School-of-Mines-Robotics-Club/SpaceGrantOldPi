@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "SensorLib.h"
+#include "RangeFinding.h"
 
 class robotControl {
 public:
