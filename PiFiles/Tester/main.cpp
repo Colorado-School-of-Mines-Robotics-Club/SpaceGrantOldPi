@@ -26,21 +26,28 @@ int main() {
     Wheel3->setPressureAlertFunction(pressureAlert);
     Wheel4->setPressureAlertFunction(pressureAlert);
 
+    std::cout << "Heading: " << sensor->getHeading() << std::endl;
+
     //sensor->scan(scanResponse);
-    sensor->getAngle(5, [](RangeFinderPacket& a){std::cout << "Distance: " << (int)a.distance << ", Angle: " << a.angle << std::endl;});
+    //sensor->getAngle(5, [](RangeFinderPacket& a){std::cout << "Distance: " << (int)a.distance << ", Angle: " << a.angle << std::endl;});
     //Wheel1->setRotation(180, [](int8_t a){std::cout << "Stopped Turning" << std::endl;});
-    //Wheel2->setRotation(90, [](int8_t a){std::cout << "Stopped Turning" << std::endl;});
+    Wheel2->setRotation(90, [](int8_t a){std::cout << "Stopped Turning" << std::endl;});
     //Wheel3->setRotation(0, [](int8_t a){std::cout << "Stopped Turning" << std::endl;});
     //Wheel4->setRotation(-90, [](int8_t a){std::cout << "Stopped Turning" << std::endl;});
 
-    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::this_thread::sleep_for(std::chrono::seconds(10));
 
     Wheel1->move(4, [](int8_t a){std::cout << "Stopped 1" << std::endl;});
     Wheel2->move(4, [](int8_t a){std::cout << "Stopped 1" << std::endl;});
     Wheel3->move(4, [](int8_t a){std::cout << "Stopped 1" << std::endl;});
     Wheel4->move(4, [](int8_t a){std::cout << "Stopped 1" << std::endl;});
 
-    std::this_thread::sleep_for(std::chrono::seconds(16));
+
+    std::cout << "Heading: " << sensor->getHeading() << std::endl;
+
+    std::this_thread::sleep_for(std::chrono::seconds(17));
+
+    std::cout << "Heading: " << sensor->getHeading() << std::endl;
 
     sensor->scan(scanResponse);
 

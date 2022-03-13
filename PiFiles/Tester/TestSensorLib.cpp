@@ -4,9 +4,10 @@
 
 #include "TestSensorLib.h"
 
+#include <cmath>
 #include <utility>
 
-#define CONFIG_NAME "Input.json"
+#define CONFIG_NAME "../Input.json"
 
 void setBotPosition(float x, float y);
 
@@ -40,6 +41,11 @@ using json = nlohmann::json;
 
 #define PUSH_SENSOR_HEIGHT 0.02
 
+#define BEACON_DIAMETER 0.2
+#define BEACON_LENGTH 15
+#define BEACON_ROTATION_RATE 1.6 //Rotations per sec
+
+#define ZOOM_AMOUNT 0.1
 
 #define dist(A, B, N) A - B > N - (A - B - 1) ? std::min(A - B, N - (A - B - 1)) : -std::min(A - B, N - (A - B - 1))
 
@@ -71,12 +77,17 @@ struct RectObstacle{
     float height;
 };
 
+struct{
+    sf::CircleShape* shape;
+    sf::Vector2<float> position;
+    float rotation;
+    sf::VertexArray directionLine;
+}beacon;
+
 wheel wheels[4];
 
 std::vector<CircleObstacle> circleObstacles;
 std::vector<RectObstacle> rectObstacles;
-
-RectObstacle beacon;
 
 bool cameraLocked = false;
 
@@ -201,6 +212,11 @@ void update(){
     }
 
     if(cameraLocked) cameraPosition = botBody.position;
+
+    beacon.rotation += BEACON_ROTATION_RATE*360/1000*deltaTime;
+    while(beacon.rotation > 360){
+        beacon.rotation -= 360;
+    }
 }
 
 void updateWindow(){
@@ -213,19 +229,25 @@ void updateWindow(){
         while(window.pollEvent(event)){
             switch(event.type){
                 case sf::Event::Closed:
-                drawing = false;
-                break;
+                    drawing = false;
+                    break;
 
                 case sf::Event::KeyPressed:
                     if(event.key.code == sf::Keyboard::Space){
                         cameraLocked = !cameraLocked;
                     }
+                    break;
+
+                case sf::Event::MouseWheelScrolled:
+                    cameraWidth *= (1 - ZOOM_AMOUNT*event.mouseWheelScroll.delta);
+                    break;
             }
         }
 
         for(auto & obstacle : circleObstacles){
             obstacle.shape->setPosition((-cameraPosition.x + obstacle.position.x)*WINDOW_WIDTH/cameraWidth + WINDOW_WIDTH/2, (-cameraPosition.y - obstacle.position.y)*WINDOW_WIDTH/cameraWidth + WINDOW_HEIGHT/2);
             obstacle.shape->setRadius(obstacle.radius*WINDOW_WIDTH/cameraWidth);
+            obstacle.shape->setOrigin(obstacle.shape->getRadius(), obstacle.shape->getRadius());
 
             window.draw(*obstacle.shape);
         }
@@ -233,13 +255,25 @@ void updateWindow(){
         for(auto & obstacle : rectObstacles){
             obstacle.shape->setPosition((-cameraPosition.x + obstacle.position.x)*WINDOW_WIDTH/cameraWidth + WINDOW_WIDTH/2, (-cameraPosition.y - obstacle.position.y)*WINDOW_WIDTH/cameraWidth + WINDOW_HEIGHT/2);
             obstacle.shape->setSize({obstacle.size.x*WINDOW_WIDTH/cameraWidth, obstacle.size.y*WINDOW_WIDTH/cameraWidth});
+            obstacle.shape->setOrigin(obstacle.size.x*WINDOW_WIDTH/(2*cameraWidth), obstacle.size.y*WINDOW_WIDTH/(2*cameraWidth));
             obstacle.shape->setRotation(-obstacle.rotation);
 
             window.draw(*obstacle.shape);
         }
 
+        beacon.shape->setPosition((-cameraPosition.x + beacon.position.x)*WINDOW_WIDTH/cameraWidth + WINDOW_WIDTH/2, (-cameraPosition.y - beacon.position.y)*WINDOW_WIDTH/cameraWidth + WINDOW_HEIGHT/2);
+        beacon.shape->setRadius(BEACON_DIAMETER/(2*cameraWidth)*WINDOW_WIDTH);
+        beacon.shape->setOrigin(beacon.shape->getRadius(), beacon.shape->getRadius());
+        beacon.directionLine[0].position = beacon.shape->getPosition();
+        beacon.directionLine[1].position = {static_cast<float>(beacon.shape->getPosition().x + (BEACON_LENGTH*WINDOW_WIDTH/cameraWidth)*cos(beacon.rotation*M_PI/180)), static_cast<float>(beacon.shape->getPosition().y - (BEACON_LENGTH*WINDOW_WIDTH/cameraWidth)*sin(beacon.rotation*M_PI/180))};
+
+        window.draw(*beacon.shape);
+        window.draw(beacon.directionLine);
+
         for(auto & wheel : wheels){
             wheel.shape->setPosition((-cameraPosition.x + wheel.position.x)*WINDOW_WIDTH/cameraWidth + WINDOW_WIDTH/2, (-cameraPosition.y - wheel.position.y)*WINDOW_WIDTH/cameraWidth + WINDOW_HEIGHT/2);
+            wheel.shape->setRadius(WHEEL_DIAMETER/(2*cameraWidth)*WINDOW_WIDTH);
+            wheel.shape->setOrigin(wheel.shape->getRadius(), wheel.shape->getRadius());
             window.draw(*wheel.shape);
 
             wheel.directionLine[0].position = wheel.shape->getPosition();
@@ -249,6 +283,8 @@ void updateWindow(){
         }
 
         botBody.shape->setPosition((-cameraPosition.x + botBody.position.x)*WINDOW_WIDTH/cameraWidth + WINDOW_WIDTH/2, (-cameraPosition.y - botBody.position.y)*WINDOW_WIDTH/cameraWidth + WINDOW_HEIGHT/2);
+        botBody.shape->setSize({static_cast<float>(BODY_WIDTH*WINDOW_WIDTH/cameraWidth), static_cast<float>(BODY_WIDTH*WINDOW_WIDTH/cameraWidth)});
+        botBody.shape->setOrigin(BODY_WIDTH*WINDOW_WIDTH/(2*cameraWidth), BODY_WIDTH*WINDOW_WIDTH/(2*cameraWidth));
         botBody.shape->setRotation(-botBody.rotation);
 
         if(sensor->scannerAngle >= -180){
@@ -307,8 +343,18 @@ void Sensor::constructorUni() {
     wheels[2].wheel = Wheel3;
     wheels[3].wheel = Wheel4;
 
+    beacon.shape = new sf::CircleShape(BEACON_DIAMETER/(2*INITIAL_WIDTH_DISTANCE)*WINDOW_WIDTH);
+    beacon.shape->setFillColor(sf::Color::Green);
+    beacon.shape->setOrigin(beacon.shape->getRadius(), beacon.shape->getRadius());
+    beacon.rotation = 0;
+    beacon.directionLine = sf::VertexArray(sf::LinesStrip, 2);
+    beacon.directionLine[0].color = sf::Color::Green;
+    beacon.directionLine[1].color = sf::Color::Green;
+
     std::ifstream ifs(CONFIG_NAME);
     json jf = json::parse(ifs);
+
+    beacon.position = sf::Vector2<float>(jf["beacon"]["position"]["x"], jf["beacon"]["position"]["y"]);
 
     setBotPosition(jf["bot"]["position"]["x"], jf["bot"]["position"]["y"]);
 
@@ -529,7 +575,15 @@ int8_t Sensor::getAngle(float angle, std::function<void(RangeFinderPacket &)> ca
 }
 
 float Sensor::getHeading() {
-    return 0;
+    float angle = 180*std::atan2(beacon.position.y - botBody.position.y, botBody.position.x - beacon.position.x)/M_PI + 180 + botBody.rotation;
+    while(angle > 360){
+        angle -= 360;
+    }
+
+    while(angle < 0){
+        angle += 360;
+    }
+    return angle;
 }
 
 uint8_t Sensor::getRSSI() {
@@ -549,7 +603,6 @@ void wheelCallback(Wheel* caller, unsigned int time, const std::function<void(in
     caller->_state = INT_STATE_NONE;
     caller->running = STOPPED;
     caller->turning = STOPPED;
-    std::cout << "New rotation: " << caller->rotation << std::endl;
     callback(1);
 }
 

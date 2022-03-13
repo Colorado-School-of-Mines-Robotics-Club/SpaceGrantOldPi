@@ -1,0 +1,50 @@
+{
+	"bot" : {
+		"position" : {
+			"x" : 0,
+			"y" : 0
+		}
+	},
+	"obstacles" : [
+		{
+			"type" : "circle",
+			"radius" : 0.5,
+			"height" : -10,
+			"x" : 5,
+			"y" : 0
+		},
+		{
+			"type" : "rectangle",
+			"length" : 0.5,
+			"width" : 3,
+			"rotation" : 80,
+			"height" : 2,
+			"x" : 2,
+			"y" : 0
+		},
+		{
+			"type" : "rectangle",
+			"length" : 0.5,
+			"width" : 4,
+			"rotation" : -45,
+			"height" : 2,
+			"x" : -2,
+			"y" : 0
+		},
+		{
+			"type" : "rectangle",
+			"length" : 0.5,
+			"width" : 2,
+			"rotation" : 5,
+			"height" : 2,
+			"x" : 0,
+			"y" : 2
+		}
+	],
+	"beacon" : {
+		"position" : {
+			"x" : 4,
+			"y" : 1
+		}
+	}
+}
