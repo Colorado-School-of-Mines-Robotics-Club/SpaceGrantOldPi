@@ -13,6 +13,7 @@
 #define STOP_REGISTER 0x08
 #define GET_POSITION_REGISTER 0x09
 #define RESPONSE_REGISTER 0x0A
+#define PRESSURE_REGISTER 0x0B
 
 #define DRIVE_ENCODER1 2
 #define DRIVE_ENCODER2 7
@@ -30,6 +31,7 @@
 #define INT_PIN 4
 
 #define LIMIT_PIN 12
+#define PUSH_SENSOR_PIN 11
 
 #define STATE_NONE 0
 #define TURN_STATE_TURN 1
@@ -37,6 +39,10 @@
 #define TURN_STATE_SET 3
 #define DRIVE_STATE_MOVE 1
 #define DRIVE_STATE_DRIVE 2
+
+#define STATUS_TURN_DONE 0b001
+#define STATUS_DRIVE_DONE 0b010
+#define STATUS_PUSH_BUTTON 0b100
 
 #define DRIVE_ERROR 10
 #define TURN_ERROR 10
@@ -48,13 +54,16 @@ uint8_t turnState = STATE_NONE;
 
 uint8_t* response;
 uint8_t responseLength = 0;
-uint8_t ok = 0;
 
 int16_t targetTurn = 0;
 int32_t targetDrive = 0;
 
-int32_t driveMotorPosition = 0;
 int16_t turnMotorPosition = 0;
+int32_t driveMotorPosition = 0;
+
+uint8_t statusResponse = 0;
+
+uint8_t lastPressureSensor = HIGH;
 
 void driveEncoderISR();
 void turnEncoderISR();
@@ -76,6 +85,8 @@ void setup() {
   pinMode(INT_PIN, OUTPUT);
 
   pinMode(LIMIT_PIN, INPUT_PULLUP);
+
+  pinMode(PUSH_SENSOR_PIN, INPUT_PULLUP);
 
   // Begin serial interfaces
   Wire.begin();
@@ -113,7 +124,7 @@ void loop() {
       targetTurn = 0;
 
       // Trigger interrupt to tell pi the operation was completed
-      ok = 1;
+      statusResponse |= STATUS_TURN_DONE;
       digitalWrite(INT_PIN, HIGH);
       turnState = STATE_NONE;
     }else{
@@ -135,7 +146,7 @@ void loop() {
   }else{
     // If we just reached the target position, tell the Pi everything is ok
     if(turnState != STATE_NONE){
-      ok = 1;
+      statusResponse |= STATUS_TURN_DONE;
       digitalWrite(INT_PIN, HIGH);
       turnState = STATE_NONE;
     }
@@ -143,6 +154,16 @@ void loop() {
     // Make sure the motor is stopped
     digitalWrite(TURN_MOTOR1, LOW);
     digitalWrite(TURN_MOTOR2, LOW);
+  }
+
+  // Check if push sensor has been hit
+  if(!digitalRead(PUSH_SENSOR_PIN) && lastPressureSensor){ // Sensor has been presseed
+    statusResponse |= STATUS_PUSH_BUTTON;
+    lastPressureSensor = LOW;
+    digitalWrite(INT_PIN, HIGH);
+
+  }else if(digitalRead(PUSH_SENSOR_PIN) && !lastPressureSensor){ // Sensor has been unpressed
+    lastPressureSensor = HIGH;
   }
 
 
@@ -165,7 +186,7 @@ void loop() {
   }else{
     // If we just reached the target position, tell the Pi everything is ok
     if(driveState != STATE_NONE){
-      ok = 1;
+      statusResponse |= STATUS_DRIVE_DONE;
       digitalWrite(INT_PIN, HIGH);
       driveState = STATE_NONE;
     }
@@ -192,7 +213,7 @@ void receiveEvent(int count){
 
   case GET_ROTATION_REGISTER:{
     // Respond with current rotation in degrees
-    float data = ((float)turnMotorPosition)/(TURN_TICKS_PER_REVOLUTION*360);
+    float data = ((float)turnMotorPosition)/(TURN_TICKS_PER_REVOLUTION*360.0f);
     response = (uint8_t*)new float(data);
     responseLength = sizeof(data);
     break;
@@ -207,10 +228,10 @@ void receiveEvent(int count){
   }
 
   case RESPONSE_REGISTER:{
-    // Tells the Pi if previous operation completed successfully
-    response = new uint8_t(ok);
+    // Tells the Pi the current status
+    response = new uint8_t(statusResponse);
     responseLength = 1;
-    ok = 0;
+    statusResponse = 0;
 
     // Clear interrupt line
     digitalWrite(INT_PIN, LOW);
@@ -282,6 +303,12 @@ void receiveEvent(int count){
     digitalWrite(DRIVE_MOTOR1, LOW);
     digitalWrite(DRIVE_MOTOR2, LOW);
     break;
+  }
+
+  case PRESSURE_REGISTER:{
+    // Return current value of pressure sensor
+    response = (uint8_t*)new bool(!digitalRead(PUSH_SENSOR_PIN));
+    responseLength = sizeof(bool);
   }
   }
 }

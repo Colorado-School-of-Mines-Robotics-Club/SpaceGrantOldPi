@@ -28,7 +28,7 @@ void Sensor::constructorUni(){
 	}
 	
 	// Read data
-	uint8_t data = i2cReadByteData(handle, _handshakeRegister);
+	uint8_t data = i2cReadByteData(handle, HANDSHAKE_REGISTER);
 
 	// Close I2C bus
 	i2cClose(handle);
@@ -65,7 +65,7 @@ int8_t Sensor::getAngle(float angle, std::function<void(RangeFinderPacket&)> cal
 	}
 
 	// Send command
-	i2cWriteI2CBlockData(handle, _angleRegister, (char*)(&angle), sizeof(angle));
+	i2cWriteI2CBlockData(handle, ANGLE_REGISTER, (char*)(&angle), sizeof(angle));
 
 	// Close I2C transmission
 	i2cClose(handle);
@@ -94,7 +94,7 @@ int8_t Sensor::scan(std::function<void(std::vector<RangeFinderPacket>&)> callbac
 	}
 
 	// Send command
-	i2cWriteByte(handle, _scanRegister);
+	i2cWriteByte(handle, SCAN_REGISTER);
 
 	// Close I2C transmission
 	i2cClose(handle);
@@ -122,7 +122,7 @@ void Sensor::intHandler(int gpio, int level, uint32_t tick){
 		}
 
 		// Read data into data variable
-		i2cReadI2CBlockData(handle, _readAngleRegister, (char*)(&data), 6);
+		i2cReadI2CBlockData(handle, READ_ANGLE_REGISTER, (char*)(&data), 6);
 
 
 		i2cClose(handle);
@@ -147,7 +147,7 @@ void Sensor::intHandler(int gpio, int level, uint32_t tick){
 			uint8_t bufferSize = 32/6;
 			RangeFinderPacket data[bufferSize];
 
-			i2cReadI2CBlockData(handle, _readScanRegister, (char*)(&data), bufferSize*6);
+			i2cReadI2CBlockData(handle, READ_SCAN_REGISTER, (char*)(&data), bufferSize*6);
 
 			for(int j = 0; j < bufferSize; j++){
 				if(scanData.size() >= SCAN_POINTS) break;
@@ -178,7 +178,7 @@ float Sensor::getHeading(){
 		return 0;
 	}
 
-	i2cReadI2CBlockData(handle, _headingRegister, (char*)(&output), sizeof(float));
+	i2cReadI2CBlockData(handle, HEADING_REGISTER, (char*)(&output), sizeof(float));
 
 	i2cClose(handle);
 
@@ -194,7 +194,7 @@ uint8_t Sensor::getRSSI(){
 		return 255;
 	}
 
-	i2cReadI2CBlockData(handle, _rssiRegister, (char*)(&output), 1);
+	i2cReadI2CBlockData(handle, RSSI_REGISTER, (char*)(&output), 1);
 
 	i2cClose(handle);
 
@@ -316,41 +316,29 @@ void* Wheel::readData(uint8_t reg, uint8_t length){
 
 
 int8_t Wheel::turnWheel(float degrees, std::function<void(int8_t)> callback){
-	if(_state == INT_STATE_NONE) return ERROR_BUSY;
-
 	degrees = degrees/360;
 
 	writeData(TURN_REGISTER, &degrees, sizeof(degrees));
 	
-	intCallback = callback;
-	_state = INT_STATE;
-
+	_driveIntCallback = callback;
 	return 0;
 }
 
 int8_t Wheel::resetRotation(std::function<void(int8_t)> callback){
-	if(_state == INT_STATE_NONE) return ERROR_BUSY;
-
 	writeRegister(RESET_ROTATION_REGISTER);
 
-	intCallback = callback;
-	_state = INT_STATE;
-
+	_turnIntCallback = callback;
 	return 0;
 }
 
 
 
 int8_t Wheel::setRotation(float degrees, std::function<void(int8_t)> callback){
-	if(_state == INT_STATE_NONE) return ERROR_BUSY;
-
 	degrees = degrees/360;
 
 	writeData(SET_ROTATION_REGISTER, &degrees, sizeof(degrees));
 
-	intCallback = callback;
-	_state = INT_STATE;
-
+	_turnIntCallback = callback;
 	return 0;
 }
 
@@ -361,13 +349,9 @@ float Wheel::getRotation(){
 
 
 int8_t Wheel::move(float revolutions, std::function<void(int8_t)> callback){
-	if(_state == INT_STATE_NONE) return ERROR_BUSY;
-
 	writeData(MOVE_REGISTER, &revolutions, sizeof(revolutions));
 
-	intCallback = callback;
-	_state = INT_STATE;
-
+	_driveIntCallback = callback;
 	return 0;
 }
 
@@ -384,19 +368,23 @@ float Wheel::getPosition(){
 	return *(float*)readData(GET_POSITION_REGISTER, sizeof(float));
 }
 
+bool Wheel::getPressureSensor(){
+	return *(bool*)readData(PRESSURE_REGISTER, sizeof(bool));
+}
+
 
 void Wheel::intHandler(int gpio, int level, uint32_t tick){
-	// Make sure we are expecting data
-	if(_state == INT_STATE_NONE) {
-		// If we arent expecting data just read the register to clear the interrupt and exit the function
-		readData(RESPONSE_REGISTER, 1);
-		return;
+	// Get arduino status
+	uint8_t status = *(uint8_t*)readData(RESPONSE_REGISTER, 1);
+
+	if(status & STATUS_TURN_DONE){
+		_turnIntCallback(1);
 	}
-
-	// Clear the current state
-	_state = INT_STATE_NONE;
-
-	// Call the callback function with the data recieved
-	intCallback(*(int8_t*)readData(RESPONSE_REGISTER, 1));
+	if(status & STATUS_DRIVE_DONE){
+		_driveIntCallback(1);
+	}
+	if(status & STATUS_PUSH_BUTTON){
+		_pushIntCallback();
+	}
 }
 

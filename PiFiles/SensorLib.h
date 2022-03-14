@@ -1,7 +1,7 @@
 #ifndef SENSORLIB_H
 #define SENSORLIB_H
 
-//#include <pigpio.h>
+#include <pigpio.h>
 #include <iostream>
 #include <vector>
 #include <functional>
@@ -38,6 +38,11 @@
 #define STOP_REGISTER 0x08
 #define GET_POSITION_REGISTER 0x09
 #define RESPONSE_REGISTER 0x0A
+#define PRESSURE_REGISTER 0x0B
+
+#define STATUS_TURN_DONE 0b001
+#define STATUS_DRIVE_DONE 0b010
+#define STATUS_PUSH_BUTTON 0b100
 
 #define WHEEL1 Wheel1
 #define WHEEL2 Wheel2
@@ -157,6 +162,15 @@ public:
 
 	uint8_t interruptPin;
 
+	// Sets the callback function which will be run when this wheel's push sensor hits something
+	// Arguments:
+	// 	callback -
+	// 		The function that will be run upon detecting an object
+	//
+	// No return value
+	void setPressureAlertFunction(std::function<void()> callback);
+
+
 	// Turns the wheel a specified amount of degrees
 	// Arguments:
 	//	degrees - 
@@ -235,22 +249,23 @@ public:
 	// Try to limit how many times this is called or run it asyncronously as I2C is a relatively slow interface
 	float getPosition();
 
-
+	bool getPressureSensor();
 
 	// Internal functions
 	// intHandler handles any interrupts caused by this wheel
-	// intCallback saves the callback function
 	// intHandler basically just calls intCallback
 	void intHandler(int gpio, int level, uint32_t tick);
-	std::function<void(int8_t)> intCallback;
 
 private:
 	// I2C information
 	uint8_t _bus;
 	uint8_t _address;
 
-	// Saves what the wheel is currently doing
-	uint8_t _state = INT_STATE_NONE;
+
+	// intCallback saves the callback function
+	std::function<void(int8_t)> _turnIntCallback;
+	std::function<void(int8_t)> _driveIntCallback;
+	std::function<void()> _pushIntCallback;
 
 	// Helper functions for I2C
 	// writeData writes data to register reg
