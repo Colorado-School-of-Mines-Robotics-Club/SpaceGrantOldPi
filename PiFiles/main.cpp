@@ -39,7 +39,7 @@ int main(){
 	//sensor = new Sensor();
 
 	// Also init wheel
-	wheel1 = new Wheel(0x1A, 1, 17);
+	Wheel1 = new Wheel(0x1A, 1, 17);
 
 	// Get distance from angle 50 degrees and print the result
 	/*std::cout << "Sending Angle Command..." << std::endl;
@@ -83,39 +83,39 @@ int main(){
 	std::cout << "Turning 45 degrees..." << std::endl;
 	ready = false;
 
-	wheel1->turnWheel(45, printResponse);
+	Wheel1->turnWheel(45, printResponse);
 
 	while(!ready);
 
 	std::cout << "Setting rotation to -45 degrees..." << std::endl;
 	ready = false;
-	wheel1->setRotation(-45, printResponse);
+	Wheel1->setRotation(-45, printResponse);
 
 	while(!ready);
 
-	std::cout << "Current rotation: " << wheel1->getRotation() << std::endl;
+	std::cout << "Current rotation: " << Wheel1->getRotation() << std::endl;
 
 	std::cout << "Resetting rotation..." << std::endl;
 	ready = false;
-	wheel1->resetRotation(printResponse);
+	Wheel1->resetRotation(printResponse);
 
 	while(!ready);
 
 	std::cout << "Moving wheel 0.5 rotations..." << std::endl;
 	ready = false;
-	wheel1->move(0.5, printResponse);
+	Wheel1->move(0.5, printResponse);
 
 	while(!ready);
 
 	std::cout << "Starting motor..." << std::endl;
-	wheel1->drive();
+	Wheel1->drive();
 
 	sleep(5);
 
 	std::cout << "Stopping motor..." << std::endl;
-	wheel1->stop();
+	Wheel1->stop();
 
-	std::cout << "Current motor position: " << wheel1->getPosition() << std::endl;
+	std::cout << "Current motor position: " << Wheel1->getPosition() << std::endl;
 
 	return 0;
 }

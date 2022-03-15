@@ -277,7 +277,7 @@ private:
 	void* readData(uint8_t reg, uint8_t length);
 	
 
-}
+};
 
 
 // This part declares the sensor object to be used and is the interrupt function

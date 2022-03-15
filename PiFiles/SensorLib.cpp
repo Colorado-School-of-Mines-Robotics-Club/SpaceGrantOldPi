@@ -327,7 +327,7 @@ int8_t Wheel::turnWheel(float degrees, std::function<void(int8_t)> callback){
 
 	writeData(TURN_REGISTER, &degrees, sizeof(degrees));
 	
-	_driveIntCallback = callback;
+	_turnIntCallback = callback;
 	return 0;
 }
 
@@ -386,11 +386,14 @@ void Wheel::intHandler(int gpio, int level, uint32_t tick){
 
 	if(status & STATUS_TURN_DONE){
 		_turnIntCallback(1);
+		std::cout << "Status turn done" << std::endl;
 	}
 	if(status & STATUS_DRIVE_DONE){
+		std::cout << "Status drive done" << std::endl;
 		_driveIntCallback(1);
 	}
 	if(status & STATUS_PUSH_BUTTON){
+		std::cout << "Status push pressed" << std::endl;
 		_pushIntCallback();
 	}
 }
