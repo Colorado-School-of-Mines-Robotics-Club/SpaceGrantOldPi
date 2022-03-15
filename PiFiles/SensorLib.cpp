@@ -1,5 +1,12 @@
 #include "SensorLib.h"
 
+Sensor* SENSOR_NAME;
+
+Wheel* WHEEL1;
+Wheel* WHEEL2;
+Wheel* WHEEL3;
+Wheel* WHEEL4;
+
 Sensor::Sensor(uint8_t address, uint8_t bus){
 	_addr = address;
 	_bus = bus;

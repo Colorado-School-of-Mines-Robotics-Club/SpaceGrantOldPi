@@ -296,12 +296,12 @@ private:
 //
 // Yes I hate this solution as much as everyone else
 // Go ahead and fix it if you can
-inline Sensor* SENSOR_NAME;
+extern Sensor* SENSOR_NAME;
 
-inline Wheel* WHEEL1;
-inline Wheel* WHEEL2;
-inline Wheel* WHEEL3;
-inline Wheel* WHEEL4;
+extern Wheel* WHEEL1;
+extern Wheel* WHEEL2;
+extern Wheel* WHEEL3;
+extern Wheel* WHEEL4;
 
 inline void interrupt(int gpio, int level, uint32_t tick){
 	if(gpio == INT_PIN){

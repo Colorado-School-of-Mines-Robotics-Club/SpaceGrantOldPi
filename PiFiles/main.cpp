@@ -36,13 +36,13 @@ int main(){
 	// Initialize the Sensor object
 	// The name of the variable can be set by defining SENSOR_NAME before including SensorLib.h - by default its just 'sensor'
 	// Yes I hate this solution too
-	sensor = new Sensor();
+	//sensor = new Sensor();
 
 	// Also init wheel
 	wheel1 = new Wheel(0x1A, 1, 17);
 
 	// Get distance from angle 50 degrees and print the result
-	std::cout << "Sending Angle Command..." << std::endl;
+	/*std::cout << "Sending Angle Command..." << std::endl;
 	sensor->getAngle(50.0, printPacket);
 	ready = false;
 
@@ -75,7 +75,7 @@ int main(){
 	sensor->getHeadingRSSI(heading, rssi);
 	std::cout << "Heading: " << heading << ", RSSI: " << (int)rssi << std::endl;
 
-	
+	*/
 	// #################################
 	// Wheel stuff
 	
