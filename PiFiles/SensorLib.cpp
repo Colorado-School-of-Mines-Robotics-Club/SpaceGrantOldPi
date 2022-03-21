@@ -343,6 +343,10 @@ Wheel::~Wheel(){
 	gpioSetAlertFunc(interruptPin, NULL);
 }
 
+void Wheel::setPressureAlertFunction(std::function<void()> fcn){
+	_pushIntCallback = fcn;
+}
+
 void Wheel::writeData(uint8_t reg, void* data, uint8_t length){
 	// Open I2C bus
 	int8_t handle = i2cOpen(_bus, _address, 0);
