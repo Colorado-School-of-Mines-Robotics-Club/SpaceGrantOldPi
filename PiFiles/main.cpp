@@ -36,17 +36,18 @@ int main(){
 	// Initialize the Sensor object
 	// The name of the variable can be set by defining SENSOR_NAME before including SensorLib.h - by default its just 'sensor'
 	// Yes I hate this solution too
-	sensor = new Sensor();
+	//sensor = new Sensor();
 
-	while(true){
+	/*while(true){
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 		Vector3 test = sensor->getRotation();
 		std::cout << "X: " << test.x << "\tY: " << test.y << "\tZ: " << test.z << std::endl;
 
-	}
+	}*/
 
 	// Also init wheel
-	/*Wheel1 = new Wheel(0x1A, 1, 17);
+	Wheel1 = new Wheel(0x1A, 1, 17);
+	Wheel1->setPressureAlertFunction([](){std::cout << "Pressure Pressed" << std::endl;});
 
 	// Get distance from angle 50 degrees and print the result
 	/*std::cout << "Sending Angle Command..." << std::endl;
@@ -80,7 +81,7 @@ int main(){
 	float heading;
 	uint8_t rssi;
 	sensor->getHeadingRSSI(heading, rssi);
-	std::cout << "Heading: " << heading << ", RSSI: " << (int)rssi << std::endl;
+	std::cout << "Heading: " << heading << ", RSSI: " << (int)rssi << std::endl;*/
 
 	// #################################
 	// Wheel stuff
@@ -89,13 +90,13 @@ int main(){
 	std::cout << "Turning 45 degrees..." << std::endl;
 	ready = false;
 
-	Wheel1->turnWheel(45, printResponse);
+	Wheel1->turnWheel(130, printResponse);
 
 	while(!ready);
 
 	std::cout << "Setting rotation to -45 degrees..." << std::endl;
 	ready = false;
-	Wheel1->setRotation(-45, printResponse);
+	Wheel1->setRotation(-130, printResponse);
 
 	while(!ready);
 
@@ -109,20 +110,19 @@ int main(){
 
 	std::cout << "Moving wheel 0.5 rotations..." << std::endl;
 	ready = false;
-	Wheel1->move(0.5, printResponse);
+	Wheel1->move(0.2, printResponse);
 
 	while(!ready);
 
 	std::cout << "Starting motor..." << std::endl;
 	Wheel1->drive();
 
-	sleep(5);
+	sleep(1);
 
 	std::cout << "Stopping motor..." << std::endl;
 	Wheel1->stop();
 
 	std::cout << "Current motor position: " << Wheel1->getPosition() << std::endl;
-	*/
 	return 0;
 }
 
