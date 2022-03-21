@@ -36,10 +36,17 @@ int main(){
 	// Initialize the Sensor object
 	// The name of the variable can be set by defining SENSOR_NAME before including SensorLib.h - by default its just 'sensor'
 	// Yes I hate this solution too
-	//sensor = new Sensor();
+	sensor = new Sensor();
+
+	while(true){
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		Vector3 test = sensor->getRotation();
+		std::cout << "X: " << test.x << "\tY: " << test.y << "\tZ: " << test.z << std::endl;
+
+	}
 
 	// Also init wheel
-	Wheel1 = new Wheel(0x1A, 1, 17);
+	/*Wheel1 = new Wheel(0x1A, 1, 17);
 
 	// Get distance from angle 50 degrees and print the result
 	/*std::cout << "Sending Angle Command..." << std::endl;
@@ -75,7 +82,6 @@ int main(){
 	sensor->getHeadingRSSI(heading, rssi);
 	std::cout << "Heading: " << heading << ", RSSI: " << (int)rssi << std::endl;
 
-	*/
 	// #################################
 	// Wheel stuff
 	
@@ -116,7 +122,7 @@ int main(){
 	Wheel1->stop();
 
 	std::cout << "Current motor position: " << Wheel1->getPosition() << std::endl;
-
+	*/
 	return 0;
 }
 
