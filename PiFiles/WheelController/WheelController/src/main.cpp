@@ -44,15 +44,18 @@
 #define STATUS_DRIVE_DONE 0b010
 #define STATUS_PUSH_BUTTON 0b100
 
-#define DRIVE_ERROR 10
-#define TURN_ERROR 10
+#define DRIVE_ERROR 25
+#define TURN_ERROR 25
+
+//#define REVERSE_DRIVE_ENCODER
+//#define REVERSE_TURN_ENCODER
 
 #define dist(A, B, N) A - B > N - (A - B - 1) ? min(A - B, N - (A - B - 1)) : -min(A - B, N - (A - B - 1))
 
 uint8_t driveState = STATE_NONE;
 uint8_t turnState = STATE_NONE;
 
-uint8_t* response;
+void* response;
 uint8_t responseLength = 0;
 
 int16_t targetTurn = 0;
@@ -214,31 +217,33 @@ void receiveEvent(int count){
   switch(reg){
   case HANDSHAKE_REGISTER:{
     // Handshake just responds with the device address to verify communication is working
-    response = new uint8_t(ADDRESS);
     responseLength = 1;
+    response = malloc(responseLength);
+    *(uint8_t*)response = ADDRESS;
     break;
   }
 
   case GET_ROTATION_REGISTER:{
     // Respond with current rotation in degrees
-    float data = ((float)turnMotorPosition)/(TURN_TICKS_PER_REVOLUTION*360.0f);
-    response = (uint8_t*)new float(data);
-    responseLength = sizeof(data);
+    responseLength = sizeof(float);
+    response = malloc(responseLength);
+    *(float*)response = ((float)turnMotorPosition)/(TURN_TICKS_PER_REVOLUTION*360.0f);
     break;
   }
 
   case GET_POSITION_REGISTER:{
     // Respond with current position in revolutions
-    float data = ((float)driveMotorPosition)/DRIVE_TICKS_PER_REVOLUTION;
-    response = (uint8_t*)new float(data);
-    responseLength = sizeof(data);
+    responseLength = sizeof(float);
+    response = malloc(responseLength);
+    *(float*)response = ((float)driveMotorPosition)/DRIVE_TICKS_PER_REVOLUTION;
     break;
   }
 
   case RESPONSE_REGISTER:{
     // Tells the Pi the current status
-    response = new uint8_t(statusResponse);
     responseLength = 1;
+    response = malloc(responseLength);
+    *(uint8_t*)response = statusResponse;
     statusResponse = 0;
 
     // Clear interrupt line
@@ -315,35 +320,59 @@ void receiveEvent(int count){
 
   case PRESSURE_REGISTER:{
     // Return current value of pressure sensor
-    response = (uint8_t*)new bool(!digitalRead(PUSH_SENSOR_PIN));
     responseLength = sizeof(bool);
+    response = malloc(responseLength);
+    *(bool*)response = !digitalRead(PUSH_SENSOR_PIN);
   }
   }
 }
 
 // Responds with whatever is stored at the location pointed to by the response pointer
 void requestEvent(){
-  Wire.write(response, responseLength);
-  for(uint8_t i = 0; i < responseLength; i++){
-    delete (response + i);
-  }
+  Wire.write((uint8_t*)response, responseLength);
+  free(response);
   responseLength = 0;
 }
 
 // Increments/decrements the position of the drive motor
 void driveEncoderISR(){
+  #ifndef REVERSE_DRIVE_ENCODER
+
   if(digitalRead(DRIVE_ENCODER2)){
     driveMotorPosition++;
   }else{
     driveMotorPosition--;
   }
+
+  #else
+
+  if(digitalRead(DRIVE_ENCODER2)){
+    driveMotorPosition--;
+  }else{
+    driveMotorPosition++;
+  }
+
+  #endif
+
 }
 
 // Increments/decrements the position of the turn motor
 void turnEncoderISR(){
+  #ifndef REVERSE_TURN_ENCODER
+
   if(digitalRead(TURN_ENCODER2)){
     turnMotorPosition++;
   }else{
     turnMotorPosition--;
   }
+
+  #else
+
+  if(digitalRead(TURN_ENCODER2)){
+    turnMotorPosition--;
+  }else{
+    turnMotorPosition++;
+  }
+
+  #endif
 }
