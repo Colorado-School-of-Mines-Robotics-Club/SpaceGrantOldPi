@@ -8,6 +8,9 @@
 #include <cmath>
 #include <bitset>
 #include <functional>
+#include <chrono>
+#include <thread>
+#include <memory.h>
 
 #ifndef SENSOR_NAME
 #define SENSOR_NAME sensor
@@ -40,6 +43,29 @@
 #define RESPONSE_REGISTER 0x0A
 #define PRESSURE_REGISTER 0x0B
 
+
+#define GYRO_ADDRESS 0x68
+#define WHOAMI_REGISTER 117
+#define CONFIG_REGISTER 26
+#define GYRO_SAMPLE_RATE_REGISTER 25
+#define GYRO_CONFIG_REGISTER 27
+#define ACCEL_CONFIG_REGISTER 28
+#define ACCEL_CONFIG2_REGISTER 29
+#define FIFO_EN_REGISTER 35
+#define GYRO_INT_CFG_REGISTER 55
+#define GYRO_INT_EN_REGISTER 56
+#define INT_STATUS_REGISTER 58
+#define USER_CTL_REGISTER 106
+#define MAGNETOMETER_CTL_REGISTER 0x0A
+#define FIFO_COUNTH 114
+#define FIFO_COUNTL 115
+#define ACCEL_DATA 59
+#define GYRO_DATA 67
+#define FIFO_REGISTER 116
+
+#define GYRO_WEIGHT 5
+#define ACCEL_WEIGHT 5
+
 #define STATUS_TURN_DONE 0b001
 #define STATUS_DRIVE_DONE 0b010
 #define STATUS_PUSH_BUTTON 0b100
@@ -56,11 +82,18 @@
 #define FAIL 0
 
 #define INT_PIN 14
+#define GYRO_INT_PIN 12
+
+
 
 struct RangeFinderPacket{
 	float angle;
 	uint16_t distance;
 }__attribute__((packed));
+
+struct Vector3{
+	float x, y, z = 0;
+};
 
 class Sensor{
 public:
@@ -123,9 +156,15 @@ public:
 	// No return value - all values are set via pass by reference
 	void getHeadingRSSI(float& heading, uint8_t& rssi);
 
+	Vector3 getRotation();
+
 	// Internal function
 	// Handles interrupt response from arduino
 	void intHandler(int gpio, int level, uint32_t tick);
+
+
+	void gyroIntHandler(int gpio, int level, uint32_t tick);
+
 
 private:
 	uint8_t _addr;
@@ -139,6 +178,14 @@ private:
 	uint8_t _readAngleRegister = READ_ANGLE_REGISTER;
 	uint8_t _headingRegister = HEADING_REGISTER;
 	uint8_t _rssiRegister = RSSI_REGISTER;
+
+	Vector3 _position;
+	Vector3 _velocity;
+	Vector3 _rotation;
+
+	Vector3 _accelEstimate;
+
+	uint32_t lastTime = 0;
 
 	uint8_t _interruptState = 0;
 
@@ -277,7 +324,7 @@ private:
 	void* readData(uint8_t reg, uint8_t length);
 	
 
-}
+};
 
 
 // This part declares the sensor object to be used and is the interrupt function
@@ -306,6 +353,9 @@ extern Wheel* WHEEL4;
 inline void interrupt(int gpio, int level, uint32_t tick){
 	if(gpio == INT_PIN){
 		SENSOR_NAME->intHandler(gpio, level, tick);
+
+	}else if(gpio == GYRO_INT_PIN){
+		SENSOR_NAME->gyroIntHandler(gpio, level, tick);
 
 	}else if(gpio == WHEEL1->interruptPin){
 		WHEEL1->intHandler(gpio, level, tick);
