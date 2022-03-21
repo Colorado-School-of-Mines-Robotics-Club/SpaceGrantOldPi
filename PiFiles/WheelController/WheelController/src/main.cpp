@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#define ADDRESS 0x19
+#define ADDRESS 0x1A
 
 #define HANDSHAKE_REGISTER 0x01
 #define TURN_REGISTER 0x02
@@ -89,7 +89,7 @@ void setup() {
   pinMode(PUSH_SENSOR_PIN, INPUT_PULLUP);
 
   // Begin serial interfaces
-  Wire.begin();
+  Wire.begin(ADDRESS);
   Serial.begin(9600);
   
   // Enable interrupts
@@ -99,6 +99,8 @@ void setup() {
   // Set I2C handling functions
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
+
+  Serial.println("Starting");
 }
 
 // This method has a target position for the drive and turn motors
@@ -112,11 +114,15 @@ void loop() {
     turnMotorPosition += TURN_TICKS_PER_REVOLUTION;
   }
 
+  if(turnState != STATE_NONE){
+    Serial.println("Turning");
+  }
+
   // Handle turn motor
   if(turnState == TURN_STATE_RESET){
     // Turn until the limit switch is triggered
     // Reset current and target positions when limit switch is triggered
-    if(LIMIT_PIN){
+    if(!digitalRead(LIMIT_PIN)){
       digitalWrite(TURN_MOTOR1, LOW);
       digitalWrite(TURN_MOTOR2, LOW);
       
@@ -149,6 +155,8 @@ void loop() {
       statusResponse |= STATUS_TURN_DONE;
       digitalWrite(INT_PIN, HIGH);
       turnState = STATE_NONE;
+
+      Serial.println("At Position");
     }
 
     // Make sure the motor is stopped
