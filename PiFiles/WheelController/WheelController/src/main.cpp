@@ -86,6 +86,7 @@ void setup() {
   pinMode(TURN_MOTOR2, OUTPUT);
 
   pinMode(INT_PIN, OUTPUT);
+  digitalWrite(INT_PIN, LOW);
 
   pinMode(LIMIT_PIN, INPUT_PULLUP);
 
@@ -171,7 +172,7 @@ void loop() {
   if(!digitalRead(PUSH_SENSOR_PIN) && lastPressureSensor){ // Sensor has been presseed
     statusResponse |= STATUS_PUSH_BUTTON;
     lastPressureSensor = LOW;
-    digitalWrite(INT_PIN, HIGH);
+    //digitalWrite(INT_PIN, HIGH);
 
   }else if(digitalRead(PUSH_SENSOR_PIN) && !lastPressureSensor){ // Sensor has been unpressed
     lastPressureSensor = HIGH;
