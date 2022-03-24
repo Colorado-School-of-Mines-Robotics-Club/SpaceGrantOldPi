@@ -25,8 +25,8 @@
 #define TURN_MOTOR1 9
 #define TURN_MOTOR2 10
 
-#define TURN_TICKS_PER_REVOLUTION 1000
-#define DRIVE_TICKS_PER_REVOLUTION 10200
+#define TURN_TICKS_PER_REVOLUTION 16100
+#define DRIVE_TICKS_PER_REVOLUTION 2600
 
 #define INT_PIN 4
 
@@ -47,8 +47,10 @@
 #define DRIVE_ERROR 25
 #define TURN_ERROR 25
 
-//#define REVERSE_DRIVE_ENCODER
 //#define REVERSE_TURN_ENCODER
+//#define REVERSE_DRIVE_ENCODER
+
+#define BAD_ENCODER
 
 #define dist(A, B, N) A - B > N - (A - B - 1) ? min(A - B, N - (A - B - 1)) : -min(A - B, N - (A - B - 1))
 
@@ -58,15 +60,19 @@ uint8_t turnState = STATE_NONE;
 void* response;
 uint8_t responseLength = 0;
 
-int16_t targetTurn = 0;
+int32_t targetTurn = 0;
 int32_t targetDrive = 0;
 
-int16_t turnMotorPosition = 0;
+int32_t turnMotorPosition = 0;
 int32_t driveMotorPosition = 0;
 
 uint8_t statusResponse = 0;
 
 uint8_t lastPressureSensor = HIGH;
+
+#ifdef BAD_ENCODER
+bool turnDirection;
+#endif
 
 void driveEncoderISR();
 void turnEncoderISR();
@@ -141,17 +147,41 @@ void loop() {
       // Havent hit limit switch yet, keep turning
       digitalWrite(TURN_MOTOR1, HIGH);
       digitalWrite(TURN_MOTOR2, LOW);
+
+      #ifdef BAD_ENCODER
+      #ifndef REVERSE_TURN_ENCODER
+      turnDirection = 1;
+      #else
+      turnDirection = 0;
+      #endif
+      #endif
     }
 
-  }else if(dist(turnMotorPosition, targetTurn, TURN_TICKS_PER_REVOLUTION) > TURN_ERROR){
+  }else if(dist(targetTurn, turnMotorPosition, TURN_TICKS_PER_REVOLUTION) > TURN_ERROR){
     // Target position is closest if we move in the positive direction
     digitalWrite(TURN_MOTOR1, HIGH);
     digitalWrite(TURN_MOTOR2, LOW);
 
-  }else if(dist(turnMotorPosition, targetTurn, TURN_TICKS_PER_REVOLUTION) < -TURN_ERROR){
+    #ifdef BAD_ENCODER
+    #ifndef REVERSE_TURN_ENCODER
+    turnDirection = 0;
+    #else
+    turnDirection = 1;
+    #endif
+    #endif
+
+  }else if(dist(targetTurn, turnMotorPosition, TURN_TICKS_PER_REVOLUTION) < -TURN_ERROR){
     // Target position is closest if we move in the negative direction
     digitalWrite(TURN_MOTOR1, LOW);
     digitalWrite(TURN_MOTOR2, HIGH);
+
+    #ifdef BAD_ENCODER
+    #ifndef REVERSE_TURN_ENCODER
+    turnDirection = 1;
+    #else
+    turnDirection = 0;
+    #endif
+    #endif
 
   }else{
     // If we just reached the target position, tell the Pi everything is ok
@@ -169,13 +199,13 @@ void loop() {
   }
 
   // Check if push sensor has been hit
-  if(!digitalRead(PUSH_SENSOR_PIN) && lastPressureSensor){ // Sensor has been presseed
+  if(digitalRead(PUSH_SENSOR_PIN) && !lastPressureSensor){ // Sensor has been presseed
     statusResponse |= STATUS_PUSH_BUTTON;
-    lastPressureSensor = LOW;
-    //digitalWrite(INT_PIN, HIGH);
-
-  }else if(digitalRead(PUSH_SENSOR_PIN) && !lastPressureSensor){ // Sensor has been unpressed
     lastPressureSensor = HIGH;
+    digitalWrite(INT_PIN, HIGH);
+
+  }else if(!digitalRead(PUSH_SENSOR_PIN) && lastPressureSensor){ // Sensor has been unpressed
+    lastPressureSensor = LOW;
   }
 
 
@@ -228,7 +258,7 @@ void receiveEvent(int count){
     // Respond with current rotation in degrees
     responseLength = sizeof(float);
     response = malloc(responseLength);
-    *(float*)response = ((float)turnMotorPosition)/(TURN_TICKS_PER_REVOLUTION*360.0f);
+    *(float*)response = ((float)turnMotorPosition)*360.0f/(TURN_TICKS_PER_REVOLUTION);
     break;
   }
 
@@ -314,6 +344,7 @@ void receiveEvent(int count){
   case STOP_REGISTER:{
     // Stop wheel
     driveState = STATE_NONE;
+    targetDrive = driveMotorPosition;
     digitalWrite(DRIVE_MOTOR1, LOW);
     digitalWrite(DRIVE_MOTOR2, LOW);
     break;
@@ -359,6 +390,7 @@ void driveEncoderISR(){
 
 // Increments/decrements the position of the turn motor
 void turnEncoderISR(){
+  #ifndef BAD_ENCODER
   #ifndef REVERSE_TURN_ENCODER
 
   if(digitalRead(TURN_ENCODER2)){
@@ -373,6 +405,16 @@ void turnEncoderISR(){
     turnMotorPosition--;
   }else{
     turnMotorPosition++;
+  }
+
+  #endif
+
+  #else
+
+  if(turnDirection){
+    turnMotorPosition++;
+  }else{
+    turnMotorPosition--;
   }
 
   #endif
