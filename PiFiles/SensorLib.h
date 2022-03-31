@@ -11,6 +11,7 @@
 #include <chrono>
 #include <thread>
 #include <memory.h>
+#include <unistd.h>
 
 #ifndef SENSOR_NAME
 #define SENSOR_NAME sensor
@@ -351,7 +352,6 @@ extern Wheel* WHEEL3;
 extern Wheel* WHEEL4;
 
 inline void interrupt(int gpio, int level, uint32_t tick){
-	std::cout << "Interrupt on pin: " << gpio << std::endl;
 	if(gpio == INT_PIN){
 		SENSOR_NAME->intHandler(gpio, level, tick);
 

@@ -86,7 +86,7 @@ int main(){
 	// #################################
 	// Wheel stuff
 	
-	std::cout << std::endl << "Testing Wheel..." << std::endl;
+	/*std::cout << std::endl << "Testing Wheel..." << std::endl;
 	std::cout << "Turning 45 degrees..." << std::endl;
 	ready = false;
 
@@ -122,7 +122,101 @@ int main(){
 	std::cout << "Stopping motor..." << std::endl;
 	Wheel1->stop();
 
-	std::cout << "Current motor position: " << Wheel1->getPosition() << std::endl;
+	std::cout << "Current motor position: " << Wheel1->getPosition() << std::endl;*/
+
+
+	bool exit = true;
+	while(exit){
+		std::cout << "Waiting for command: ";
+		char c;
+		std::cin >> c;
+
+		switch(c){
+		case 'r':{
+			float input;
+			std::cout << "Rotate degrees: ";
+			std::cin >> input;
+			std::cout << std::endl;
+
+			Wheel1->turnWheel(input, printResponse);
+			break;
+		}
+		
+		case 's':{
+			float input;
+			std::cout << "Set rotation: ";
+			std::cin >> input;
+			std::cout << std::endl;
+
+			Wheel1->setRotation(input, printResponse);
+			break;
+		}
+
+		case 'R':{
+			std::cout << "Resetting rotation..." << std::endl;
+
+			Wheel1->resetRotation(printResponse);
+			break;
+		}
+
+		case 'm':{
+			float input;
+			std::cout << "Move wheel: ";
+			std::cin >> input;
+			std::cout << std::endl;
+
+			Wheel1->move(input, printResponse);
+			break;
+		}
+
+		case 'D':{
+			std::cout << "Driving..." << std::endl;
+			Wheel1->drive();
+			break;
+		}
+
+		case 'd':{
+			std::cout << "Stopping..." << std::endl;
+			Wheel1->stop();
+			break;
+		}
+
+		case 'w':{
+			std::cout << "Wheel position: " << Wheel1->getPosition() << std::endl;
+			break;
+		}
+
+		case 't':{
+			std::cout << "Turn position: " << Wheel1->getRotation() << std::endl;
+			break;
+		}
+
+		case 'e':{
+			exit = false;
+			break;
+		}
+
+		case '?':{
+			std::cout << std::endl << "-------------------------------" << std::endl;
+			std::cout << "r - rotate wheel" << std::endl;
+			std::cout << "s - set rotation" << std::endl;
+			std::cout << "R - reset rotation" << std::endl;
+			std::cout << "m - move wheel" << std::endl;
+			std::cout << "D - drive" << std::endl;
+			std::cout << "d - stop" << std::endl;
+			std::cout << "w - get drive position" << std::endl;
+			std::cout << "t - get turn position" << std::endl;
+			std::cout << "e - exit" << std::endl;
+			std::cout << "-------------------------------" << std::endl << std::endl;
+			break;
+		}
+
+		default:{
+			std::cout << "Unknown command" << std::endl;
+		}
+
+		}
+	}
 	return 0;
 }
 

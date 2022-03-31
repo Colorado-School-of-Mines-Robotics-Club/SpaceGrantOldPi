@@ -72,13 +72,65 @@ void Sensor::constructorUni(){
 	std::cout << "Succesfully connected to sensors!" << std::endl;
 
 	// Initialize gyro
+	/*i2cWriteByteData(handle, 0x6B, 0x01);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x6C, 0x00);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x1A, 0x00);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x1B, 0x00);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x1C, 0x08);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x1D, 0x09);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x37, 0x10);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x6A, 0x20);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x24, 0x0D);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x25, 0x0C);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x26, 0x0B);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x63, 0x01);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x27, 0x81);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x26, 0x0A);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x63, 0x12);
+	usleep(100000);
+
+	i2cWriteByteData(handle, 0x27, 0x81);
+	usleep(100000);*/
+
+	usleep(100000);
+
+	usleep(100000);
+
 	i2cWriteByteData(handle, CONFIG_REGISTER, 0);
 	i2cWriteByteData(handle, GYRO_CONFIG_REGISTER, 0b11);
 	i2cWriteByteData(handle, ACCEL_CONFIG_REGISTER, 0);
 	i2cWriteByteData(handle, ACCEL_CONFIG2_REGISTER, 0b1000);
-	i2cWriteByteData(handle, FIFO_EN_REGISTER, 0b01111000);
 	i2cWriteByteData(handle, GYRO_INT_CFG_REGISTER, 0b00010000);
 	i2cWriteByteData(handle, GYRO_INT_EN_REGISTER, 0b00000001);
+	i2cWriteByteData(handle, FIFO_EN_REGISTER, 0b01111000);
 	i2cWriteByteData(handle, USER_CTL_REGISTER, 0b01000100);
 	//i2cWriteByteData(handle, MAGNETOMETER_CTL_REGISTER, 0b00010010);
 
@@ -106,7 +158,11 @@ void Sensor::gyroIntHandler(int gpio, int level, uint32_t tick){
 	}
 
 	// Check if fifo is ready
-	uint16_t count = ((i2cReadByteData(handle, FIFO_COUNTH)  & 0b11111) << 8) & i2cReadByteData(handle, FIFO_COUNTL);
+	uint8_t countH = i2cReadByteData(handle, FIFO_COUNTH) & 0b11111;
+	uint8_t countL = i2cReadByteData(handle, FIFO_COUNTL);
+	uint16_t count = (countH << 8) | countL;
+	//uint16_t count = ((i2cReadByteData(handle, FIFO_COUNTH) & 0b11111) << 8) & i2cReadByteData(handle, FIFO_COUNTL);
+	std::cout << "FIFO count: " << (int)count << std::endl;
 	if(count < 12) {
 		i2cClose(handle);
 		return;
@@ -409,15 +465,15 @@ void* Wheel::readData(uint8_t reg, uint8_t length){
 		return nullptr;
 	}
 	
-	char* data = new char[length];
+	void* data = malloc(length);
 	
 	// Read data
-	i2cReadI2CBlockData(handle, reg, data, length);
+	i2cReadI2CBlockData(handle, reg, (char*)data, length);
 
 	// Close I2C bus
 	i2cClose(handle);
 
-	return (void*)data;
+	return data;
 
 }
 
@@ -451,7 +507,11 @@ int8_t Wheel::setRotation(float degrees, std::function<void(int8_t)> callback){
 
 
 float Wheel::getRotation(){
-	return *(float*)readData(GET_ROTATION_REGISTER, sizeof(float));
+	void* data = readData(GET_ROTATION_REGISTER, sizeof(float));
+	float output = *(float*)data;
+	free(data);
+
+	return output;
 }
 
 
@@ -472,11 +532,19 @@ void Wheel::stop(){
 }
 
 float Wheel::getPosition(){
-	return *(float*)readData(GET_POSITION_REGISTER, sizeof(float));
+	void* data = readData(GET_POSITION_REGISTER, sizeof(float));
+	float output = *(float*)data;
+	free(data);
+
+	return output;
 }
 
 bool Wheel::getPressureSensor(){
-	return *(bool*)readData(PRESSURE_REGISTER, sizeof(bool));
+	void* data = readData(PRESSURE_REGISTER, sizeof(bool));
+	bool output = *(bool*)data;
+	free(data);
+
+	return output; 
 }
 
 
@@ -486,14 +554,11 @@ void Wheel::intHandler(int gpio, int level, uint32_t tick){
 
 	if(status & STATUS_TURN_DONE){
 		_turnIntCallback(1);
-		std::cout << "Status turn done" << std::endl;
 	}
 	if(status & STATUS_DRIVE_DONE){
-		std::cout << "Status drive done" << std::endl;
 		_driveIntCallback(1);
 	}
 	if(status & STATUS_PUSH_BUTTON){
-		std::cout << "Status push pressed" << std::endl;
 		_pushIntCallback();
 	}
 }
