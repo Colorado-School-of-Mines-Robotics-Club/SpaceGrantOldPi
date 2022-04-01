@@ -81,7 +81,7 @@ void testObstacle(std::vector<RangeFinderPacket> obstacles) {
         int xOffset = round(cos(point.angle)*MapSize/rangeFinderRadius); //Of indices
         Map[botY+yOffset][botX+xOffset] += 1; //Registers there is a obstacle at this location
     }
-    for(int row = 0; row < MapSize; row++){
+    for(int row = 0; row < MapSize; row++){ //This goes through and checks if anything has gone past what we want to avoid
         for(int col = 0; col < MapSize; col++){
             if(Map[row][col] > obstacleProblemThreshold){
                 obstacleInFront = true;
