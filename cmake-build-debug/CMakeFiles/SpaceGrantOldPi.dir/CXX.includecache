@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/RangeFinding.h
+iostream
+-
+list
+-
+vector
+-
+SensorLib.h
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/SensorLib.h
+
 C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/SensorLib.h
 iostream
 -
@@ -31,8 +41,6 @@ vector
 -
 SensorLib.h
 C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/SensorLib.h
-
-C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/main.cpp
-iostream
--
+RangeFinding.h
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/RangeFinding.h
 
