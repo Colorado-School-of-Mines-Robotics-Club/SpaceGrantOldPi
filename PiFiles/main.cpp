@@ -36,7 +36,7 @@ int main(){
 	// Initialize the Sensor object
 	// The name of the variable can be set by defining SENSOR_NAME before including SensorLib.h - by default its just 'sensor'
 	// Yes I hate this solution too
-	//sensor = new Sensor();
+	sensor = new Sensor();
 
 	/*while(true){
 		std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -46,8 +46,8 @@ int main(){
 	}*/
 
 	// Also init wheel
-	Wheel1 = new Wheel(0x1A, 1, 17);
-	Wheel1->setPressureAlertFunction([](){std::cout << "Pressure Pressed" << std::endl;});
+	//Wheel1 = new Wheel(0x1A, 1, 17);
+	//Wheel1->setPressureAlertFunction([](){std::cout << "Pressure Pressed" << std::endl;});
 
 	// Get distance from angle 50 degrees and print the result
 	/*std::cout << "Sending Angle Command..." << std::endl;
@@ -132,7 +132,7 @@ int main(){
 		std::cin >> c;
 
 		switch(c){
-		case 'r':{
+		/*case 'r':{
 			float input;
 			std::cout << "Rotate degrees: ";
 			std::cin >> input;
@@ -194,7 +194,7 @@ int main(){
 		case 'e':{
 			exit = false;
 			break;
-		}
+		}*/
 
 		case '?':{
 			std::cout << std::endl << "-------------------------------" << std::endl;
