@@ -31,7 +31,7 @@
 #define GET_HEADING_REGISTER 0x04
 #define GET_RSSI_REGISTER 0x05
 #define REQUEST_REGISTER 0x06
-#define GET_ROTATION_REGISTER 0x07
+#define SENSOR_GET_ROTATION_REGISTER 0x07
 
 #define TURN_REGISTER 0x02
 #define RESET_ROTATION_REGISTER 0x03
@@ -59,7 +59,7 @@
 #define SUCCESS 1
 #define FAIL 0
 
-#define INT_PIN 14
+#define BAUDRATE 115200
 
 
 
@@ -71,6 +71,7 @@ struct RangeFinderPacket{
 struct Vector3{
 	float x, y, z = 0;
 }__attribute__((packed));
+
 
 class Sensor{
 public:
@@ -100,7 +101,7 @@ public:
 	// 		The RangeFinderPacket argument contains the data returned from the arduino
 	//
 	// Returns 0 if sucessful - otherwise a negative error code
-	int8_t getAngle(float angle, std::function<void(std::vector<RangeFinderPacket>&)> callbackFcn);
+	int8_t getAngle(float angle, std::function<void(RangeFinderPacket&)> callbackFcn);
 
 	// Gets the angle repored by the beacon with the lowest RSSI value
 	// Note: This function is blocking and must wait for the relatively slow I2C communication
@@ -135,23 +136,11 @@ public:
 
 	Vector3 getRotation();
 
-	// Internal function
-	// Handles interrupt response from arduino
-	void intHandler(int gpio, int level, uint32_t tick);
-
 
 private:
 	uint8_t _addr;
 	int _fd;
 	uint8_t _bus;
-	
-	uint8_t _handshakeRegister = HANDSHAKE_REGISTER;
-	uint8_t _scanRegister = SCAN_REGISTER;
-	uint8_t _readScanRegister = READ_SCAN_REGISTER;
-	uint8_t _angleRegister = ANGLE_REGISTER;
-	uint8_t _readAngleRegister = READ_ANGLE_REGISTER;
-	uint8_t _headingRegister = HEADING_REGISTER;
-	uint8_t _rssiRegister = RSSI_REGISTER;
 
 	std::function<void(std::vector<RangeFinderPacket>&)> _callback;
 	void constructorUni();
@@ -313,13 +302,7 @@ extern Wheel* WHEEL3;
 extern Wheel* WHEEL4;
 
 inline void interrupt(int gpio, int level, uint32_t tick){
-	if(gpio == INT_PIN){
-		SENSOR_NAME->intHandler(gpio, level, tick);
-
-	}else if(gpio == GYRO_INT_PIN){
-		SENSOR_NAME->gyroIntHandler(gpio, level, tick);
-
-	}else if(gpio == WHEEL1->interruptPin){
+	if(gpio == WHEEL1->interruptPin){
 		WHEEL1->intHandler(gpio, level, tick);
 
 	}else if(gpio == WHEEL2->interruptPin){

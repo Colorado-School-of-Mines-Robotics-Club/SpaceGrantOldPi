@@ -7,6 +7,8 @@ Wheel* WHEEL2;
 Wheel* WHEEL3;
 Wheel* WHEEL4;
 
+char SERTTY[] = "/dev/ttyS0";
+
 Sensor::Sensor(uint8_t address, uint8_t bus){
 	_addr = address;
 	_bus = bus;
@@ -21,12 +23,11 @@ Sensor::Sensor(){
 
 // Deconstructor removes the interrput to avoid nullptr errors
 Sensor::~Sensor(){
-	gpioSetAlertFunc(INT_PIN, NULL);
 }
 
 void Sensor::constructorUni(){
 	// Open I2C bus
-	int8_t handle = i2cOpen(_bus, _addr, 0);
+	int8_t handle = serOpen(SERTTY, BAUDRATE, 0); 
 
 	// Make sure connection has been established
 	if(handle < 0){
@@ -35,10 +36,12 @@ void Sensor::constructorUni(){
 	}
 	
 	// Read data
-	uint8_t data = i2cReadByteData(handle, HANDSHAKE_REGISTER);
+	serWriteByte(handle, HANDSHAKE_REGISTER);
+	while(!serDataAvailable(handle));
+	uint8_t data = serReadByte(handle);
 
 	// Close I2C bus
-	i2cClose(handle);
+	serClose(handle);
 
 	// Make sure data is correct
 	if(data != _addr){
@@ -51,34 +54,33 @@ void Sensor::constructorUni(){
 
 	// Tell user everything is ok
 	std::cout << "Succesfully connected to sensors!" << std::endl;
-
-	// Set interrupt
-	gpioSetAlertFunc(INT_PIN, interrupt);
 }
 
 
 Vector3 Sensor::getRotation(){
 	// Open I2C bus
-	int8_t handle = i2cOpen(_bus, _addr, 0);
+	int8_t handle = serOpen(SERTTY, BAUDRATE, 0); 
+
+	Vector3 output;
 
 	// Make sure connection has been established
 	if(handle < 0){
 		std::cerr << "Unable to connect to sensors." << std::endl;
-		return;
+		return output;
 	}
 
-	Vector3 output;
+	serWriteByte(handle, SENSOR_GET_ROTATION_REGISTER);
+	while(!serDataAvailable(handle));
+	serRead(handle, (char*)&output, sizeof(output)); 
 
-	i2cReadI2CBlockData(handle, GET_ROTATION_REGISTER, (char*)output, sizeof(output));
-
-	i2cClose(handle);
+	serClose(handle);
 
 	return output;
 }
 
-int8_t Sensor::getAngle(float angle, std::function<void(std::vector<RangeFinderPacket>&)> callbackFcn){
+int8_t Sensor::getAngle(float angle, std::function<void(RangeFinderPacket&)> callbackFcn){
 	// Open I2C bus
-	int8_t handle = i2cOpen(_bus, _addr, 0);
+	int8_t handle = serOpen(SERTTY, BAUDRATE, 0); 
 
 	// Make sure connection is established
 	if(handle < 0){
@@ -86,30 +88,56 @@ int8_t Sensor::getAngle(float angle, std::function<void(std::vector<RangeFinderP
 		return ERROR_CONNECTION;
 	}
 
-	char buffer[sizeof(float)];
-	*(float*)buffer = angle;
+	char buffer[sizeof(angle) + 1];
+	*(float*)(buffer + 1) = angle;
+	*(uint8_t*)buffer = GET_ANGLE_REGISTER;
 
 	// Send command
-	i2cBlockProcessCall(handle, GET_ANGLE_REGISTER, buffer, sizeof(angle));
+	serWrite(handle, buffer, sizeof(angle) + 1);
+	while(!serDataAvailable(handle));
+	uint8_t response = serReadByte(handle);
 
 	// Close I2C transmission
-	i2cClose(handle);
+	serClose(handle);
 
-	uint8_t response = *(uint8_t*)buffer;
 
 	if(response){
 		// Busy
 		return ERROR_BUSY;
 	}
 
-	_callback = callbackFcn;
+	if(!fork()){
+		int8_t handle = serOpen(SERTTY, BAUDRATE, 0);
+		
+		if(handle < 0){
+			std::cerr << "Unable to connect to sensor" << std::endl;
+			exit(0);
+		}
+		while(true){
+			usleep(10000);
+
+			if(!serDataAvailable(handle)){
+				continue;
+		 	}		
+			std::cout << "Responded" << std::endl;
+
+			RangeFinderPacket response;
+			serRead(handle, (char*)&response, sizeof(response));
+
+			serClose(handle);
+
+			callbackFcn(response);
+
+			exit(0);
+		}
+	}
 
 	return 0;
 }
 
 int8_t Sensor::scan(std::function<void(std::vector<RangeFinderPacket>&)> callbackFcn, uint8_t points, float angle){
 	// Open I2C bus
-	int8_t handle = i2cOpen(_bus, _addr, 0);
+	int8_t handle = serOpen(SERTTY, BAUDRATE, 0); 
 
 	// Make sure connection is established
 	if(handle < 0){
@@ -117,72 +145,62 @@ int8_t Sensor::scan(std::function<void(std::vector<RangeFinderPacket>&)> callbac
 		return ERROR_CONNECTION;
 	}
 
-	char* buffer[sizeof(points) + sizeof(angle)];
-	*(uint8_t*)buffer = points;
-	*(float*)(buffer + 1) = angle;
+	char buffer[sizeof(points) + sizeof(angle) + 1];
+	*(uint8_t*)buffer = SCAN_REGISTER;
+	*(uint8_t*)(buffer + 1) = points;
+	*(float*)(buffer + 2) = angle;
 
 	// Send command
-	i2cBlockProcessCall(handle, SCAN_REGISTER, buffer, sizeof(points) + sizeof(angle));
+	serWrite(handle, buffer, sizeof(points) + sizeof(angle) + 1);
+	while(!serDataAvailable(handle));
+	uint8_t response = serReadByte(handle);
 
 	// Close I2C transmission
-	i2cClose(handle);
-
-	uint8_t response = *(uint8_t*)buffer;
+	serClose(handle);
 
 	if(response){
 		// Busy
 		return ERROR_BUSY;
 	}
 
-	_callback = callbackFcn;
+
+	if(!fork()){
+		while(true){
+			usleep(10000);
+			int8_t handle = serOpen(SERTTY, BAUDRATE, 0);
+
+			if(handle < 0){
+				std::cerr << "Unable to connect to sensor" << std::endl;
+				continue;
+			}
+
+			if(!serDataAvailable(handle)){
+				serClose(handle);
+				continue;
+		 	}		
+			uint8_t length = serDataAvailable(handle);
+
+			char response[length];
+			serRead(handle, response, length);
+
+			serClose(handle);
+
+			std::vector<RangeFinderPacket> output(length/sizeof(RangeFinderPacket));
+
+			for(uint8_t i = 0; i < length/sizeof(RangeFinderPacket); i++){
+				output[i] = *(RangeFinderPacket*)(response + i*sizeof(RangeFinderPacket));
+			}
+
+			callbackFcn(output);
+
+			exit(0);
+		}
+	}
 
 	return 0;
 
 }
 
-void Sensor::intHandler(int gpio, int level, uint32_t tick){
-	// Return if not rising edge
-	if(level != 1) return;
-
-	void* buffer;
-	uint8_t bufferSize = 0;
-
-	int8_t handle = i2cOpen(_bus, _addr, 0);
-
-	if(handle < 0){
-		std::cerr << "Unable to connect to sensor" << std::endl;
-		return;
-	}
-
-	uint8_t done = false;
-	do{
-		char data[32];
-		i2cReadI2CBlockData(handle, REQUEST_REGISTER, data, 32);
-
-		done = data[31];
-
-		if(done){
-			bufferSize += done;
-			buffer = realloc(buffer, bufferSize);
-			memcpy(buffer + bufferSize - done, (void*)data, done);
-
-		}else{
-			bufferSize += 31;
-			buffer = realloc(buffer, bufferSize);
-			memcpy(buffer + bufferSize - 31, (void*)data, 31);
-		}
-	}while(!done);
-
-	i2cClose(handle);
-
-	std::vector<RangeFinderPacket> output(bufferSize/sizeof(RangeFinderPacket));
-	for(uint8_t i = 0; i < output.size(); i++){
-		output[i] = ((RangeFinderPacket*)buffer)[i];
-	}
-
-	_callback(output);
-
-}
 
 float Sensor::getHeading(){
 	float output;

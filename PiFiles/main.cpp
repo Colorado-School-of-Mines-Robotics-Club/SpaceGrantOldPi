@@ -195,9 +195,40 @@ int main(){
 			exit = false;
 			break;
 		}*/
+			case 'S':{
+				std::cout << "Scanning..." << std::endl;
+				sensor->scan(printPackets);
+				break;
+			 }
+
+			case 'A':{
+				float input;
+				std::cout << "Get angle: " << std::endl;
+				std::cin >> input;
+				sensor->getAngle(input, printPacket);
+				break;
+			 }
+
+			case 'H':{
+				std::cout << "Heading: " << sensor->getHeading() << std::endl;
+				break;
+			 }
+
+			case 'O':{
+				Vector3 rotation = sensor->getRotation();
+				std::cout << "Rotation:" << std::endl;
+				std::cout << "\tX: " << rotation.x << std::endl;
+				std::cout << "\tY: " << rotation.y << std::endl;
+				std::cout << "\tZ: " << rotation.z << std::endl;
+				break;
+
+			 }
+
+
 
 		case '?':{
 			std::cout << std::endl << "-------------------------------" << std::endl;
+			std::cout << "Wheel commands: " << std::endl;
 			std::cout << "r - rotate wheel" << std::endl;
 			std::cout << "s - set rotation" << std::endl;
 			std::cout << "R - reset rotation" << std::endl;
@@ -207,6 +238,12 @@ int main(){
 			std::cout << "w - get drive position" << std::endl;
 			std::cout << "t - get turn position" << std::endl;
 			std::cout << "e - exit" << std::endl;
+			std::cout << "-------------------------------" << std::endl << std::endl;
+			std::cout << "Sensor commands: " << std::endl;
+			std::cout << "S - scan" << std::endl;
+			std::cout << "A - get angle" << std::endl;
+			std::cout << "H - get heading" << std::endl;
+			std::cout << "O - get rotation" << std::endl;
 			std::cout << "-------------------------------" << std::endl << std::endl;
 			break;
 		}
