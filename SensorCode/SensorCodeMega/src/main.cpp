@@ -5,16 +5,17 @@
 #include <EEPROM.h>
 #include <MPU9250.h>
 
-#define ADDRESS 0x10
-
 #define SERVO_MAX 60
 
 #define XBEE_SAMPLES 200
 
-#define SERVO_COUNTER_MAX 24000 // Gives 3ms period
-#define SERVO_POSITION_MAX 16000
-#define SERVO_POSITION_MID 12000
-#define SERVO_POSITION_MIN 800
+#define SERVO_COUNTER_MAX 24000U
+#define SERVO_POSITION_MAX 16000U
+#define SERVO_POSITION_MID 12000U
+#define SERVO_POSITION_MIN 8000U
+/*#define SERVO_POSITION_MAX 32000U
+#define SERVO_POSITION_MID 24000U
+#define SERVO_POSITION_MIN 16000U*/
 #define TICKS_PER_DEG ((SERVO_POSITION_MAX - SERVO_POSITION_MID)/SERVO_ANGLE)
 
 #define HANDSHAKE_REGISTER 0x01
@@ -22,12 +23,14 @@
 #define GET_ANGLE_REGISTER 0x03
 #define GET_HEADING_REGISTER 0x04
 #define GET_RSSI_REGISTER 0x05
-#define REQUEST_REGISTER 0x06
 #define GET_ROTATION_REGISTER 0x07
 
-#define SERVO_ANGLE 60
+#define ADDRESS 25
 
-#define INT_PIN 4
+#define SDA 3
+#define SCL 2
+
+#define SERVO_ANGLE 60
 
 #define OFFSET_ADDRESS 0
 
@@ -53,25 +56,20 @@ XBeePacket xbeeData[XBEE_SAMPLES];
 float heading;
 uint8_t rssi;
 
-void* response;
-uint8_t responseLength = 0;
-bool largeResponse = false;
-
 int16_t servoOffset = 0;
 
 HardwareSerial& scannerSerial = Serial2;
 HardwareSerial& xbeeSerial = Serial3;
+HardwareSerial& piSerial = Serial1;
 
 MPU9250 mpu;
+MPU9250Setting setting;
 
 struct Vector3{
   float x, y, z = 0;
 };
 
 Vector3 rotation;
-
-void i2cRequest();
-void i2cReceive(int count);
 void setServo(uint16_t angle);
 
 void setup() {
@@ -79,31 +77,32 @@ void setup() {
   Serial.begin(115200);
   xbeeSerial.begin(115200);
   scannerSerial.begin(115200);
+  piSerial.begin(115200);
+
 
   Serial.println("Starting...");
 
   xbee.setSerial(xbeeSerial);
 
-  Wire.begin(ADDRESS);
+  Wire.begin();
   Wire.setClock(400000);
-  Wire.onReceive(i2cReceive);
-  Wire.onRequest(i2cRequest);
 
-  pinMode(INT_PIN, OUTPUT);
-  digitalWrite(INT_PIN, LOW);
+  pinMode(13, INPUT_PULLUP);
 
   //Servo pin is D11/OC1A
   pinMode(11, OUTPUT);
   TCCR1A |= (1 << COM1A1);
   TCCR1A &= ~(1 << COM1A0) & ~(1 << WGM10) & ~(1 << WGM11);
-  TCCR1B |= (1 << WGM13) | (1 << CS10);
+  TCCR1B |= (1 << CS10) | (1 << WGM13);
   TCCR1B &= ~(1 << WGM12) & ~(1 << CS11) & ~(1 << CS12);
+  /*TCCR1A |= (1 << COM1A1);
+  TCCR1A &= ~(1 << COM1A0) & ~(1 << WGM10) & ~(1 << WGM11);
+  TCCR1B |= (1 << CS10);
+  TCCR1B &= ~(1 << WGM12) & !(1 << WGM13) & ~(1 << CS11) & ~(1 << CS12);*/
 
-  ICR1L = SERVO_COUNTER_MAX & 0xFF;
-  ICR1H = SERVO_COUNTER_MAX >> 8;
+  ICR1 = SERVO_COUNTER_MAX;
 
-  OCR1AL = SERVO_POSITION_MID & 0xFF;
-  OCR1AH = SERVO_POSITION_MID >> 8;
+  //mpu.verbose(true);
 
   if(!mpu.setup(0x68)){
     Serial.println("Failed to connect to MPU");
@@ -112,19 +111,28 @@ void setup() {
 
   Serial.println("Connected to MPU... Calibrating");
 
-  mpu.calibrateAccelGyro();
-  mpu.calibrateMag();
+  if(!digitalRead(13)){
+    mpu.calibrateAccelGyro();
+    mpu.calibrateMag();
+  }
 
   Serial.println("Calibration done... Initializing Rangefinder");
 
-  EEPROM.get(OFFSET_ADDRESS, servoOffset);
+  servoOffset = EEPROM.read(OFFSET_ADDRESS) << 8;
+  servoOffset |= EEPROM.read(OFFSET_ADDRESS + 1) & 0xFF;
+  //EEPROM.get(OFFSET_ADDRESS, servoOffset);
+  Serial.print("Servo offset: ");
+  Serial.println(servoOffset);
+  setServo(SERVO_POSITION_MID);
 
   delay(2000);
   scannerSerial.write('U');
   delay(100);
-  scannerSerial.write('E');
-  Serial.println("Calibrating Rangefinder...");
-  //delay(15000);
+  if(!digitalRead(13)){
+    scannerSerial.write('E');
+    Serial.println("Calibrating Rangefinder...");
+    delay(10000);
+  }
   
   Serial.println("Ready!");
 }
@@ -183,6 +191,9 @@ void serialEvent(){
     offset -= data.substring(0, data.indexOf('-')).toInt();
   }
 
+  servoOffset = offset;
+  setServo(SERVO_POSITION_MID);
+
   Serial.print("Offset: ");
   Serial.println((int) offset);
 
@@ -208,7 +219,7 @@ void serialEvent2(){ // Rangefinder response
     }
   }
 
-  rangeFinderBuffer[index].angle = ((float)(angle - SERVO_POSITION_MID))/TICKS_PER_DEG;
+  rangeFinderBuffer[index].angle = ((float)angle - SERVO_POSITION_MID)/TICKS_PER_DEG;
   
   uint32_t distanceBuffer;
   scannerSerial.readBytes((uint8_t*)&distanceBuffer, 4);
@@ -222,7 +233,9 @@ void serialEvent2(){ // Rangefinder response
     index = 0;
     angle = 0;
 
-    digitalWrite(INT_PIN, HIGH);
+    piSerial.write((uint8_t*)&rangeFinderBuffer, scanPoints*sizeof(rangeFinderBuffer));
+    free(rangeFinderBuffer);
+    scanPoints = 0;
   }else{
     angle += 2*(scanAngleLimit - SERVO_POSITION_MID)/scanPoints;
     setServo(angle);
@@ -232,54 +245,25 @@ void serialEvent2(){ // Rangefinder response
 
 void setServo(uint16_t angle){
   angle += servoOffset;
-  OCR1AL = angle & 0xFF;
-  OCR1AH = angle >> 8;
+  OCR1A = angle;
+  Serial.print(angle);
+  Serial.print(" ");
+  Serial.println((int)OCR1A);
+  //OCR1A = angle & 0xFF;
 }
 
-void i2cRequest(){
-  static uint8_t index = 0;
-  
-  if(!largeResponse){
-    Wire.write((uint8_t*)response, responseLength);
-    free(response);
-    responseLength = 0;
-    return;
-  }
-
-  Wire.write((uint8_t*)response + index, min(responseLength, 31));
-  
-  uint8_t padding = 0;
-  if(responseLength - index < 32) padding = 31 - (responseLength - index);
-  for(uint8_t i = 0; i < padding; i++) Wire.write(0);
-
-  index += min(responseLength, 31);
-
-  if(index >= responseLength){
-    index = 0;
-    largeResponse = false;
-    Wire.write(31 - padding);
-    free(response);
-    responseLength = 0;
-  }else{
-    Wire.write(false);
-  }
-}
-
-void i2cReceive(int count){
+void serialEvent1(){
+  uint8_t count = piSerial.available();
   uint8_t data[count];
-  Wire.readBytes(data, count);
+  piSerial.readBytes(data, count);
 
   switch(data[0]){
   case HANDSHAKE_REGISTER:
-    response = malloc(sizeof(bool));
-    *(uint8_t*)response = ADDRESS;
-    responseLength = sizeof(bool);
+    piSerial.write(ADDRESS);
     break;
 
   case SCAN_REGISTER:
-    response = malloc(sizeof(bool));
-    *(bool*)response = (bool)scanPoints;
-    responseLength = sizeof(bool);
+    piSerial.write((bool)scanPoints);
     if(scanPoints) break; // Busy
 
     scanPoints = data[1];
@@ -295,13 +279,11 @@ void i2cReceive(int count){
     break;
 
   case GET_ANGLE_REGISTER:
-    response = malloc(sizeof(bool));
-    *(bool*)response = (bool)scanPoints;
-    responseLength = sizeof(bool);
+    piSerial.write((bool)scanPoints);
     if(scanPoints) break; // Busy
 
     scanPoints = 1;
-    scanAngle = (uint16_t)((abs(*(float*)(data + 1)))*TICKS_PER_DEG + SERVO_POSITION_MID);
+    scanAngle = (uint16_t)((*(float*)(data + 1))*TICKS_PER_DEG + SERVO_POSITION_MID);
     rangeFinderBuffer = (RangeFinderPacket*)malloc(scanPoints*sizeof(RangeFinderPacket));
 
     setServo(scanAngle);
@@ -309,31 +291,15 @@ void i2cReceive(int count){
     break;
 
   case GET_HEADING_REGISTER:
-    response = malloc(sizeof(float));
-    *(float*)response = heading;
-    responseLength = sizeof(float);
+    piSerial.write((uint8_t*)&heading, sizeof(heading));
     break;
 
   case GET_RSSI_REGISTER:
-    response = malloc(sizeof(uint8_t));
-    *(uint8_t*)response = rssi;
-    responseLength = sizeof(uint8_t);
-    break;
-
-  case REQUEST_REGISTER:
-    if(!responseLength) break;
-    largeResponse = true;
-    digitalWrite(INT_PIN, LOW);
-    response = (void*)rangeFinderBuffer;
-    responseLength = scanPoints*sizeof(RangeFinderPacket);
-    scanPoints = 0;
-    
+    piSerial.write(rssi);
     break;
 
   case GET_ROTATION_REGISTER:
-    response = malloc(sizeof(rotation));
-    *(Vector3*)response = rotation;
-    responseLength = sizeof(rotation);
+    piSerial.write((uint8_t*)&rotation, sizeof(rotation));
     break;
   }
 }

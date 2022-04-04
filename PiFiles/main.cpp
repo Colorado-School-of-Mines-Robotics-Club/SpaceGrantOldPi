@@ -1,7 +1,7 @@
-#include "SensorLib.h"
+#include "BotCode/SensorLib.h"
 #include <iostream>
 #include <unistd.h>
-#include "robotControl.h"
+#include "BotCode/robotControl.h"
 
 bool ready = true;
 

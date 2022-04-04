@@ -9,13 +9,25 @@
 int rangeFinderRadius = 10; //This is the largest distance the Rangefinder can see
 int MapSize = 21; //This is the dimensions of the map and should be odd bigger dimensions more precise
 std::vector<std::vector<int>> Map(MapSize, std::vector<int>(MapSize,0)); //This is the initial Map
-bool obstacleInFront = false;
+bool obstacleInFront = false; //check this after
+bool hasScanned = false; //this tells us if we have scanned the current area that our bot is facing if it is not true we should be
+// waiting for the scan before we move
 int obstacleProblemThreshold = 10;//How many points we need to see in a block for it to be an obstacle we want to avoid
 
 
-//figures out motor commands to go towards beacon
-void maintain() {
-
+//For now this can be used for our movement and is mostly just to make powering the wheels less lines
+//may need to change how this works depending on how we handle bumps and gyro obstacles
+//as it doesn't allow for interruption
+void powerWheels(int time) {
+    Wheel1->drive();
+    Wheel2->drive();
+    Wheel3->drive();
+    Wheel4->drive();
+    std::this_thread::sleep_for(std::chrono::seconds(time));
+    Wheel1->stop();
+    Wheel2->stop();
+    Wheel3->stop();
+    Wheel4->stop();
 }
 
 //does a general sensor check
@@ -32,7 +44,7 @@ void askGyro() {
     problemGyro(tester);
 }
 //This will be called if there is an issue and send commands to motors to avoid
-void problemGyro(std::vector<int> problem) {
+void problemGyro(std::vector<int> *problem) {
 
 }
 
@@ -51,7 +63,7 @@ void askLaser(std::vector<RangeFinderPacket>& packets){
     //Put a call to your function here
 }
 //adjusts path to avoid obstacle shown by clumps
-void problemLaser(std::vector<int> clumps) {
+void problemLaser(std::vector<int> *clumps) {
     //solve laser problem
 }
 
@@ -65,7 +77,7 @@ void setup() {
 
 //This should be sent into the Sensor-> scan and since it needs to be void it will set the global obstacleInFront
 //to whether there is an obstacle
-void testObstacle(std::vector<RangeFinderPacket> obstacles) {
+void testObstacle(std::vector<RangeFinderPacket> *obstacles) {
     //Resetting Map
     for(int i = 0; i < MapSize; i++){
         for(int j = 0; j < MapSize; j++){
@@ -76,7 +88,7 @@ void testObstacle(std::vector<RangeFinderPacket> obstacles) {
     int botX = int(MapSize/2);
     int botY = int(MapSize/2);
     //Updating Map to reflect the scan
-    for(auto & point : obstacles){
+    for(auto & point : *obstacles){
         int yOffset = round(sin(point.angle)*MapSize/rangeFinderRadius); //Calculates distance from bot in terms
         int xOffset = round(cos(point.angle)*MapSize/rangeFinderRadius); //Of indices
         Map[botY+yOffset][botX+xOffset] += 1; //Registers there is a obstacle at this location
