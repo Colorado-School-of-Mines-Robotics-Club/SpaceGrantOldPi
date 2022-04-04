@@ -7,11 +7,11 @@
 
 #include <vector>
 #include "SensorLib.h"
-#include "RangeFinding.h"
+#include "../RangeFinding.h"
 
 void setup();
 void sensorCheck();
-void maintain();
+void drive(int time);
 void testObstacle(std::vector<RangeFinderPacket> obstacles);
 void problemLaser(std::vector<int> clump);
 void askBump();
@@ -19,5 +19,6 @@ void problemBumper(int bumper);
 void askGyro();
 void problemGyro(std::vector<int> problem);
 void askLaser(std::vector<RangeFinderPacket>& packets);
+
 
 #endif //SPACEGRANTOLDPI_ROBOTCONTROL_H

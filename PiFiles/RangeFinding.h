@@ -7,7 +7,7 @@
 #include <iostream>
 #include <list>
 #include <vector>
-#include "SensorLib.h"
+#include "BotCode/SensorLib.h"
 struct Clump{
     RangeFinderPacket point1;
     RangeFinderPacket point2;
