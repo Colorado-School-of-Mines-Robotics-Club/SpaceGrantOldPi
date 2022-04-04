@@ -11,7 +11,7 @@
 
 void setup();
 void sensorCheck();
-void drive(int time);
+void powerWheels(int time);
 void testObstacle(std::vector<RangeFinderPacket> obstacles);
 void problemLaser(std::vector<int> clump);
 void askBump();

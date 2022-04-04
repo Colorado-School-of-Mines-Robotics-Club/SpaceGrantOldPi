@@ -15,9 +15,19 @@ bool hasScanned = false; //this tells us if we have scanned the current area tha
 int obstacleProblemThreshold = 10;//How many points we need to see in a block for it to be an obstacle we want to avoid
 
 
-
-void driveForward(int time) {
-    
+//For now this can be used for our movement and is mostly just to make powering the wheels less lines
+//may need to change how this works depending on how we handle bumps and gyro obstacles
+//as it doesn't allow for interruption
+void powerWheels(int time) {
+    Wheel1->drive();
+    Wheel2->drive();
+    Wheel3->drive();
+    Wheel4->drive();
+    std::this_thread::sleep_for(std::chrono::seconds(time));
+    Wheel1->stop();
+    Wheel2->stop();
+    Wheel3->stop();
+    Wheel4->stop();
 }
 
 //does a general sensor check
