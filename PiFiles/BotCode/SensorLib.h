@@ -147,6 +147,22 @@ public:
 	// No return value - all values are set via pass by reference
 	void getHeadingRSSI(float& heading, uint8_t& rssi);
 
+	// Gets the current rotation of the bot as a Vector3
+	// Vector 3 has 3 properties - x, y, and z
+	// Uses a right hand coordinate system
+	//		
+	//		Looking at arduino from top view:
+	//		/---------------------------------------\
+	//		|										|
+	//		|(usb port)			^ y					|
+	//		|					|					|
+	//		|			   z(up)O---> x				|
+	//		|										|
+	//		|(9v port)										|
+	//		|										|
+	//		\---------------------------------------/
+	//
+	// Use right hand rule to get rotation from these coordinate axes
 	Vector3 getRotation();
 
 	void intHandler(int pin, int level, uint32_t tick);
