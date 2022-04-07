@@ -12,6 +12,13 @@
 #include <thread>
 #include <memory.h>
 #include <unistd.h>
+#include <fstream>
+#include <string>
+
+#include <stdio.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <termios.h>
 
 #ifndef SENSOR_NAME
 #define SENSOR_NAME sensor
@@ -59,7 +66,13 @@
 #define SUCCESS 1
 #define FAIL 0
 
-#define BAUDRATE 115200
+#define BAUDRATE 32000
+#define SPICHAN 0
+#define SPILENGTH(x) (x << 10)
+#define SPIFLAGS (1 << 9)
+#define POLL_REGISTER 0x08
+
+#define SENSOR_INT_PIN 18
 
 
 
@@ -101,7 +114,7 @@ public:
 	// 		The RangeFinderPacket argument contains the data returned from the arduino
 	//
 	// Returns 0 if sucessful - otherwise a negative error code
-	int8_t getAngle(float angle, std::function<void(RangeFinderPacket&)> callbackFcn);
+	int8_t getAngle(float angle, std::function<void(std::vector<RangeFinderPacket>&)> callbackFcn);
 
 	// Gets the angle repored by the beacon with the lowest RSSI value
 	// Note: This function is blocking and must wait for the relatively slow I2C communication
@@ -136,14 +149,27 @@ public:
 
 	Vector3 getRotation();
 
+	void intHandler(int pin, int level, uint32_t tick);
+
 
 private:
 	uint8_t _addr;
 	int _fd;
 	uint8_t _bus;
 
+	std::fstream arduino;
+	int arduinoPort;
+	
+	uint8_t readRegister(uint8_t reg);
+	void readRegister(uint8_t reg, char* buffer, uint8_t length);
+	uint8_t writeRegister(uint8_t reg, char* buffer, uint8_t length);
+
 	std::function<void(std::vector<RangeFinderPacket>&)> _callback;
 	void constructorUni();
+
+	int dataRequired = 0;
+	std::vector<RangeFinderPacket> responseData;
+	float scanAngle;
 
 };
 
@@ -302,7 +328,11 @@ extern Wheel* WHEEL3;
 extern Wheel* WHEEL4;
 
 inline void interrupt(int gpio, int level, uint32_t tick){
-	if(gpio == WHEEL1->interruptPin){
+	if(level != 1) return;
+	if(gpio == SENSOR_INT_PIN){
+		SENSOR_NAME->intHandler(gpio, level, tick);
+
+	}else if(gpio == WHEEL1->interruptPin){
 		WHEEL1->intHandler(gpio, level, tick);
 
 	}else if(gpio == WHEEL2->interruptPin){

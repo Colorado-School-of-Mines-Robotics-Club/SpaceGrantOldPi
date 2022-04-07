@@ -7,15 +7,16 @@ Wheel* WHEEL2;
 Wheel* WHEEL3;
 Wheel* WHEEL4;
 
-char SERTTY[] = "/dev/ttyS0";
+//char SERTTY[] = "/dev/ttyS0";
+char SERTTY[] = "/dev/serial0";
 
-Sensor::Sensor(uint8_t address, uint8_t bus){
+Sensor::Sensor(uint8_t address, uint8_t bus)/* : arduino("/dev/ttyACM0")*/{
 	_addr = address;
 	_bus = bus;
 	constructorUni();
 }
 
-Sensor::Sensor(){
+Sensor::Sensor()/* : arduino("/dev/ttyACM0")*/{
 	_addr = 0x19;
 	_bus = 1;
 	constructorUni();
@@ -23,25 +24,78 @@ Sensor::Sensor(){
 
 // Deconstructor removes the interrput to avoid nullptr errors
 Sensor::~Sensor(){
+	close(arduinoPort);
+	gpioSetAlertFunc(SENSOR_INT_PIN, NULL);
+}
+
+uint8_t Sensor::readRegister(uint8_t reg){
+	tcflush(arduinoPort, TCIOFLUSH);
+	uint8_t data[2] = {1, reg};
+	write(arduinoPort, data, 2);
+	read(arduinoPort, data, 1);
+	return data[0];
+}
+
+void Sensor::readRegister(uint8_t reg, char* buffer, uint8_t length){
+	tcflush(arduinoPort, TCIOFLUSH);
+	uint8_t txBuffer[2] = {1, reg};
+	write(arduinoPort, txBuffer, 2);
+	read(arduinoPort, buffer, length);
+}
+
+uint8_t Sensor::writeRegister(uint8_t reg, char* data, uint8_t length){
+	tcflush(arduinoPort, TCIOFLUSH);
+	uint8_t txBuffer[length + 2];
+	txBuffer[0] = length + 1;
+	txBuffer[1] = reg;
+	memcpy(txBuffer + 2, data, length);
+
+	write(arduinoPort, txBuffer, length + 2);
+
+	uint8_t output;
+	read(arduinoPort, &output, 1);
+	
+	return output;
 }
 
 void Sensor::constructorUni(){
-	// Open I2C bus
-	int8_t handle = serOpen(SERTTY, BAUDRATE, 0); 
+	arduinoPort = open("/dev/ttyACM0", O_RDWR);
 
-	// Make sure connection has been established
-	if(handle < 0){
-		std::cerr << "Unable to connect to sensors." << std::endl;
-		return;
+	if (arduinoPort < 0) {
+    	printf("Error %i from open: %s\n", errno, strerror(errno));
 	}
-	
-	// Read data
-	serWriteByte(handle, HANDSHAKE_REGISTER);
-	while(!serDataAvailable(handle));
-	uint8_t data = serReadByte(handle);
 
-	// Close I2C bus
-	serClose(handle);
+	struct termios tty;
+	if(tcgetattr(arduinoPort, &tty) != 0) {
+		printf("Error %i from tcgetattr: %s\n", errno, strerror(errno));
+	}
+
+	tty.c_cflag &= ~PARENB;
+	tty.c_cflag &= ~CSTOPB;
+	tty.c_cflag &= ~CSIZE;
+	tty.c_cflag |= CS8;
+	tty.c_cflag &= ~CRTSCTS;
+	tty.c_cflag |= CREAD | CLOCAL;
+	tty.c_lflag &= ~ICANON;
+	tty.c_lflag &= ~ECHO; // Disable echo
+	tty.c_lflag &= ~ECHOE; // Disable erasure	
+	tty.c_lflag &= ~ECHONL; // Disable new-line echo
+	tty.c_lflag &= ~ISIG;
+	tty.c_iflag &= ~(IXON | IXOFF | IXANY); // Turn off s/w flow ctrl
+	tty.c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL); // Disable any special handling of received bytes
+	tty.c_oflag &= ~OPOST; // Prevent special interpretation of output bytes (e.g. newline chars)
+	tty.c_oflag &= ~ONLCR; // Prevent conversion of newline to carriage return/line feed
+	tty.c_cc[VTIME] = 50;
+	tty.c_cc[VMIN] = 1;
+	cfsetispeed(&tty, B115200);
+	cfsetospeed(&tty, B115200);
+
+	if (tcsetattr(arduinoPort, TCSANOW, &tty) != 0) {
+		printf("Error %i from tcsetattr: %s\n", errno, strerror(errno));
+	}
+	sleep(5);
+
+	uint8_t data = readRegister(HANDSHAKE_REGISTER);
 
 	// Make sure data is correct
 	if(data != _addr){
@@ -50,192 +104,157 @@ void Sensor::constructorUni(){
 		std::cerr << "Got:      " << (int)data << std::endl;
 		return;
 	}
+	
 
 
 	// Tell user everything is ok
 	std::cout << "Succesfully connected to sensors!" << std::endl;
+
+	gpioSetAlertFunc(SENSOR_INT_PIN, interrupt);
 }
 
 
 Vector3 Sensor::getRotation(){
-	// Open I2C bus
-	int8_t handle = serOpen(SERTTY, BAUDRATE, 0); 
-
 	Vector3 output;
+	readRegister(SENSOR_GET_ROTATION_REGISTER, (char*)&output, sizeof(output));
 
-	// Make sure connection has been established
-	if(handle < 0){
-		std::cerr << "Unable to connect to sensors." << std::endl;
-		return output;
-	}
+	if(    output.x == 0   ||     output.y == 0   ||     output.z == 0 ||
+	   abs(output.x) > 180 || abs(output.y) > 180 || abs(output.z) > 360){ // Bad data
 
-	serWriteByte(handle, SENSOR_GET_ROTATION_REGISTER);
-	while(!serDataAvailable(handle));
-	serRead(handle, (char*)&output, sizeof(output)); 
-
-	serClose(handle);
+			return getRotation();
+	   }
 
 	return output;
 }
 
-int8_t Sensor::getAngle(float angle, std::function<void(RangeFinderPacket&)> callbackFcn){
-	// Open I2C bus
-	int8_t handle = serOpen(SERTTY, BAUDRATE, 0); 
+int8_t Sensor::getAngle(float angle, std::function<void(std::vector<RangeFinderPacket>&)> callbackFcn){
 
-	// Make sure connection is established
-	if(handle < 0){
-		std::cerr << "Unable to connect to sensor" << std::endl;
-		return ERROR_CONNECTION;
-	}
-
-	char buffer[sizeof(angle) + 1];
-	*(float*)(buffer + 1) = angle;
-	*(uint8_t*)buffer = GET_ANGLE_REGISTER;
-
-	// Send command
-	serWrite(handle, buffer, sizeof(angle) + 1);
-	while(!serDataAvailable(handle));
-	uint8_t response = serReadByte(handle);
-
-	// Close I2C transmission
-	serClose(handle);
-
+	uint8_t response = writeRegister(GET_ANGLE_REGISTER, (char*)&angle, sizeof(angle));
 
 	if(response){
 		// Busy
 		return ERROR_BUSY;
 	}
 
-	if(!fork()){
-		int8_t handle = serOpen(SERTTY, BAUDRATE, 0);
-		
-		if(handle < 0){
-			std::cerr << "Unable to connect to sensor" << std::endl;
-			exit(0);
-		}
-		while(true){
-			usleep(10000);
-
-			if(!serDataAvailable(handle)){
-				continue;
-		 	}		
-			std::cout << "Responded" << std::endl;
-
-			RangeFinderPacket response;
-			serRead(handle, (char*)&response, sizeof(response));
-
-			serClose(handle);
-
-			callbackFcn(response);
-
-			exit(0);
-		}
-	}
+	_callback = callbackFcn;
 
 	return 0;
 }
 
 int8_t Sensor::scan(std::function<void(std::vector<RangeFinderPacket>&)> callbackFcn, uint8_t points, float angle){
-	// Open I2C bus
-	int8_t handle = serOpen(SERTTY, BAUDRATE, 0); 
+	angle = std::abs(angle);
+	uint8_t response = getAngle(-angle, callbackFcn);
 
-	// Make sure connection is established
-	if(handle < 0){
-		std::cerr << "Unable to connect to sensor" << std::endl;
-		return ERROR_CONNECTION;
+	if(response){
+		return ERROR_BUSY;
 	}
 
-	char buffer[sizeof(points) + sizeof(angle) + 1];
-	*(uint8_t*)buffer = SCAN_REGISTER;
-	*(uint8_t*)(buffer + 1) = points;
-	*(float*)(buffer + 2) = angle;
+	scanAngle = angle;
+	dataRequired = points - 1;
 
-	// Send command
-	serWrite(handle, buffer, sizeof(points) + sizeof(angle) + 1);
-	while(!serDataAvailable(handle));
-	uint8_t response = serReadByte(handle);
+	return response;
 
-	// Close I2C transmission
-	serClose(handle);
+	/*char buffer[sizeof(points) + sizeof(angle)];
+	*(uint8_t*)buffer = points;
+	*(float*)(buffer + sizeof(points)) = angle; 
+
+	uint8_t response = writeRegister(SCAN_REGISTER, buffer, sizeof(points) + sizeof(angle));
 
 	if(response){
 		// Busy
 		return ERROR_BUSY;
 	}
 
+	_callback = callbackFcn;
+	return 0;*/
 
-	if(!fork()){
-		while(true){
-			usleep(10000);
-			int8_t handle = serOpen(SERTTY, BAUDRATE, 0);
+}
 
-			if(handle < 0){
-				std::cerr << "Unable to connect to sensor" << std::endl;
-				continue;
-			}
+void Sensor::intHandler(int pin, int level, uint32_t tick){
+	static int totalReceived = 0;
+	responseData.emplace_back();
+	totalReceived++;
 
-			if(!serDataAvailable(handle)){
-				serClose(handle);
-				continue;
-		 	}		
-			uint8_t length = serDataAvailable(handle);
+	tcflush(arduinoPort, TCIOFLUSH);
+	uint8_t txBuffer[2] = {1, REQUEST_REGISTER};
+	write(arduinoPort, txBuffer, 2);
 
-			char response[length];
-			serRead(handle, response, length);
+	uint8_t length;
+	read(arduinoPort, &length, 1);
 
-			serClose(handle);
+	read(arduinoPort, (uint8_t*)&(responseData.back().angle), 4);
+	read(arduinoPort, (uint8_t*)&(responseData.back().distance), 2);
 
-			std::vector<RangeFinderPacket> output(length/sizeof(RangeFinderPacket));
-
-			for(uint8_t i = 0; i < length/sizeof(RangeFinderPacket); i++){
-				output[i] = *(RangeFinderPacket*)(response + i*sizeof(RangeFinderPacket));
-			}
-
-			callbackFcn(output);
-
-			exit(0);
-		}
+	if(responseData.back().distance > 10000 || abs(responseData.back().angle) > 180){ // Bad data
+		totalReceived--;
+		responseData.pop_back();
 	}
 
-	return 0;
+	if(totalReceived > dataRequired){
+		totalReceived = 0;
+		dataRequired = 0;
+		scanAngle = 0;
+		dataRequired = 0;
 
+		_callback(responseData);
+		responseData.clear();
+
+		return;
+	}
+
+	getAngle(2*scanAngle*totalReceived/dataRequired - scanAngle, _callback);
+/*tcflush(arduinoPort, TCIOFLUSH);
+	uint8_t txBuffer[2] = {1, REQUEST_REGISTER};
+	write(arduinoPort, txBuffer, 2);
+
+	std::vector<RangeFinderPacket> data;
+
+	while(true){
+		uint8_t packetInfo[2];
+		read(arduinoPort, packetInfo, 2);
+
+		int received = 0;
+		uint8_t checksum = packetInfo[0];
+
+		data.resize(packetInfo[0]);
+		for(uint8_t i = 0; i < packetInfo[0]; i++){
+			received += read(arduinoPort, (uint8_t*)&(data[i].angle), 4);
+			received += read(arduinoPort, (uint8_t*)&(data[i].distance), 2);
+
+			for(uint8_t j = 0; j < sizeof(float); j++){
+				checksum += *(((uint8_t*)&(data[i].angle)) + j);
+			}
+			for(uint8_t j = 0; j < sizeof(uint16_t); j++){
+				checksum += *(((uint8_t*)&(data[i].distance)) + j);
+			}
+		}
+
+		std::cout << "Received: " << received << std::endl;
+
+		uint8_t checksumResponse = checksum != packetInfo[1];
+		write(arduinoPort, &checksumResponse, 1);
+
+		if(!checksumResponse){
+			std::cout << "Checksum passed" << std::endl;
+			break;
+		}
+
+		std::cout << "Checksum failed" << std::endl;
+	}
+
+	_callback(data);*/
 }
 
 
 float Sensor::getHeading(){
 	float output;
-	int8_t handle = serOpen(SERTTY, BAUDRATE, 0);
-
-	if(handle < 0){
-		std::cerr << "Unable to connect to sensor" << std::endl;
-		return 0;
-	}
-
-	serWriteByte(handle, GET_HEADING_REGISTER);
-	while(!serDataAvailable(handle));
-	serRead(handle, (char*)&output, sizeof(output));
-
-	serClose(handle);
+	readRegister(GET_HEADING_REGISTER, (char*)&output, sizeof(output));
 
 	return output;
 }
 
 uint8_t Sensor::getRSSI(){
-	uint8_t output;
-	int8_t handle = serOpen(SERTTY, BAUDRATE, 0);
-
-	if(handle < 0){
-		std::cerr << "Unable to connect to sensor" << std::endl;
-		return 255;
-	}
-
-	serWriteBute(handle, GET_RSSI_REGISTER);
-	while(!serDataAvailable(handle));
-	output = serReadByte(handle);
-
-	serClose(handle);
-
-	return output;
+	return readRegister(GET_RSSI_REGISTER);
 }
 
 void Sensor::getHeadingRSSI(float& heading, uint8_t& rssi){
