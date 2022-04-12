@@ -10,14 +10,8 @@
 #include "../RangeFinding.h"
 
 void setup();
-void powerWheels(int time);
+void powerWheels(float revolutions, int first, int second, int third, int fourth);
 void testObstacle(std::vector<RangeFinderPacket> obstacles);
-void problemLaser(std::vector<int> clump);
-void askBump();
-void problemBumper(int bumper);
-void askGyro();
-void problemGyro(std::vector<int> problem);
-void askLaser(std::vector<RangeFinderPacket>& packets);
 int main();
 void navigate();
 
