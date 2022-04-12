@@ -5,38 +5,35 @@
 #include "robotControl.h"
 
 //
+bool atBeacon = false;
 
+//Range finder mapping stuff might just chang this to only be obstacleInFront
 int rangeFinderRadius = 10; //This is the largest distance the Rangefinder can see
 int MapSize = 21; //This is the dimensions of the map and should be odd bigger dimensions more precise
-std::vector<std::vector<int>> Map(MapSize, std::vector<int>(MapSize,0)); //This is the initial Map
-bool obstacleInFront = false; //check this after
+std::vector<std::vector<bool>> Map(MapSize, std::vector<bool>(MapSize,0)); //This is the initial Map
+
+bool obstacleInFront = false; //Is there an Obstacle in front of us
 bool hasScanned = false; //this tells us if we have scanned the current area that our bot is facing if it is not true we should be
 // waiting for the scan before we move
-int obstacleProblemThreshold = 10;//How many points we need to see in a block for it to be an obstacle we want to avoid
+bool moving = false; //are we moving
 
 
-//For now this can be used for our movement and is mostly just to make powering the wheels less lines
-//may need to change how this works depending on how we handle bumps and gyro obstacles
-//as it doesn't allow for interruption
-void powerWheels(int time) {
-    Wheel1->drive();
-    Wheel2->drive();
-    Wheel3->drive();
-    Wheel4->drive();
-    std::this_thread::sleep_for(std::chrono::seconds(time));
-    Wheel1->stop();
-    Wheel2->stop();
-    Wheel3->stop();
-    Wheel4->stop();
+
+
+//Once the wheel is done moving set moving to false
+void wheelCallback(int8_t){
+    moving = false;
 }
 
-//does a general sensor check
-void sensorCheck() {
-    askBump();
-    askGyro();
-    sensor->scan(testObstacle);
-
+//easy way to turn all wheels in the same direction
+void powerWheels(float revolutions) {
+    moving = true;
+    Wheel1->move(revolutions, wheelCallback);
+    Wheel2->move(revolutions, wheelCallback);
+    Wheel3->move(revolutions, wheelCallback);
+    Wheel4->move(revolutions, wheelCallback);
 }
+
 
 //uses I2C and if something is wrong gets a vector with values and passes to problem
 void askGyro() {
@@ -48,31 +45,9 @@ void problemGyro(std::vector<int> *problem) {
 
 }
 
-//Checks if any bumpers are triggered then passes the bumper if is to problem
-void askBump() {
-    problemBumper(1);
-}
-//sends commands to motor to get away;
-void problemBumper(int bumper) {
-
-}
-
-//Asks Laser and gets a vector of clumps
-//if clumps is not empty sends to problem laser
-void askLaser(std::vector<RangeFinderPacket>& packets){
-    //Put a call to your function here
-}
-//adjusts path to avoid obstacle shown by clumps
-void problemLaser(std::vector<int> *clumps) {
-    //solve laser problem
-}
-
 
 void setup() {
-    //send signal to arduinos for calibration
-    //swivel rangefinder
-    //calibrate gyro
-    //check beacon heading
+    //Do all the checking for arduino to PI communication working/setup
 }
 
 //This should be sent into the Sensor-> scan and since it needs to be void it will set the global obstacleInFront
@@ -81,7 +56,7 @@ void testObstacle(std::vector<RangeFinderPacket> *obstacles) {
     //Resetting Map
     for(int i = 0; i < MapSize; i++){
         for(int j = 0; j < MapSize; j++){
-            Map[i][j] = 0;
+            Map[i][j] = false;
         }
     }
     obstacleInFront = false;
@@ -91,13 +66,30 @@ void testObstacle(std::vector<RangeFinderPacket> *obstacles) {
     for(auto & point : *obstacles){
         int yOffset = round(sin(point.angle)*MapSize/rangeFinderRadius); //Calculates distance from bot in terms
         int xOffset = round(cos(point.angle)*MapSize/rangeFinderRadius); //Of indices
-        Map[botY+yOffset][botX+xOffset] += 1; //Registers there is a obstacle at this location
+        Map[botY+yOffset][botX+xOffset] = true; //Registers there is a obstacle at this location
     }
-    for(int row = 0; row < MapSize; row++){ //This goes through and checks if anything has gone past what we want to avoid
-        for(int col = 0; col < MapSize; col++){
-            if(Map[row][col] > obstacleProblemThreshold){
-                obstacleInFront = true;
-            }
+}
+
+//This is going to be running and waiting for any ping from either the bump or gyro saying there
+//is a problem
+void bumpGyro(){
+    /*if problem
+     * setObstacle in front to true
+     */
+}
+
+
+void navigate() {
+
+}
+
+int main(){
+    setup();
+    std::thread sensorThread(bumpGyro);// set up thread for bumpers and gyros we want this always going
+    while(!atBeacon){
+        if(hasScanned){ //if we have scanned the part infront of us
+            std::thread navigateThread(navigate); //starts a new thread for navigation
+            navigateThread.join(); //Wait until the navigate thread is done
         }
     }
 

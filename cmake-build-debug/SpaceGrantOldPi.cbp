@@ -80,10 +80,10 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/robotControl.cpp">
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/BotCode/robotControl.cpp">
 			<Option target="SpaceGrantOldPi"/>
 		</Unit>
-		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/robotControl.h">
+		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/BotCode/robotControl.h">
 			<Option target="SpaceGrantOldPi"/>
 		</Unit>
 		<Unit filename="C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/CMakeLists.txt">

@@ -142,32 +142,32 @@ SpaceGrantOldPi/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/build
 .PHONY : SpaceGrantOldPi/fast
 
-PiFiles/robotControl.obj: PiFiles/robotControl.cpp.obj
+PiFiles/BotCode/robotControl.obj: PiFiles/BotCode/robotControl.cpp.obj
 
-.PHONY : PiFiles/robotControl.obj
+.PHONY : PiFiles/BotCode/robotControl.obj
 
 # target to build an object file
-PiFiles/robotControl.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.obj
-.PHONY : PiFiles/robotControl.cpp.obj
+PiFiles/BotCode/robotControl.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/PiFiles/BotCode/robotControl.cpp.obj
+.PHONY : PiFiles/BotCode/robotControl.cpp.obj
 
-PiFiles/robotControl.i: PiFiles/robotControl.cpp.i
+PiFiles/BotCode/robotControl.i: PiFiles/BotCode/robotControl.cpp.i
 
-.PHONY : PiFiles/robotControl.i
+.PHONY : PiFiles/BotCode/robotControl.i
 
 # target to preprocess a source file
-PiFiles/robotControl.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.i
-.PHONY : PiFiles/robotControl.cpp.i
+PiFiles/BotCode/robotControl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/PiFiles/BotCode/robotControl.cpp.i
+.PHONY : PiFiles/BotCode/robotControl.cpp.i
 
-PiFiles/robotControl.s: PiFiles/robotControl.cpp.s
+PiFiles/BotCode/robotControl.s: PiFiles/BotCode/robotControl.cpp.s
 
-.PHONY : PiFiles/robotControl.s
+.PHONY : PiFiles/BotCode/robotControl.s
 
 # target to generate assembly for a file
-PiFiles/robotControl.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/PiFiles/robotControl.cpp.s
-.PHONY : PiFiles/robotControl.cpp.s
+PiFiles/BotCode/robotControl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\SpaceGrantOldPi.dir\build.make CMakeFiles/SpaceGrantOldPi.dir/PiFiles/BotCode/robotControl.cpp.s
+.PHONY : PiFiles/BotCode/robotControl.cpp.s
 
 # Help Target
 help:
@@ -178,9 +178,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... SpaceGrantOldPi
-	@echo ... PiFiles/robotControl.obj
-	@echo ... PiFiles/robotControl.i
-	@echo ... PiFiles/robotControl.s
+	@echo ... PiFiles/BotCode/robotControl.obj
+	@echo ... PiFiles/BotCode/robotControl.i
+	@echo ... PiFiles/BotCode/robotControl.s
 .PHONY : help
 
 

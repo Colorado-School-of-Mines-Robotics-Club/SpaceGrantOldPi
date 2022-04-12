@@ -10,7 +10,6 @@
 #include "../RangeFinding.h"
 
 void setup();
-void sensorCheck();
 void powerWheels(int time);
 void testObstacle(std::vector<RangeFinderPacket> obstacles);
 void problemLaser(std::vector<int> clump);
@@ -19,6 +18,8 @@ void problemBumper(int bumper);
 void askGyro();
 void problemGyro(std::vector<int> problem);
 void askLaser(std::vector<RangeFinderPacket>& packets);
+int main();
+void navigate();
 
 
 #endif //SPACEGRANTOLDPI_ROBOTCONTROL_H
