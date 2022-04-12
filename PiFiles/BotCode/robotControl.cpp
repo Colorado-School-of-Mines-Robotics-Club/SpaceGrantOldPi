@@ -6,7 +6,10 @@
 
 //
 bool atBeacon = false;
+//Wheel diameter = 0.16
+float perMeter = 2; //This is the number of revolutions per meter
 
+//RangFinder stuff
 int toClose = 100; //checks if we are seeing an object that is too close implying an obstacle
 int toFar = 1000; //checks if we are seeing an object that is too far implying an obstacle
 int offset = 10; //this is the offset based off of how the angle will affect the distance
@@ -29,7 +32,7 @@ void wheelCallback(int8_t){
     moving = false;
 }
 
-//easy way to power all wheels in the
+//easy way to power all wheels the extra ints can be used for direction
 void powerWheels(float revolutions, int first, int second, int third, int fourth) {
     moving = true;
     Wheel1->move(first*revolutions, wheelCallback);
@@ -64,16 +67,15 @@ void turnBot(float degrees){
 //If we can't use wheel Rotation
 void tankTurn(float degrees){
     powerWheels(degrees,1,-1,-1,1);
-    while(moving);
+    while(moving){}
 }
-
-
-
-
-
 
 void setup() {
     //Do all the checking for arduino to PI communication working/setup
+    Wheel1->setPressureAlertFunction(gotBumped);
+    Wheel2->setPressureAlertFunction(gotBumped);
+    Wheel3->setPressureAlertFunction(gotBumped);
+    Wheel4->setPressureAlertFunction(gotBumped);
 }
 
 //This should be sent into the Sensor-> scan and since it needs to be void it will set the global obstacleInFront
@@ -84,30 +86,49 @@ void checkObstacle(std::vector<RangeFinderPacket> scanPoints) {
             obstacleInFront = true;
         }
     }
+    scanning = false;
     hasScanned = true;
 }
 
 //This is going to be running and waiting for any ping from either the bump or gyro saying there
 //is a problem
-void bumpGyro(){
+void gyroControl(){
     /*if problem
      * setObstacle in front to true
-     * stop
+     *
      *
      */
 }
+
+//This is called anytime we get a bump and its going to go backwards a fourth of a meter
+void gotBumped(){
+    stopWheels();
+    obstacleInFront = true;
+    powerWheels(perMeter/4,-1,-1,-1,-1);
+    while(moving);
+}
+
+//write obstacle avoidence stuff here when entered there is an obstacle in front
+void avoidObstacle(){
+
+}
+
+
 
 //Navigation algorithm
 void navigate() {
     if(!scanning){
         sensor->scan(checkObstacle);
-        scanning;
+        scanning = true;
     }
-
     //we only want to start doing stuff once we have scanned
     if(hasScanned) {
         if (obstacleInFront) {
-
+            return;
+        }
+        else{
+            //we want to move half a meter
+            powerWheels(perMeter/2, 1,1,1,1);
         }
     }
 
@@ -116,10 +137,13 @@ void navigate() {
 
 int main(){
     setup();
-    std::thread sensorThread(bumpGyro);// set up thread for bumpers and gyros we want this always going
+    std::thread sensorThread(gyroControl);// set up thread for bumpers and gyros we want this always going
     while(!atBeacon){
         if(!moving){ //if we aren't currently moving run our navigation again
             navigate();
+            if(obstacleInFront) {
+                avoidObstacle();
+            }
         }
     }
 
