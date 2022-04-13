@@ -4,10 +4,12 @@
 
 #include "robotControl.h"
 
-//
+// if we get to Beacon we are done
 bool atBeacon = false;
-//Wheel diameter = 0.16
-float perMeter = 2; //This is the number of revolutions per meter
+//Gyro stuff
+float initial_X =0;
+float initial_Y =0;
+float initial_Z =0;
 
 //RangFinder stuff
 int toClose = 100; //checks if we are seeing an object that is too close implying an obstacle
@@ -19,11 +21,12 @@ bool scanning = false; //Tells us whether we should send a scan
 bool hasScanned = false; //this tells us if we have scanned the current area that our bot is facing if it is not true we should be
 // waiting for the scan before we move
 
-
+//Movement stuff
 bool obstacleInFront = false; //Is there an Obstacle in front of us
 bool moving = false; //are we moving
 
-
+//Wheel diameter = 0.16
+float perMeter = 2; //This is the number of revolutions per meter
 
 
 
@@ -76,6 +79,12 @@ void setup() {
     Wheel2->setPressureAlertFunction(gotBumped);
     Wheel3->setPressureAlertFunction(gotBumped);
     Wheel4->setPressureAlertFunction(gotBumped);
+    sensor = new Sensor();
+    Vector3 initial = sensor->getRotation();
+    initial_X = initial.x;
+    initial_Y = initial.y;
+    initial_Z = initial.z;
+
 }
 
 //This should be sent into the Sensor-> scan and since it needs to be void it will set the global obstacleInFront
@@ -90,8 +99,7 @@ void checkObstacle(std::vector<RangeFinderPacket> scanPoints) {
     hasScanned = true;
 }
 
-//This is going to be running and waiting for any ping from either the bump or gyro saying there
-//is a problem
+//This is running in a separate thread and should be checking gyro every
 void gyroControl(){
     /*if problem
      * setObstacle in front to true
