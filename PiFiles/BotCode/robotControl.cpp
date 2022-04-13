@@ -7,9 +7,9 @@
 // if we get to Beacon we are done
 bool atBeacon = false;
 //Gyro stuff
-float initial_X =0;
-float initial_Y =0;
-float initial_Z =0;
+float initialX =0;
+float initialY =0;
+float initialZ =0;
 
 //RangFinder stuff
 int toClose = 100; //checks if we are seeing an object that is too close implying an obstacle
@@ -29,6 +29,31 @@ bool moving = false; //are we moving
 float perMeter = 2; //This is the number of revolutions per meter
 
 
+void setup() {
+    // General gpio initialization
+    if(gpioInitialise() < 0){
+        std::cout << "GPIO failed to initialize!" << std::endl;
+        return -1;
+    }else{
+        std::cout << "GPIO initialized!" << std::endl;
+    }
+    sensor = new Sensor();
+    //Do all the checking for arduino to PI communication working/setup
+    Wheel1 = new Wheel(); //These need to be set correctly to the bus and all that
+    Wheel2 = new Wheel();
+    Wheel3 = new Wheel();
+    Wheel4 = new Wheel()
+    Wheel1->setPressureAlertFunction(gotBumped);
+    Wheel2->setPressureAlertFunction(gotBumped);
+    Wheel3->setPressureAlertFunction(gotBumped);
+    Wheel4->setPressureAlertFunction(gotBumped);
+
+    Vector3 initial = sensor->getRotation();
+    initialX = initial.x;
+    initialY = initial.y;
+    initialZ = initial.z;
+
+}
 
 //Once the wheel is done moving set moving to false
 void wheelCallback(int8_t){
@@ -73,19 +98,7 @@ void tankTurn(float degrees){
     while(moving){}
 }
 
-void setup() {
-    //Do all the checking for arduino to PI communication working/setup
-    Wheel1->setPressureAlertFunction(gotBumped);
-    Wheel2->setPressureAlertFunction(gotBumped);
-    Wheel3->setPressureAlertFunction(gotBumped);
-    Wheel4->setPressureAlertFunction(gotBumped);
-    sensor = new Sensor();
-    Vector3 initial = sensor->getRotation();
-    initial_X = initial.x;
-    initial_Y = initial.y;
-    initial_Z = initial.z;
 
-}
 
 //This should be sent into the Sensor-> scan and since it needs to be void it will set the global obstacleInFront
 //to whether there is an obstacle
@@ -114,6 +127,7 @@ void gotBumped(){
     obstacleInFront = true;
     powerWheels(perMeter/4,-1,-1,-1,-1);
     while(moving);
+    avoidObstacle();
 }
 
 //write obstacle avoidence stuff here when entered there is an obstacle in front
