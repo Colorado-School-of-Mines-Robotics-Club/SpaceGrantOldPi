@@ -3,6 +3,7 @@
 //
 
 #include "robotControl.h"
+#define dist(A, B, N) A - B > N - (A - B - 1) ? fmin(A - B, N - (A - B - 1)) : -fmin(A - B, N - (A - B - 1))
 
 // if we get to Beacon we are done
 bool atBeacon = false;
@@ -66,11 +67,13 @@ void wheelCallback(int8_t){
 //easy way to power all wheels the extra ints can be used for direction
 void powerWheels(float revolutions, float first, float second, float third, float fourth) {
     moving = true;
-    Wheel1->move(first*revolutions, wheelCallback);
-    Wheel2->move(second*revolutions, wheelCallback);
-    Wheel3->move(third*revolutions, wheelCallback);
-    Wheel4->move(fourth*revolutions, wheelCallback);
+    Wheel1->move(first * revolutions, wheelCallback);
+    Wheel2->move(second * revolutions, wheelCallback);
+    Wheel3->move(third * revolutions, wheelCallback);
+    Wheel4->move(fourth * revolutions, wheelCallback);
 }
+
+
 //for stopping
 void stopWheels(){
     moving = false;
@@ -82,20 +85,26 @@ void stopWheels(){
 
 //turning the bot using the rotation of the wheels
 void turnBot(float degrees){
+    float startingZ = sensor->getRotation().z; //The initial rotation
     moving = true;
     Wheel1->turnWheel(90, wheelCallback);
     Wheel3->turnWheel(-90,wheelCallback);
     while(moving){} //Wait until wheel turning done
-    powerWheels(degrees,1,-1,1,1);//THIS NEEDS TO CHANGE AND DO SOME MATH TO FIGURE OUT
-    //HOW MANY ROTATIONS PER DEGREE
-    while(moving){} //wait until bot rotation done
+    float finishingZ = sensor->getRotation().z + degrees; //The final Rotation we want
+    float currentDirection = degrees/std::abs(degrees); //Gets either 1 or -1
+    float rotationDiff = abs(dist(finishingZ,startingZ,360)); //This gets our absolute difference
+    powerWheels(200*currentDirection,1,-1,1,1);//Turns on the wheels to go for a while
+    while(rotationDiff > 5){ //This goes until we are within 5 degrees of our initial tolerance
+        usleep(2); //Sleeps for 2 milliseconds
+        rotationDiff = std::abs(finishingZ-sensor->getRotation().z); //Checking our current situation
+    }
+    stopWheels();
     Wheel1->turnWheel(-90, wheelCallback); //Turning back to normal
     Wheel3->turnWheel(90, wheelCallback); //Turning back to normal
     while(moving){}
-
 }
 
-//If we can't use wheel Rotation
+//If we can't use wheel Rotation take the stuff from other turn except the rotating wheels
 void tankTurn(float degrees){
     powerWheels(degrees,1,-1,-1,1);
     while(moving){}
