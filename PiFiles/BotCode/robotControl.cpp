@@ -92,11 +92,11 @@ void turnBot(float degrees){
     while(moving){} //Wait until wheel turning done
     float finishingZ = sensor->getRotation().z + degrees; //The final Rotation we want
     float currentDirection = degrees/std::abs(degrees); //Gets either 1 or -1
-    float rotationDiff = abs(dist(finishingZ,startingZ,360)); //This gets our absolute difference
+    float rotationDiff = std::abs(dist(finishingZ,startingZ,360)); //This gets our absolute difference
     powerWheels(200*currentDirection,1,-1,1,1);//Turns on the wheels to go for a while
     while(rotationDiff > 5){ //This goes until we are within 5 degrees of our initial tolerance
         usleep(2); //Sleeps for 2 milliseconds
-        rotationDiff = std::abs(finishingZ-sensor->getRotation().z); //Checking our current situation
+        rotationDiff = std::abs(dist(finishingZ,sensor->getRotation().z,360)); //Checking our current situation
     }
     stopWheels();
     Wheel1->turnWheel(-90, wheelCallback); //Turning back to normal
