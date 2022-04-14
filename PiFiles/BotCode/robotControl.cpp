@@ -99,6 +99,7 @@ void turnBot(float degrees){
         rotationDiff = std::abs(dist(finishingZ,sensor->getRotation().z,360)); //Checking our current situation
     }
     stopWheels();
+    moving = true;
     Wheel1->turnWheel(-90, wheelCallback); //Turning back to normal
     Wheel3->turnWheel(90, wheelCallback); //Turning back to normal
     while(moving){}
