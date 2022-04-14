@@ -191,18 +191,14 @@ void adjustToBeacon(){
 
 //Navigation algorithm
 void navigate() {
-    if(!scanning){
-        doScan();
+    doScan();
+    //Once we done scanning check if theres an obstacle
+    if (obstacleInFront) {
+        avoidObstacle();
     }
-    //we only want to start doing stuff once we have scanned
-    if(hasScanned) {
-        if (obstacleInFront) {
-            return;
-        }
-        else{
-            //we want to move half a meter
-            powerWheels(perMeter/2, 1,1,1,1);
-        }
+    else {
+        //we want to move half a meter
+        powerWheels(perMeter / 2, 1, 1, 1, 1);
     }
 
 
@@ -214,9 +210,6 @@ int main(){
     while(!atBeacon){
         if(!moving){ //if we aren't currently moving run our navigation again
             navigate();
-            if(obstacleInFront) {
-                avoidObstacle();
-            }
         }
     }
 
