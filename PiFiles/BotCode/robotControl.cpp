@@ -20,6 +20,9 @@ int offset = 10; //this is the offset based off of how the angle will affect the
 bool scanning = false; //Tells us whether we should send a scan
 bool hasScanned = false; //this tells us if we have scanned the current area that our bot is facing if it is not true we should be
 // waiting for the scan before we move
+int direction = -1; //Really bad way to do this but for now if this is -1 we default
+//to avoid left first and if 1 we default to right would be good if we could replace so
+//we default to go towards the beacon
 
 //Movement stuff
 bool obstacleInFront = false; //Is there an Obstacle in front of us
@@ -33,16 +36,16 @@ void setup() {
     // General gpio initialization
     if(gpioInitialise() < 0){
         std::cout << "GPIO failed to initialize!" << std::endl;
-        return -1;
     }else{
         std::cout << "GPIO initialized!" << std::endl;
     }
     sensor = new Sensor();
     //Do all the checking for arduino to PI communication working/setup
-    Wheel1 = new Wheel(); //These need to be set correctly to the bus and all that
+    /*Wheel1 = new Wheel(); //These need to be set correctly to the bus and all that
     Wheel2 = new Wheel();
     Wheel3 = new Wheel();
     Wheel4 = new Wheel()
+     */
     Wheel1->setPressureAlertFunction(gotBumped);
     Wheel2->setPressureAlertFunction(gotBumped);
     Wheel3->setPressureAlertFunction(gotBumped);
@@ -112,13 +115,10 @@ void checkObstacle(std::vector<RangeFinderPacket> scanPoints) {
     hasScanned = true;
 }
 
-//This is running in a separate thread and should be checking gyro every
+//This is running in a separate thread and should be checking gyro every pit
 void gyroControl(){
-    /*if problem
-     * setObstacle in front to true
-     *
-     *
-     */
+
+
 }
 
 //This is called anytime we get a bump and its going to go backwards a fourth of a meter
@@ -129,9 +129,49 @@ void gotBumped(){
     while(moving);
     avoidObstacle();
 }
+//Call when want to Scan will wait until done scanning
+void doScan(){
+    scanning = true;
+    sensor->scan(checkObstacle);
+    while(scanning){} //wait till done scanning
+}
 
 //write obstacle avoidence stuff here when entered there is an obstacle in front
 void avoidObstacle(){
+    turnBot(-90*direction); //Should turn 90 degrees
+    obstacleInFront = false;
+    doScan();
+    if(obstacleInFront) {
+        turnBot(180*direction); //if there was an obstacle we need to check other side
+        obstacleInFront = false;
+        doScan();
+        if (obstacleInFront) {//If we get here it means we are boxed in and need to back up
+            turnBot(-90*direction);
+            powerWheels(perMeter / 4, -1, -1, -1, -1);
+            avoidObstacle(); //recall and try to go from there
+        }
+        powerWheels(perMeter/2,1,1,1,1);
+        turnBot(-90*direction); //Turn back to forward
+    }
+    powerWheels(perMeter/2,1,1,1,1);
+    direction = -direction; //flipDirection
+    turnBot(-90*direction); //Turn back to forward
+}
+//This should adjust to Beacon test a little to make sure its not turning the opposite direction
+void adjustToBeacon(){
+    float currentBeaconHeading = sensor->getHeading();
+    float currentBotHeading = sensor->getRotation().z - initialZ; //This gets our Bot Heading
+    float degreesToAdjust = currentBeaconHeading-currentBotHeading;
+    if(degreesToAdjust < 0){
+        while(currentBeaconHeading-(sensor->getRotation().z) < -1){
+            turnBot(1);
+        }
+    }
+    else{
+        while(currentBeaconHeading-(sensor->getRotation().z) > 1){
+            turnBot(-1);
+        }
+    }
 
 }
 
@@ -140,8 +180,7 @@ void avoidObstacle(){
 //Navigation algorithm
 void navigate() {
     if(!scanning){
-        sensor->scan(checkObstacle);
-        scanning = true;
+        doScan();
     }
     //we only want to start doing stuff once we have scanned
     if(hasScanned) {

@@ -15,6 +15,8 @@ void testObstacle(std::vector<RangeFinderPacket> obstacles);
 int main();
 void navigate();
 void gotBumped();
+void avoidObstacle();
+void doScan();
 
 
 #endif //SPACEGRANTOLDPI_ROBOTCONTROL_H
