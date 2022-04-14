@@ -133,12 +133,11 @@ void gyroControl(){
     while(true) {
         Vector3 gyro = sensor->getRotation();
         if(std::abs(gyro.x - initialX) >= xThresh) {
-        gotBumped();
-        return;
-    }
-    if(std::abs(gyro.y - initialY) >= yThresh) {
-        gotBumped();
-    }
+            gotBumped();
+        }
+        if(std::abs(gyro.y - initialY) >= yThresh) {
+            gotBumped();
+        }
     }
    
 }
