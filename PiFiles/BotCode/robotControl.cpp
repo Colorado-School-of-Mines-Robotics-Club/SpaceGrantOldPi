@@ -126,8 +126,20 @@ void checkObstacle(std::vector<RangeFinderPacket> scanPoints) {
 
 //This is running in a separate thread and should be checking gyro every pit
 void gyroControl(){
-
-
+    
+    float xThresh = 10.0;
+    float yThresh = 10.0;
+    while(true) {
+        Vector3 gyro = sensor->getRotation();
+        if(abs(gyro.x - initialX) >= xThresh) {
+        gotBumped();
+        return;
+    }
+    if(abs(gyro.y - initialY) >= yThresh) {
+        gotBumped();
+    }
+    }
+   
 }
 
 //This is called anytime we get a bump and its going to go backwards a fourth of a meter

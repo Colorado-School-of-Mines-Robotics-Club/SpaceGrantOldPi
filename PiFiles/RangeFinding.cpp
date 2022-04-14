@@ -71,5 +71,6 @@ vector<Clump>* RangeFinding::RangeFinder (vector<RangeFinderPacket> data){
             returnClumps->push_back(c);
         }
     }
+    delete clumps;
     return returnClumps;
 }
