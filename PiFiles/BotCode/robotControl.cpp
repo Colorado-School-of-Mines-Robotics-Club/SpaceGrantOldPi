@@ -64,12 +64,12 @@ void wheelCallback(int8_t){
 }
 
 //easy way to power all wheels the extra ints can be used for direction
-void powerWheels(float revolutions, int first, int second, int third, int fourth) {
+void powerWheels(float revolutions, float first, float second, float third, float fourth) {
     moving = true;
     Wheel1->move(first*revolutions, wheelCallback);
-    Wheel2->move(first*revolutions, wheelCallback);
-    Wheel3->move(first*revolutions, wheelCallback);
-    Wheel4->move(first*revolutions, wheelCallback);
+    Wheel2->move(second*revolutions, wheelCallback);
+    Wheel3->move(third*revolutions, wheelCallback);
+    Wheel4->move(fourth*revolutions, wheelCallback);
 }
 //for stopping
 void stopWheels(){
