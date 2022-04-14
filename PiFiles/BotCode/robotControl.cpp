@@ -181,19 +181,9 @@ void avoidObstacle(){
 //This should adjust to Beacon test a little to make sure its not turning the opposite direction
 void adjustToBeacon(){
     float currentBeaconHeading = sensor->getHeading();
-    float currentBotHeading = sensor->getRotation().z - initialZ; //This gets our Bot Heading
+    float currentBotHeading = sensor->getRotation().z; //This gets our Bot Heading
     float degreesToAdjust = currentBeaconHeading-currentBotHeading;
-    if(degreesToAdjust < 0){
-        while(currentBeaconHeading-(sensor->getRotation().z) < -1){
-            turnBot(1);
-        }
-    }
-    else{
-        while(currentBeaconHeading-(sensor->getRotation().z) > 1){
-            turnBot(-1);
-        }
-    }
-
+    turnBot(degreesToAdjust);
 }
 
 
