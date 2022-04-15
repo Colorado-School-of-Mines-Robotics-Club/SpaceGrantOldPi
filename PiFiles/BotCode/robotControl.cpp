@@ -65,7 +65,7 @@ void wheelCallback(int8_t){
 }
 
 //easy way to power all wheels the extra ints can be used for direction
-void powerWheels(float revolutions, float first, float second, float third, float fourth) {
+void powerWheels(float revolutions, int first, int second, int third, int fourth) {
     moving = true;
     sensor->moveWheel(first * revolutions, wheelCallback,0);
     sensor->moveWheel(second * revolutions, wheelCallback,1);
