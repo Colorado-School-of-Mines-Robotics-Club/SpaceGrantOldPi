@@ -339,10 +339,10 @@ private:
 // Go ahead and fix it if you can
 extern Sensor* SENSOR_NAME;
 
-extern Wheel* WHEEL1;
-extern Wheel* WHEEL2;
-extern Wheel* WHEEL3;
-extern Wheel* WHEEL4;
+//extern Wheel* WHEEL1;
+//extern Wheel* WHEEL2;
+//extern Wheel* WHEEL3;
+//extern Wheel* WHEEL4;
 
 inline void interrupt(int gpio, int level, uint32_t tick){
 	if(level != 1) return;
