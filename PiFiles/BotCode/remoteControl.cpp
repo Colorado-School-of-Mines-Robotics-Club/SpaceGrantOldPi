@@ -7,7 +7,6 @@
 #include <iostream>
 #include <unistd.h>  /* only for sleep() */
 
-#include "robotControl.cpp"
 #include "robotControl.h"
 
 
