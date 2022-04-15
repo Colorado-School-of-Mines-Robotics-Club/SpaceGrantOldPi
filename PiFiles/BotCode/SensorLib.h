@@ -173,6 +173,11 @@ public:
 	void handleScan(int pin, int level, uint32_t tick);
 
 
+	//WHEEL FUNCTIONS go below here
+	//Wheel int should be 0,1,2,3
+	void moveWheel(float revolutions, std::function<void(int8_t)> callback, int Wheel);
+
+
 private:
 	uint8_t _addr;
 	int _fd;

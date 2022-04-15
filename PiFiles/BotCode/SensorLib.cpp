@@ -205,6 +205,7 @@ void Sensor::handleScan(int pin, int level, uint32_t tick) {
     getAngle(2*scanAngle*totalReceived/dataRequired - scanAngle, _callback);
 }
 
+
 void Sensor::intHandler(int pin, int level, uint32_t tick){
     uint16_t status = 0;
     readRegister(RESPONSE_REGISTER,(char*)&status, 2) //Status gets set to the response_register
@@ -213,46 +214,7 @@ void Sensor::intHandler(int pin, int level, uint32_t tick){
     }
 
 
-/*tcflush(arduinoPort, TCIOFLUSH);
-	uint8_t txBuffer[2] = {1, REQUEST_REGISTER};
-	write(arduinoPort, txBuffer, 2);
 
-	std::vector<RangeFinderPacket> data;
-
-	while(true){
-		uint8_t packetInfo[2];
-		read(arduinoPort, packetInfo, 2);
-
-		int received = 0;
-		uint8_t checksum = packetInfo[0];
-
-		data.resize(packetInfo[0]);
-		for(uint8_t i = 0; i < packetInfo[0]; i++){
-			received += read(arduinoPort, (uint8_t*)&(data[i].angle), 4);
-			received += read(arduinoPort, (uint8_t*)&(data[i].distance), 2);
-
-			for(uint8_t j = 0; j < sizeof(float); j++){
-				checksum += *(((uint8_t*)&(data[i].angle)) + j);
-			}
-			for(uint8_t j = 0; j < sizeof(uint16_t); j++){
-				checksum += *(((uint8_t*)&(data[i].distance)) + j);
-			}
-		}
-
-		std::cout << "Received: " << received << std::endl;
-
-		uint8_t checksumResponse = checksum != packetInfo[1];
-		write(arduinoPort, &checksumResponse, 1);
-
-		if(!checksumResponse){
-			std::cout << "Checksum passed" << std::endl;
-			break;
-		}
-
-		std::cout << "Checksum failed" << std::endl;
-	}
-
-	_callback(data);*/
 }
 
 
@@ -270,6 +232,11 @@ uint8_t Sensor::getRSSI(){
 void Sensor::getHeadingRSSI(float& heading, uint8_t& rssi){
 	heading = getHeading();
 	rssi = getRSSI();
+}
+
+
+void Sensor::moveWheel(float revolutions, std::function<void(int8_t)> callback, int Wheel) {
+
 }
 
 
