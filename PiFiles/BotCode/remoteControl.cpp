@@ -1,7 +1,8 @@
 //
 // Created by Shane on 4/15/2022.
 //
-
+#ifndef remoteControl_cpp
+#define remoteControl_cpp
 #include <ncurses.h>
 #include <iostream>
 #include <unistd.h>  /* only for sleep() */
@@ -79,3 +80,5 @@ int main(void)
         }
     }
 }
+
+#endif
