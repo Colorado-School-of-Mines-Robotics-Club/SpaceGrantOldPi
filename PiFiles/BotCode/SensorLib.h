@@ -37,8 +37,9 @@
 #define GET_ANGLE_REGISTER 0x03
 #define GET_HEADING_REGISTER 0x04
 #define GET_RSSI_REGISTER 0x05
-#define REQUEST_REGISTER 0x06
-#define SENSOR_GET_ROTATION_REGISTER 0x07
+#define SCAN_RESPONSE_REGISTER 0x06
+#define GET_ROTATION_REGISTER 0x07
+#define POLL_REGISTER 0x08
 
 #define TURN_REGISTER 0x09
 #define RESET_ROTATION_REGISTER 0x0A
@@ -217,6 +218,46 @@ public:
     void setPressureAlertFunction(std::function<void()> callback);
 
 
+    // Turns on the drive motor
+    // The motor will not stop until stop() or move() are called
+    void drive(int8_t Wheel);
+
+    // Stops the drive motor
+    // Designed to be used with drive but will also stop move()
+    void stop(int8_t Wheel);
+
+
+    // Turns the wheel until it reaches the limit switch
+    // Arguments:
+    //	callback -
+    //		function that will be run when the wheel has completed or failed the operation
+    //		this function should take an argument of type int8_t
+    //		This argument is the response code from the arduino. >0 means success, otherwise failed
+    //		Currently this will never actually be a fail but I wanted to keep the support
+    //  wheel -
+    //      this is the wheel we are resetting
+    //
+    // Returns 0 if sucessful - othewise ERROR_BUSY
+    int8_t resetRotation(std::function<void(int8_t)> callback, int8_t Wheel);
+
+
+    // Sets the absolute rotation of the wheel
+    // Arguments:
+    //	degrees -
+    //		Amount of degrees to turn the wheel
+    //
+    //	callback -
+    //		function that will be run when the wheel has completed or failed the operation
+    //		this function should take an argument of type int8_t
+    //		This argument is the response code from the arduino. >0 means success, otherwise failed
+    //		Currently this will never actually be a fail but I wanted to keep the support
+    //
+    // Returns 0 if sucessful - othewise ERROR_BUSY
+    int8_t setRotation(float degrees, std::function<void(int8_t)> callback, int8_t Wheel);
+
+
+
+
 private:
 	uint8_t _addr;
 	int _fd;
@@ -246,96 +287,36 @@ private:
 	
 	
 	
-class Wheel{ 
-public: 
-	
-
-	Wheel(uint8_t address, uint8_t bus, uint8_t interruptPin); 
-	~Wheel();
-
-	uint8_t interruptPin;
+class Wheel {
+public:
 
 
+    Wheel(uint8_t address, uint8_t bus, uint8_t interruptPin);
 
+    ~Wheel();
 
-	// Turns the wheel until it reaches the limit switch 
-	// Arguments:
-	//	callback -
-	//		function that will be run when the wheel has completed or failed the operation
-	//		this function should take an argument of type int8_t
-	//		This argument is the response code from the arduino. >0 means success, otherwise failed
-	//		Currently this will never actually be a fail but I wanted to keep the support
-	//
-	// Returns 0 if sucessful - othewise ERROR_BUSY 
-	int8_t resetRotation(std::function<void(int8_t)> callback);
-
-
-
-	// Sets the absolute rotation of the wheel
-	// Arguments:
-	//	degrees - 
-	//		Amount of degrees to turn the wheel
-	//
-	//	callback -
-	//		function that will be run when the wheel has completed or failed the operation
-	//		this function should take an argument of type int8_t
-	//		This argument is the response code from the arduino. >0 means success, otherwise failed
-	//		Currently this will never actually be a fail but I wanted to keep the support
-	//
-	// Returns 0 if sucessful - othewise ERROR_BUSY 
-	int8_t setRotation(float degrees, std::function<void(int8_t)> callback);
-
-
-	// Returns the current rotation of the wheel in degrees
-	// Try to limit how many times this is called or run it asyncronously as I2C is a relatively slow interface
-	float getRotation();
-
-
-	
+    uint8_t interruptPin;
 
 
 
 
-	// Turns on the drive motor
-	// The motor will not stop until stop() or move() are called
-	void drive();
 
 
-	// Stops the drive motor
-	// Designed to be used with drive but will also stop move()
-	void stop();
+
+    // Returns the current rotation of the wheel in degrees
+    // Try to limit how many times this is called or run it asyncronously as I2C is a relatively slow interface
+    float getRotation();
 
 
-	// Returns the current position of the drive motor in revolutions
-	// Try to limit how many times this is called or run it asyncronously as I2C is a relatively slow interface
-	float getPosition();
+    // Returns the current position of the drive motor in revolutions
+    // Try to limit how many times this is called or run it asyncronously as I2C is a relatively slow interface
+    float getPosition();
 
-	bool getPressureSensor();
+    bool getPressureSensor();
 
-	// Internal functions
-	// intHandler handles any interrupts caused by this wheel
-	// intHandler basically just calls intCallback
-
-private:
-	// I2C information
-	uint8_t _bus;
-	uint8_t _address;
-
-
-	// intCallback saves the callback function
-	std::function<void(int8_t)> _turnIntCallback;
-	std::function<void(int8_t)> _driveIntCallback;
-	std::function<void()> _pushIntCallback;
-
-	// Helper functions for I2C
-	// writeData writes data to register reg
-	// writeRegister will write data to register reg or just sends reg
-	// readData reads data from a register and returns a pointer to the data
-	void writeData(uint8_t reg, void* data, uint8_t length);
-	void writeRegister(uint8_t reg);
-	void writeRegister(uint8_t reg, uint8_t data);
-	void* readData(uint8_t reg, uint8_t length);
-	
+    // Internal functions
+    // intHandler handles any interrupts caused by this wheel
+    // intHandler basically just calls intCallback
 
 };
 

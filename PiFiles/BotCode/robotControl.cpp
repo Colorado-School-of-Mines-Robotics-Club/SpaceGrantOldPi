@@ -48,10 +48,7 @@ void setup() {
     Wheel3 = new Wheel(0x1C,1,8);    
     Wheel4 = new Wheel(0x1D,1,23);
      
-    Wheel1->setPressureAlertFunction(gotBumped);
-    Wheel2->setPressureAlertFunction(gotBumped);
-    Wheel3->setPressureAlertFunction(gotBumped);
-    Wheel4->setPressureAlertFunction(gotBumped);
+    sensor->setPressureAlertFunction(gotBumped);
 
     Vector3 initial = sensor->getRotation();
     initialX = initial.x;
@@ -78,10 +75,10 @@ void powerWheels(float revolutions, float first, float second, float third, floa
 //for stopping
 void stopWheels(){
     moving = false;
-    Wheel1->stop();
-    Wheel2->stop();
-    Wheel3->stop();
-    Wheel4->stop();
+    sensor->stop(0);
+    sensor->stop(1);
+    sensor->stop(2);
+    sensor->stop(3);
 }
 
 //turning the bot using the rotation of the wheels
