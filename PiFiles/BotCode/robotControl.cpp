@@ -75,10 +75,10 @@ void powerWheels(float revolutions, float first, float second, float third, floa
 //for stopping
 void stopWheels(){
     moving = false;
-    Wheel1->stop();
-    Wheel2->stop();
-    Wheel3->stop();
-    Wheel4->stop();
+    sensor->stop(0);
+    sensor->stop(1);
+    sensor->stop(2);
+    sensor->stop(3);
 }
 
 //turning the bot using the rotation of the wheels

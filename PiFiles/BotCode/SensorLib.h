@@ -219,11 +219,11 @@ public:
 
     // Turns on the drive motor
     // The motor will not stop until stop() or move() are called
-    void drive();
+    void drive(int8_t Wheel);
 
     // Stops the drive motor
     // Designed to be used with drive but will also stop move()
-    void stop();
+    void stop(int8_t Wheel);
 
 
 private:
