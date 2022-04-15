@@ -8,6 +8,8 @@
 
 #include "robotControl.cpp"
 #include "SensorLib.cpp"
+#include "SensorLib.h"
+#include "robotControl.h"
 
 
 void rMove(int direction) {
