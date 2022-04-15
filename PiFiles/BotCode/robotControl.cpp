@@ -144,7 +144,7 @@ void gyroControl(){
 }
 
 //This is called anytime we get a bump and its going to go backwards a fourth of a meter
-void gotBumped(){
+void gotBumped(uint8_t wheelNum){
     avoiding = true;
     stopWheels();
     obstacleInFront = true;

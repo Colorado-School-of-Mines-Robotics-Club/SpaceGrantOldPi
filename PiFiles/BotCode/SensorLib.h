@@ -175,7 +175,11 @@ public:
 
 	//WHEEL FUNCTIONS go below here
 	//Wheel int should be 0,1,2,3
+	//moves the wheel for number of revolutions
 	void moveWheel(float revolutions, std::function<void(int8_t)> callback, int Wheel);
+
+	//setting the callback
+    void setPressureAlertFunction(std::function<void()> callback);
 
 
 private:
@@ -222,7 +226,6 @@ public:
 	// 		The function that will be run upon detecting an object
 	//
 	// No return value
-	void setPressureAlertFunction(std::function<void()> callback);
 
 
 	// Turns the wheel a specified amount of degrees
@@ -286,7 +289,7 @@ public:
 	//		Currently this will never actually be a fail but I wanted to keep the support
 	//
 	// Returns 0 if sucessful - othewise ERROR_BUSY 
-	int8_t move(float revolutions, std::function<void(int8_t)> callback);
+
 
 
 	// Turns on the drive motor
@@ -308,7 +311,6 @@ public:
 	// Internal functions
 	// intHandler handles any interrupts caused by this wheel
 	// intHandler basically just calls intCallback
-	void intHandler(int gpio, int level, uint32_t tick);
 
 private:
 	// I2C information

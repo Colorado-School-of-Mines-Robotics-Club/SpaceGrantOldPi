@@ -255,6 +255,9 @@ void Sensor::moveWheel(float revolutions, std::function<void(int8_t)> callback, 
     writeRegister(MOVE_REGISTER,buffer,5);
 }
 
+void Sensor::setPressureAlertFunction(std::function<void()> callback) {
+    _pushIntCallback = callback;
+}
 
 
 
@@ -286,9 +289,6 @@ Wheel::~Wheel(){
 	gpioSetAlertFunc(interruptPin, NULL);
 }
 
-void Wheel::setPressureAlertFunction(std::function<void()> fcn){
-	_pushIntCallback = fcn;
-}
 
 void Wheel::writeData(uint8_t reg, void* data, uint8_t length){
 	// Open I2C bus
@@ -402,12 +402,6 @@ float Wheel::getRotation(){
 }
 
 
-int8_t Wheel::move(float revolutions, std::function<void(int8_t)> callback){
-	writeData(MOVE_REGISTER, &revolutions, sizeof(revolutions));
-
-	_driveIntCallback = callback;
-	return 0;
-}
 
 
 void Wheel::drive(){
@@ -435,17 +429,3 @@ bool Wheel::getPressureSensor(){
 }
 
 
-void Wheel::intHandler(int gpio, int level, uint32_t tick){
-	// Get arduino status
-	uint8_t status = *(uint8_t*)readData(RESPONSE_REGISTER, 1);
-
-	if(status & STATUS_TURN_DONE){
-		_turnIntCallback(1);
-	}
-	if(status & STATUS_DRIVE_DONE){
-		_driveIntCallback(1);
-	}
-	if(status & STATUS_PUSH_BUTTON){
-		_pushIntCallback();
-	}
-}
