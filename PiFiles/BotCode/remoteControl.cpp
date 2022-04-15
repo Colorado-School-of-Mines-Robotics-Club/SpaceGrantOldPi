@@ -2,45 +2,74 @@
 // Created by Shane on 4/15/2022.
 //
 
-#include <vector>
-//#include "SensorLib.h"
-//#include "robotControl.h"
-#include <conio.h>
+#include <ncurses.h>
+#include <iostream>
+#include <unistd.h>  /* only for sleep() */
+#include "robotControl.h"
+#include "SensorLib.h"
 
+void rMove(int direction) {
+    powerWheels(0.25 * direction,1,1,1,1);
+    printw("Moving!\n");
 
+}
 
-using namespace std;
+void rTurn(int direction) {
+    powerWheels(0.1,1 * direction, 1 * direction, -1 * direction, -1  * direction);
+    printw("Turning!\n");
+}
 
-void turn(int direction) {
-//    powerWheels(0.1, 1 * direction, 1 * direction, -1 * direction, -1 * direction)
-    cout << "Turning..." << endl;
-};
-
-void move(int direction) {
-//    powerWheels(0.25 * direction,1,1,1,1);
-    cout << "Moving..." << endl;
+void chooseAction(int cmd) {
+    switch(cmd) {
+        case 97:
+            rTurn(1);
+            break;
+        case 100:
+            rTurn(-1);
+            break;
+        case 119:
+            rMove(1);
+            break;
+        case 115:
+            rMove(-1);
+            break;
+        case 48:
+            endwin();
+            _exit(0);
+    }
 }
 
 
-int main {
-//    setup();
-    char cmd;
-    while(cmd != '0') {
-        cmd = _getch();
-        switch(cmd) {
-            case 'w':
-                move(1);
-                break;
-            case 's':
-                move(-1);
-                break;
-            case 'a':
-                turn(1);
-                break;
-            case 'd':
-                turn(-1);
-                break;
+
+int kbhit(void)
+{
+    int ch = getch();
+
+    if (ch != ERR) {
+        ungetch(ch);
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int main(void)
+{
+    setup();
+    initscr();
+
+    cbreak();
+    noecho();
+    nodelay(stdscr, TRUE);
+
+    scrollok(stdscr, TRUE);
+    while (1) {
+        if (kbhit()) {
+            chooseAction(getch());
+            refresh();
+        } else {
+            refresh();
+            sleep(1);
         }
     }
-
 }
