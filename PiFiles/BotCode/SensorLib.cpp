@@ -248,7 +248,7 @@ void Sensor::getHeadingRSSI(float& heading, uint8_t& rssi){
 
 void Sensor::moveWheel(float revolutions, std::function<void(int8_t)> callback, int8_t Wheel) {
     _driveIntCallback = callback;
-    char buffer[sizeof(revolutions) + sizeof(Wheel)]
+    char buffer[sizeof(revolutions) + sizeof(Wheel)];
     buffer[0] = Wheel;
     *(float*)(buffer + sizeof(Wheel)) = revolutions;
     writeRegister(MOVE_REGISTER,buffer,5);
@@ -257,7 +257,7 @@ void Sensor::moveWheel(float revolutions, std::function<void(int8_t)> callback, 
 void Sensor::turnWheel(float degrees, std::function<void(int8_t)> callback, int8_t Wheel){
     _turnIntCallback = callback;
     degrees = degrees/360;
-    char buffer[sizeof(degrees) + sizeof(Wheel)]
+    char buffer[sizeof(degrees) + sizeof(Wheel)];
     buffer[0] = Wheel;
     *(float*)(buffer+sizeof(Wheel)) = degrees;
     writeRegister(TURN_REGISTER,buffer,5);
@@ -265,6 +265,18 @@ void Sensor::turnWheel(float degrees, std::function<void(int8_t)> callback, int8
 
 void Sensor::setPressureAlertFunction(std::function<void()> callback) {
     _pushIntCallback = callback;
+}
+
+void Sensor::drive(int8_t Wheel){
+    char buffer[sizeof(Wheel)];
+    buffer[0] = Wheel;
+    writeRegister(DRIVE_REGISTER, buffer,1);
+}
+
+void Wheel::stop(int8_t Wheel){
+    char buffer[sizeof(Wheel)];
+    buffer[0] = Wheel;
+    writeRegister(STOP_REGISTER,buffer,1);
 }
 
 
@@ -298,79 +310,7 @@ Wheel::~Wheel(){
 }
 
 
-void Wheel::writeData(uint8_t reg, void* data, uint8_t length){
-	// Open I2C bus
-	int8_t handle = i2cOpen(_bus, _address, 0);
 
-	// Make sure connection has been established
-	if(handle < 0){
-		std::cerr << "Unable to connect to wheel at " << (int)_address << std::endl;
-		return;
-	}
-	
-	// Read data
-	i2cWriteI2CBlockData(handle, reg, (char*)data, length);
-
-	// Close I2C bus
-	i2cClose(handle);
-}
-
-void Wheel::writeRegister(uint8_t reg){
-	// Open I2C bus
-	int8_t handle = i2cOpen(_bus, _address, 0);
-
-	// Make sure connection has been established
-	if(handle < 0){
-		std::cerr << "Unable to connect to wheel at " << (int)_address << std::endl;
-		return;
-	}
-	
-	// Read data
-	i2cWriteByte(handle, reg);
-
-	// Close I2C bus
-	i2cClose(handle);
-}
-
-void Wheel::writeRegister(uint8_t reg, uint8_t data){
-	// Open I2C bus
-	int8_t handle = i2cOpen(_bus, _address, 0);
-
-	// Make sure connection has been established
-	if(handle < 0){
-		std::cerr << "Unable to connect to wheel at " << (int)_address << std::endl;
-		return;
-	}
-	
-	// Read data
-	i2cWriteByteData(handle, reg, data);
-
-	// Close I2C bus
-	i2cClose(handle);
-}
-	
-
-void* Wheel::readData(uint8_t reg, uint8_t length){
-	// Open I2C bus
-	int8_t handle = i2cOpen(_bus, _address, 0);
-
-	// Make sure connection has been established
-	if(handle < 0){
-		std::cerr << "Unable to connect to wheel at " << (int)_address << std::endl;
-		return nullptr;
-	}
-	
-	void* data = malloc(length);
-	
-	// Read data
-	i2cReadI2CBlockData(handle, reg, (char*)data, length);
-
-	// Close I2C bus
-	i2cClose(handle);
-
-	return data;
-
-}
 
 
 
@@ -404,13 +344,7 @@ float Wheel::getRotation(){
 
 
 
-void Wheel::drive(){
-	writeRegister(DRIVE_REGISTER);
-}
 
-void Wheel::stop(){
-	writeRegister(STOP_REGISTER);
-}
 
 float Wheel::getPosition(){
 	void* data = readData(GET_POSITION_REGISTER, sizeof(float));
