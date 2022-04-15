@@ -224,8 +224,6 @@ void Sensor::intHandler(int pin, int level, uint32_t tick){
         }
     }
 
-
-
 }
 
 
@@ -273,10 +271,27 @@ void Sensor::drive(int8_t Wheel){
     writeRegister(DRIVE_REGISTER, buffer,1);
 }
 
-void Wheel::stop(int8_t Wheel){
+void Sensor::stop(int8_t Wheel){
     char buffer[sizeof(Wheel)];
     buffer[0] = Wheel;
     writeRegister(STOP_REGISTER,buffer,1);
+}
+
+int8_t Sensor::resetRotation(std::function<void(int8_t)> callback, int8_t Wheel){
+    _turnIntCallback = callback;
+    char buffer[sizeof(Wheel)];
+    buffer[0] = Wheel;
+    writeRegister(RESET_ROTATION_REGISTER, buffer, sizeof(Wheel));
+    return 0;
+}
+
+int8_t Sensor::setRotation(float degrees, std::function<void(int8_t)> callback, int8_t Wheel){
+    degrees = degrees/360;
+    _turnIntCallback = callback;
+    char buffer[sizeof(Wheel)+sizeof(degrees)];
+    buffer[0]= Wheel;
+    *(float*)(buffer+sizeof(Wheel)) = degrees;
+    writeRegister(SET_ROTATION_REGISTER,buffer, 5);
 }
 
 
@@ -308,42 +323,6 @@ Wheel::Wheel(uint8_t address, uint8_t bus, uint8_t interruptPin){
 Wheel::~Wheel(){
 	gpioSetAlertFunc(interruptPin, NULL);
 }
-
-
-
-
-
-
-int8_t Wheel::resetRotation(std::function<void(int8_t)> callback){
-	writeRegister(RESET_ROTATION_REGISTER);
-
-	_turnIntCallback = callback;
-	return 0;
-}
-
-
-
-int8_t Wheel::setRotation(float degrees, std::function<void(int8_t)> callback){
-	degrees = degrees/360;
-
-	writeData(SET_ROTATION_REGISTER, &degrees, sizeof(degrees));
-
-	_turnIntCallback = callback;
-	return 0;
-}
-
-
-float Wheel::getRotation(){
-	void* data = readData(GET_ROTATION_REGISTER, sizeof(float));
-	float output = *(float*)data;
-	free(data);
-
-	return output;
-}
-
-
-
-
 
 
 float Wheel::getPosition(){

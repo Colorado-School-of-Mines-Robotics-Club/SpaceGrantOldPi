@@ -37,8 +37,9 @@
 #define GET_ANGLE_REGISTER 0x03
 #define GET_HEADING_REGISTER 0x04
 #define GET_RSSI_REGISTER 0x05
-#define REQUEST_REGISTER 0x06
-#define SENSOR_GET_ROTATION_REGISTER 0x07
+#define SCAN_RESPONSE_REGISTER 0x06
+#define GET_ROTATION_REGISTER 0x07
+#define POLL_REGISTER 0x08
 
 #define TURN_REGISTER 0x09
 #define RESET_ROTATION_REGISTER 0x0A
@@ -226,6 +227,37 @@ public:
     void stop(int8_t Wheel);
 
 
+    // Turns the wheel until it reaches the limit switch
+    // Arguments:
+    //	callback -
+    //		function that will be run when the wheel has completed or failed the operation
+    //		this function should take an argument of type int8_t
+    //		This argument is the response code from the arduino. >0 means success, otherwise failed
+    //		Currently this will never actually be a fail but I wanted to keep the support
+    //  wheel -
+    //      this is the wheel we are resetting
+    //
+    // Returns 0 if sucessful - othewise ERROR_BUSY
+    int8_t resetRotation(std::function<void(int8_t)> callback, int8_t Wheel);
+
+
+    // Sets the absolute rotation of the wheel
+    // Arguments:
+    //	degrees -
+    //		Amount of degrees to turn the wheel
+    //
+    //	callback -
+    //		function that will be run when the wheel has completed or failed the operation
+    //		this function should take an argument of type int8_t
+    //		This argument is the response code from the arduino. >0 means success, otherwise failed
+    //		Currently this will never actually be a fail but I wanted to keep the support
+    //
+    // Returns 0 if sucessful - othewise ERROR_BUSY
+    int8_t setRotation(float degrees, std::function<void(int8_t)> callback, int8_t Wheel);
+
+
+
+
 private:
 	uint8_t _addr;
 	int _fd;
@@ -266,31 +298,9 @@ public:
     uint8_t interruptPin;
 
 
-    // Turns the wheel until it reaches the limit switch
-    // Arguments:
-    //	callback -
-    //		function that will be run when the wheel has completed or failed the operation
-    //		this function should take an argument of type int8_t
-    //		This argument is the response code from the arduino. >0 means success, otherwise failed
-    //		Currently this will never actually be a fail but I wanted to keep the support
-    //
-    // Returns 0 if sucessful - othewise ERROR_BUSY
-    int8_t resetRotation(std::function<void(int8_t)> callback);
 
 
-    // Sets the absolute rotation of the wheel
-    // Arguments:
-    //	degrees -
-    //		Amount of degrees to turn the wheel
-    //
-    //	callback -
-    //		function that will be run when the wheel has completed or failed the operation
-    //		this function should take an argument of type int8_t
-    //		This argument is the response code from the arduino. >0 means success, otherwise failed
-    //		Currently this will never actually be a fail but I wanted to keep the support
-    //
-    // Returns 0 if sucessful - othewise ERROR_BUSY
-    int8_t setRotation(float degrees, std::function<void(int8_t)> callback);
+
 
 
     // Returns the current rotation of the wheel in degrees
