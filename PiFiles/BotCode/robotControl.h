@@ -12,7 +12,7 @@
 void setup();
 void powerWheels(float revolutions, int first, int second, int third, int fourth);
 void testObstacle(std::vector<RangeFinderPacket> obstacles);
-int main();
+
 void navigate();
 void gotBumped();
 void avoidObstacle();
