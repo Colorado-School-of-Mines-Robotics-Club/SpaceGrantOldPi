@@ -170,7 +170,7 @@ public:
 	void intHandler(int pin, int level, uint32_t tick);
 
 	//Helper function for int handler to handle any scans
-	void handleScan(int pin, int level, unint32_t tick);
+	void handleScan(int pin, int level, uint32_t tick);
 
 
 private:
