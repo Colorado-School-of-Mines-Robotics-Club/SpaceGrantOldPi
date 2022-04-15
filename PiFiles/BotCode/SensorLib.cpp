@@ -200,9 +200,9 @@ void Sensor::handleScan(int pin, int level, uint32_t tick) {
 //        responseData.clear();
 //
 //        return;
-    }
+//    }
 
-    getAngle(2*scanAngle*totalReceived/dataRequired - scanAngle, _callback);
+//    getAngle(2*scanAngle*totalReceived/dataRequired - scanAngle, _callback);
 }
 
 
