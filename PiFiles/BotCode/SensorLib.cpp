@@ -212,7 +212,15 @@ void Sensor::intHandler(int pin, int level, uint32_t tick){
     if(status & STATUS_SCAN_DONE){
         handleScan(pin,level,tick); //handles scan
     }
-
+    if(status & STATUS_TURN_DONE){
+        _turnIntCallback(1);
+    }
+    if(status & STATUS_DRIVE_DONE){
+        _driveIntCallback(1);
+    }
+    if(status & STATUS_PUSH_BUTTON){
+        _pushIntCallback();
+    }
 
 
 }
@@ -240,7 +248,7 @@ void Sensor::moveWheel(float revolutions, std::function<void(int8_t)> callback, 
 	*(uint8_t*)buffer = points;
 	*(float*)(buffer + sizeof(points)) = angle;
      */
-    
+
     char buffer[sizeof(revolutions) + sizeof(Wheel)]
     buffer[0] = Wheel;
     *(float*)(buffer + sizeof(Wheel)) = revolutions;
