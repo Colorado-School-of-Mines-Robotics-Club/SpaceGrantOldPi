@@ -183,6 +183,10 @@ private:
 	int _fd;
 	uint8_t _bus;
 
+	std::function<void(int8_t)> _turnIntCallback;
+	std::function<void(int8_t)> _driveIntCallback;
+	std::function<void()> _pushIntCallback;
+
 	std::fstream arduino;
 	int arduinoPort;
 	
@@ -357,18 +361,6 @@ inline void interrupt(int gpio, int level, uint32_t tick){
 	if(level != 1) return;
 	if(gpio == SENSOR_INT_PIN){
 		SENSOR_NAME->intHandler(gpio, level, tick);
-
-	}else if(gpio == WHEEL1->interruptPin){
-		WHEEL1->intHandler(gpio, level, tick);
-
-	}else if(gpio == WHEEL2->interruptPin){
-		WHEEL2->intHandler(gpio, level, tick);
-
-	}else if(gpio == WHEEL3->interruptPin){
-		WHEEL3->intHandler(gpio, level, tick);
-		
-	}else if(gpio == WHEEL4->interruptPin){
-		WHEEL4->intHandler(gpio, level, tick);
 
 	}
 }
