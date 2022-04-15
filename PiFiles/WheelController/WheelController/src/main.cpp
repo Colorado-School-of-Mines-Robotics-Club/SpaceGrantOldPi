@@ -51,6 +51,7 @@
 //#define REVERSE_DRIVE_ENCODER
 
 #define BAD_ENCODER
+#define BAD_DRIVE_ENCODER
 
 #define dist(A, B, N) A - B > N - (A - B - 1) ? min(A - B, N - (A - B - 1)) : -min(A - B, N - (A - B - 1))
 
@@ -72,6 +73,10 @@ uint8_t lastPressureSensor = HIGH;
 
 #ifdef BAD_ENCODER
 bool turnDirection;
+#endif
+
+#ifdef BAD_DRIVE_ENCODER
+bool driveDirection;
 #endif
 
 void driveEncoderISR();
@@ -215,15 +220,39 @@ void loop() {
     digitalWrite(DRIVE_MOTOR1, HIGH);
     digitalWrite(DRIVE_MOTOR2, LOW);
 
+    #ifdef BAD_DRIVE_ENCODER
+    #ifndef REVERSE_DRIVE_ENCODER
+    driveDirection = 1;
+    #else
+    turnDirection = 0;
+    #endif
+    #endif
+
   }else if(driveMotorPosition < targetDrive - DRIVE_ERROR){
     // Target position is closest if we move in the positive direction
     digitalWrite(DRIVE_MOTOR1, HIGH);
     digitalWrite(DRIVE_MOTOR2, LOW);
 
+    #ifdef BAD_DRIVE_ENCODER
+    #ifndef REVERSE_DRIVE_ENCODER
+    driveDirection = 1;
+    #else
+    turnDirection = 0;
+    #endif
+    #endif
+
   }else if(driveMotorPosition > targetDrive + DRIVE_ERROR){
     // Target position is closest if we move in the negative direction
     digitalWrite(DRIVE_MOTOR1, LOW);
     digitalWrite(DRIVE_MOTOR2, HIGH);
+
+    #ifdef BAD_DRIVE_ENCODER
+    #ifndef REVERSE_DRIVE_ENCODER
+    driveDirection = 0;
+    #else
+    turnDirection = 1;
+    #endif
+    #endif
 
   }else{
     // If we just reached the target position, tell the Pi everything is ok
@@ -368,6 +397,7 @@ void requestEvent(){
 
 // Increments/decrements the position of the drive motor
 void driveEncoderISR(){
+  #ifndef BAD_DRIVE_ENCODER
   #ifndef REVERSE_DRIVE_ENCODER
 
   if(digitalRead(DRIVE_ENCODER2)){
@@ -382,6 +412,16 @@ void driveEncoderISR(){
     driveMotorPosition--;
   }else{
     driveMotorPosition++;
+  }
+
+  #endif
+
+  #else
+
+  if(driveDirection){
+    driveMotorPosition++;
+  }else{
+    driveMotorPosition--;
   }
 
   #endif

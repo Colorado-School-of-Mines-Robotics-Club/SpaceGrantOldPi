@@ -46,8 +46,8 @@ int main(){
 	}*/
 
 	// Also init wheel
-	//Wheel1 = new Wheel(0x1A, 1, 17);
-	//Wheel1->setPressureAlertFunction([](){std::cout << "Pressure Pressed" << std::endl;});
+	Wheel1 = new Wheel(0x1A, 1, 24);
+	Wheel1->setPressureAlertFunction([](){std::cout << "Pressure Pressed" << std::endl;});
 
 	bool exit = true;
 	while(exit){
@@ -56,7 +56,7 @@ int main(){
 		std::cin >> c;
 
 		switch(c){
-		/*case 'r':{
+		case 'r':{
 			float input;
 			std::cout << "Rotate degrees: ";
 			std::cin >> input;
@@ -113,7 +113,7 @@ int main(){
 		case 't':{
 			std::cout << "Turn position: " << Wheel1->getRotation() << std::endl;
 			break;
-		}*/
+		}
 
 		case 'e':{
 			exit = false;
