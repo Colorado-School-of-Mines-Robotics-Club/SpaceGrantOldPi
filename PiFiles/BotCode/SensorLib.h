@@ -174,11 +174,46 @@ public:
 
 
 	//WHEEL FUNCTIONS go below here
-	//Wheel int should be 0,1,2,3
-	//moves the wheel for number of revolutions
+
+
+	//
+    // Moves the wheel a specified number of revolutions
+    // Arguments:
+    //	revolutions -
+    //		Number of revolutions to move
+    //
+    //	callback -
+    //		function that will be run when the wheel has completed or failed the operation
+    //		this function should take an argument oftype int8_t
+    //		This argument is the response code from the arduino. >0 means success, otherwise failed
+    //		Currently this will never actually be a fail but I wanted to keep the support
+    //  Wheel -
+    //      this is which wheel we are moving
+    //      Wheel int should be 0,1,2,3
+    //
+    // Returns 0 if sucessful - othewise ERROR_BUSY
 	void moveWheel(float revolutions, std::function<void(int8_t)> callback, int Wheel);
 
-	//setting the callback
+    // Turns the wheel a specified amount of degrees
+    // Arguments:
+    //	degrees -
+    //		Amount of degrees to turn the wheel
+    //
+    //	callback -
+    //		function that will be run when the wheel has completed or failed the operation
+    //		this function should take an argument of type int8_t
+    //		This argument is the response code from the arduino. >0 means success, otherwise failed
+    //		Currently this will never actually be a fail but I wanted to keep the support
+    //
+    // Returns 0 if sucessful - othewise ERROR_BUSY
+    void turnWheel(float degrees, std::function<void(int8_t)> callback, int8_t Wheel);
+
+    // Sets the callback function which will be run when this wheel's push sensor hits something
+    // Arguments:
+    // 	callback -
+    // 		The function that will be run upon detecting an object
+    //
+    // No return value
     void setPressureAlertFunction(std::function<void()> callback);
 
 
@@ -220,27 +255,7 @@ public:
 
 	uint8_t interruptPin;
 
-	// Sets the callback function which will be run when this wheel's push sensor hits something
-	// Arguments:
-	// 	callback -
-	// 		The function that will be run upon detecting an object
-	//
-	// No return value
 
-
-	// Turns the wheel a specified amount of degrees
-	// Arguments:
-	//	degrees - 
-	//		Amount of degrees to turn the wheel
-	//
-	//	callback -
-	//		function that will be run when the wheel has completed or failed the operation
-	//		this function should take an argument of type int8_t
-	//		This argument is the response code from the arduino. >0 means success, otherwise failed
-	//		Currently this will never actually be a fail but I wanted to keep the support
-	//
-	// Returns 0 if sucessful - othewise ERROR_BUSY 
-	int8_t turnWheel(float degrees, std::function<void(int8_t)> callback);
 
 
 	// Turns the wheel until it reaches the limit switch 
@@ -277,18 +292,7 @@ public:
 
 
 	
-	// Moves the wheel a specified number of revolutions 
-	// Arguments:
-	//	revolutions - 
-	//		Number of revolutions to move
-	//
-	//	callback -
-	//		function that will be run when the wheel has completed or failed the operation
-	//		this function should take an argument oftype int8_t
-	//		This argument is the response code from the arduino. >0 means success, otherwise failed
-	//		Currently this will never actually be a fail but I wanted to keep the support
-	//
-	// Returns 0 if sucessful - othewise ERROR_BUSY 
+
 
 
 

@@ -68,10 +68,10 @@ void wheelCallback(int8_t){
 //easy way to power all wheels the extra ints can be used for direction
 void powerWheels(float revolutions, float first, float second, float third, float fourth) {
     moving = true;
-    Wheel1->move(first * revolutions, wheelCallback);
-    Wheel2->move(second * revolutions, wheelCallback);
-    Wheel3->move(third * revolutions, wheelCallback);
-    Wheel4->move(fourth * revolutions, wheelCallback);
+    sensor->moveWheel(first * revolutions, wheelCallback,0);
+    sensor->moveWheel(second * revolutions, wheelCallback,1);
+    sensor->moveWheel(third * revolutions, wheelCallback,2);
+    sensor->moveWheel(fourth * revolutions, wheelCallback,3);
 }
 
 
@@ -88,8 +88,8 @@ void stopWheels(){
 void turnBot(float degrees){
     float startingZ = sensor->getRotation().z; //The initial rotation
     moving = true;
-    Wheel1->turnWheel(90, wheelCallback);
-    Wheel3->turnWheel(-90,wheelCallback);
+    sensor->turnWheel(90, wheelCallback,0);
+    sensor->turnWheel(-90,wheelCallback,2);
     while(moving){} //Wait until wheel turning done
     float finishingZ = sensor->getRotation().z + degrees; //The final Rotation we want
     float currentDirection = degrees/std::abs(degrees); //Gets either 1 or -1
@@ -101,8 +101,8 @@ void turnBot(float degrees){
     }
     stopWheels();
     moving = true;
-    Wheel1->turnWheel(-90, wheelCallback); //Turning back to normal
-    Wheel3->turnWheel(90, wheelCallback); //Turning back to normal
+    sensor->turnWheel(-90, wheelCallback,0); //Turning back to normal
+    sensor->turnWheel(90, wheelCallback,2); //Turning back to normal
     while(moving){}
 }
 

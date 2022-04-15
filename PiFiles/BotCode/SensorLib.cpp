@@ -247,12 +247,20 @@ void Sensor::getHeadingRSSI(float& heading, uint8_t& rssi){
 
 
 void Sensor::moveWheel(float revolutions, std::function<void(int8_t)> callback, int8_t Wheel) {
-
     _driveIntCallback = callback;
     char buffer[sizeof(revolutions) + sizeof(Wheel)]
     buffer[0] = Wheel;
     *(float*)(buffer + sizeof(Wheel)) = revolutions;
     writeRegister(MOVE_REGISTER,buffer,5);
+}
+
+void Sensor::turnWheel(float degrees, std::function<void(int8_t)> callback, int8_t Wheel){
+    _turnIntCallback = callback;
+    degrees = degrees/360;
+    char buffer[sizeof(degrees) + sizeof(Wheel)]
+    buffer[0] = Wheel;
+    *(float*)(buffer+sizeof(Wheel)) = degrees;
+    writeRegister(TURN_REGISTER,buffer,5);
 }
 
 void Sensor::setPressureAlertFunction(std::function<void()> callback) {
@@ -365,14 +373,6 @@ void* Wheel::readData(uint8_t reg, uint8_t length){
 }
 
 
-int8_t Wheel::turnWheel(float degrees, std::function<void(int8_t)> callback){
-	degrees = degrees/360;
-
-	writeData(TURN_REGISTER, &degrees, sizeof(degrees));
-	
-	_turnIntCallback = callback;
-	return 0;
-}
 
 int8_t Wheel::resetRotation(std::function<void(int8_t)> callback){
 	writeRegister(RESET_ROTATION_REGISTER);
