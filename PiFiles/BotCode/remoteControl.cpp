@@ -5,8 +5,10 @@
 #include <ncurses.h>
 #include <iostream>
 #include <unistd.h>  /* only for sleep() */
-#include "robotControl.h"
-#include "SensorLib.h"
+
+#include "robotControl.cpp"
+#include "SensorLib.cpp"
+
 
 void rMove(int direction) {
     powerWheels(0.25 * direction,1,1,1,1);
@@ -55,6 +57,7 @@ int kbhit(void)
 
 int main(void)
 {
+
     setup();
     initscr();
 
