@@ -171,35 +171,35 @@ int8_t Sensor::scan(std::function<void(std::vector<RangeFinderPacket>&)> callbac
 }
 
 void Sensor::handleScan(int pin, int level, uint32_t tick) {
-    static int totalReceived = 0;
-    responseData.emplace_back();
-    totalReceived++;
-
-    tcflush(arduinoPort, TCIOFLUSH);
-    uint8_t txBuffer[2] = {1, REQUEST_REGISTER};
-    write(arduinoPort, txBuffer, 2);
-
-    uint8_t length;
-    read(arduinoPort, &length, 1);
-
-    read(arduinoPort, (uint8_t*)&(responseData.back().angle), 4);
-    read(arduinoPort, (uint8_t*)&(responseData.back().distance), 2);
-
-    if(responseData.back().distance > 10000 || abs(responseData.back().angle) > 180){ // Bad data
-        totalReceived--;
-        responseData.pop_back();
-    }
-
-    if(totalReceived > dataRequired){
-        totalReceived = 0;
-        dataRequired = 0;
-        scanAngle = 0;
-        dataRequired = 0;
-
-        _callback(responseData);
-        responseData.clear();
-
-        return;
+//    static int totalReceived = 0;
+//    responseData.emplace_back();
+//    totalReceived++;
+//
+//    tcflush(arduinoPort, TCIOFLUSH);
+//    uint8_t txBuffer[2] = {1, REQUEST_REGISTER};
+//    write(arduinoPort, txBuffer, 2);
+//
+//    uint8_t length;
+//    read(arduinoPort, &length, 1);
+//
+//    read(arduinoPort, (uint8_t*)&(responseData.back().angle), 4);
+//    read(arduinoPort, (uint8_t*)&(responseData.back().distance), 2);
+//
+//    if(responseData.back().distance > 10000 || abs(responseData.back().angle) > 180){ // Bad data
+//        totalReceived--;
+//        responseData.pop_back();
+//    }
+//
+//    if(totalReceived > dataRequired){
+//        totalReceived = 0;
+//        dataRequired = 0;
+//        scanAngle = 0;
+//        dataRequired = 0;
+//
+//        _callback(responseData);
+//        responseData.clear();
+//
+//        return;
     }
 
     getAngle(2*scanAngle*totalReceived/dataRequired - scanAngle, _callback);
