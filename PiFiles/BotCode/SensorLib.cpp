@@ -156,7 +156,7 @@ int8_t Sensor::scan(std::function<void(std::vector<RangeFinderPacket>&)> callbac
 
 	/*char buffer[sizeof(points) + sizeof(angle)];
 	*(uint8_t*)buffer = points;
-	*(float*)(buffer + sizeof(points)) = angle; 
+	*(float*)(buffer + sizeof(points)) = angle;
 
 	uint8_t response = writeRegister(SCAN_REGISTER, buffer, sizeof(points) + sizeof(angle));
 
@@ -235,8 +235,16 @@ void Sensor::getHeadingRSSI(float& heading, uint8_t& rssi){
 }
 
 
-void Sensor::moveWheel(float revolutions, std::function<void(int8_t)> callback, int Wheel) {
-
+void Sensor::moveWheel(float revolutions, std::function<void(int8_t)> callback, int8_t Wheel) {
+    /*char buffer[sizeof(points) + sizeof(angle)];
+	*(uint8_t*)buffer = points;
+	*(float*)(buffer + sizeof(points)) = angle;
+     */
+    
+    char buffer[sizeof(revolutions) + sizeof(Wheel)]
+    buffer[0] = Wheel;
+    *(float*)(buffer + sizeof(Wheel)) = revolutions;
+    writeRegister(MOVE_REGISTER,buffer,5);
 }
 
 

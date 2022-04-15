@@ -6,17 +6,9 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/RangeFinding.h
-iostream
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/BotCode/SensorLib.h
+pigpio.h
 -
-list
--
-vector
--
-SensorLib.h
-C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/SensorLib.h
-
-C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/SensorLib.h
 iostream
 -
 vector
@@ -29,18 +21,46 @@ bitset
 -
 functional
 -
+chrono
+-
+thread
+-
+memory.h
+-
+unistd.h
+-
+fstream
+-
+string
+-
+stdio.h
+-
+fcntl.h
+-
+errno.h
+-
+termios.h
+-
 
-C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/robotControl.cpp
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/BotCode/robotControl.cpp
 robotControl.h
-C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/robotControl.h
-robotControl.h
-C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/robotControl.h
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/BotCode/robotControl.h
 
-C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/robotControl.h
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/BotCode/robotControl.h
 vector
 -
 SensorLib.h
-C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/SensorLib.h
-RangeFinding.h
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/BotCode/SensorLib.h
+../RangeFinding.h
 C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/RangeFinding.h
+
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/RangeFinding.h
+iostream
+-
+list
+-
+vector
+-
+BotCode/SensorLib.h
+C:/Users/colin/OneDrive/Documents/GitHub/SpaceGrantOldPi/PiFiles/BotCode/SensorLib.h
 
