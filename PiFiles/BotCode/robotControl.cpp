@@ -212,6 +212,7 @@ int main(){
     std::thread sensorThread(gyroControl);// set up thread for bumpers and gyros we want this always going
     while(!atBeacon){
         if(!avoiding){ //if we aren't currently moving run our navigation again
+            adjustToBeacon();
             navigate();
         }
     }
