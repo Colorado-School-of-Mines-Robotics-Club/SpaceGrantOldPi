@@ -204,17 +204,17 @@ void navigate() {
 
 }
 
-int main(){
-    setup();
-    std::thread sensorThread(gyroControl);// set up thread for bumpers and gyros we want this always going
-    // while(!atBeacon){
-    //     if(!avoiding){ //if we aren't currently moving run our navigation again
-    //         adjustToBeacon();
-    //         navigate();
-    //     }
-    // }
-    powerWheels(perMeter / 2, 1, 1, 1, 1);
-    while(moving);
-    
-
-}
+//int main(){
+//    setup();
+//    std::thread sensorThread(gyroControl);// set up thread for bumpers and gyros we want this always going
+//    // while(!atBeacon){
+//    //     if(!avoiding){ //if we aren't currently moving run our navigation again
+//    //         adjustToBeacon();
+//    //         navigate();
+//    //     }
+//    // }
+//    powerWheels(perMeter / 2, 1, 1, 1, 1);
+//    while(moving);
+//
+//
+//}
