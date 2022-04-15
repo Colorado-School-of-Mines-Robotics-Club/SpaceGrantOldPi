@@ -40,20 +40,22 @@
 #define REQUEST_REGISTER 0x06
 #define SENSOR_GET_ROTATION_REGISTER 0x07
 
-#define TURN_REGISTER 0x02
-#define RESET_ROTATION_REGISTER 0x03
-#define SET_ROTATION_REGISTER 0x04
-#define GET_ROTATION_REGISTER 0x05
-#define MOVE_REGISTER 0x06
-#define DRIVE_REGISTER 0x07
-#define STOP_REGISTER 0x08
-#define GET_POSITION_REGISTER 0x09
-#define RESPONSE_REGISTER 0x0A
-#define PRESSURE_REGISTER 0x0B
+#define TURN_REGISTER 0x09
+#define RESET_ROTATION_REGISTER 0x0A
+#define SET_ROTATION_REGISTER 0x0B
+#define GET_WHEEL_ROTATION_REGISTER 0x0C
+#define MOVE_REGISTER 0x0D
+#define DRIVE_REGISTER 0x0E
+#define STOP_REGISTER 0x0F
+#define GET_POSITION_REGISTER 0x10
+#define RESPONSE_REGISTER 0x11
+#define PRESSURE_REGISTER 0x12
 
-#define STATUS_TURN_DONE 0b001
-#define STATUS_DRIVE_DONE 0b010
-#define STATUS_PUSH_BUTTON 0b100
+
+#define STATUS_SCAN_DONE 0b0001
+#define STATUS_TURN_DONE(motor) (0b001 << (motor*3 + 1))
+#define STATUS_DRIVE_DONE(motor) (0b010 << (motor*3 + 1))
+#define STATUS_PUSH_BUTTON(motor) (0b100 << (motor*3 + 1))
 
 #define WHEEL1 Wheel1
 #define WHEEL2 Wheel2
@@ -166,6 +168,9 @@ public:
 	Vector3 getRotation();
 
 	void intHandler(int pin, int level, uint32_t tick);
+
+	//Helper function for int handler to handle any scans
+	void handleScan(int pin, int level, unint32_t tick);
 
 
 private:

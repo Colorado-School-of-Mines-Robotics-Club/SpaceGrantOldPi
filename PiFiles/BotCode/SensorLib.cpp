@@ -170,7 +170,10 @@ int8_t Sensor::scan(std::function<void(std::vector<RangeFinderPacket>&)> callbac
 
 }
 
+
+
 void Sensor::intHandler(int pin, int level, uint32_t tick){
+
 	static int totalReceived = 0;
 	responseData.emplace_back();
 	totalReceived++;
