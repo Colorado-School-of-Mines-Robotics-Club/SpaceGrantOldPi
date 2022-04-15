@@ -287,38 +287,38 @@ private:
 	
 	
 	
-class Wheel {
-public:
-
-
-    Wheel(uint8_t address, uint8_t bus, uint8_t interruptPin);
-
-    ~Wheel();
-
-    uint8_t interruptPin;
-
-
-
-
-
-
-
-    // Returns the current rotation of the wheel in degrees
-    // Try to limit how many times this is called or run it asyncronously as I2C is a relatively slow interface
-    float getRotation();
-
-
-    // Returns the current position of the drive motor in revolutions
-    // Try to limit how many times this is called or run it asyncronously as I2C is a relatively slow interface
-    float getPosition();
-
-    bool getPressureSensor();
-
-    // Internal functions
-    // intHandler handles any interrupts caused by this wheel
-    // intHandler basically just calls intCallback
-
-};
+//class Wheel {
+//public:
+//
+//
+//    Wheel(uint8_t address, uint8_t bus, uint8_t interruptPin);
+//
+//    ~Wheel();
+//
+//    uint8_t interruptPin;
+//
+//
+//
+//
+//
+//
+//
+//    // Returns the current rotation of the wheel in degrees
+//    // Try to limit how many times this is called or run it asyncronously as I2C is a relatively slow interface
+//    float getRotation();
+//
+//
+//    // Returns the current position of the drive motor in revolutions
+//    // Try to limit how many times this is called or run it asyncronously as I2C is a relatively slow interface
+//    float getPosition();
+//
+//    bool getPressureSensor();
+//
+//    // Internal functions
+//    // intHandler handles any interrupts caused by this wheel
+//    // intHandler basically just calls intCallback
+//
+//};
 
 
 // This part declares the sensor object to be used and is the interrupt function

@@ -1,11 +1,11 @@
 #include "SensorLib.h"
 
 Sensor* SENSOR_NAME;
-
-Wheel* WHEEL1;
-Wheel* WHEEL2;
-Wheel* WHEEL3;
-Wheel* WHEEL4;
+//
+//Wheel* WHEEL1;
+//Wheel* WHEEL2;
+//Wheel* WHEEL3;
+//Wheel* WHEEL4;
 
 //char SERTTY[] = "/dev/ttyS0";
 char SERTTY[] = "/dev/serial0";
@@ -293,52 +293,52 @@ int8_t Sensor::setRotation(float degrees, std::function<void(int8_t)> callback, 
     *(float*)(buffer+sizeof(Wheel)) = degrees;
     writeRegister(SET_ROTATION_REGISTER,buffer, 5);
 }
-
-
-
-
-Wheel::Wheel(uint8_t address, uint8_t bus, uint8_t interruptPin){
-	_address = address;
-	_bus = bus;
-	Wheel::interruptPin = interruptPin;
-
-
-	uint8_t data = *(uint8_t*)readData(HANDSHAKE_REGISTER, 1);
-
-	// Make sure data is correct
-	if(data != _address){
-		std::cerr << "Wheel handshake failed" << std::endl;
-		std::cerr << "Expected: " << (int)_address << std::endl;
-		std::cerr << "Got:      " << (int)data << std::endl;
-		return;
-	}
-
-	// Tell user everything is ok
-	std::cout << "Succesfully connected to wheel at " << (int)address << std::endl;
-
-	// Set interrupt
-	gpioSetAlertFunc(interruptPin, interrupt);
-}
-
-Wheel::~Wheel(){
-	gpioSetAlertFunc(interruptPin, NULL);
-}
-
-
-float Wheel::getPosition(){
-	void* data = readData(GET_POSITION_REGISTER, sizeof(float));
-	float output = *(float*)data;
-	free(data);
-
-	return output;
-}
-
-bool Wheel::getPressureSensor(){
-	void* data = readData(PRESSURE_REGISTER, sizeof(bool));
-	bool output = *(bool*)data;
-	free(data);
-
-	return output; 
-}
-
-
+//
+//
+//
+//
+//Wheel::Wheel(uint8_t address, uint8_t bus, uint8_t interruptPin){
+//	_address = address;
+//	_bus = bus;
+//	Wheel::interruptPin = interruptPin;
+//
+//
+//	uint8_t data = *(uint8_t*)readData(HANDSHAKE_REGISTER, 1);
+//
+//	// Make sure data is correct
+//	if(data != _address){
+//		std::cerr << "Wheel handshake failed" << std::endl;
+//		std::cerr << "Expected: " << (int)_address << std::endl;
+//		std::cerr << "Got:      " << (int)data << std::endl;
+//		return;
+//	}
+//
+//	// Tell user everything is ok
+//	std::cout << "Succesfully connected to wheel at " << (int)address << std::endl;
+//
+//	// Set interrupt
+//	gpioSetAlertFunc(interruptPin, interrupt);
+//}
+//
+//Wheel::~Wheel(){
+//	gpioSetAlertFunc(interruptPin, NULL);
+//}
+//
+//
+//float Wheel::getPosition(){
+//	void* data = readData(GET_POSITION_REGISTER, sizeof(float));
+//	float output = *(float*)data;
+//	free(data);
+//
+//	return output;
+//}
+//
+//bool Wheel::getPressureSensor(){
+//	void* data = readData(PRESSURE_REGISTER, sizeof(bool));
+//	bool output = *(bool*)data;
+//	free(data);
+//
+//	return output;
+//}
+//
+//
