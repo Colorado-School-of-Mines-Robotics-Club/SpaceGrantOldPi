@@ -193,7 +193,7 @@ public:
     //      Wheel int should be 0,1,2,3
     //
     // Returns 0 if sucessful - othewise ERROR_BUSY
-	void moveWheel(float revolutions, std::function<void(int8_t)> callback, int Wheel);
+	void moveWheel(float revolutions, std::function<void(int8_t)> callback, int8_t Wheel);
 
     // Turns the wheel a specified amount of degrees
     // Arguments:
