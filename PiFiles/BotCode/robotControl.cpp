@@ -43,11 +43,11 @@ void setup() {
     }
     sensor = new Sensor();
     //Do all the checking for arduino to PI communication working/setup
-    /*Wheel1 = new Wheel(); //These need to be set correctly to the bus and all that
-    Wheel2 = new Wheel();
-    Wheel3 = new Wheel();
-    Wheel4 = new Wheel()
-     */
+    Wheel1 = new Wheel(0x1A,1,24);
+    Wheel2 = new Wheel(0x1B,1,25);
+    Wheel3 = new Wheel(0x1C,1,8);    
+    Wheel4 = new Wheel(0x1D,1,23);
+     
     Wheel1->setPressureAlertFunction(gotBumped);
     Wheel2->setPressureAlertFunction(gotBumped);
     Wheel3->setPressureAlertFunction(gotBumped);
