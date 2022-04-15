@@ -1,3 +1,6 @@
+#ifndef SensorLib_cpp
+#define SensorLib_cpp
+
 #include "SensorLib.h"
 
 Sensor* SENSOR_NAME;
@@ -342,3 +345,5 @@ int8_t Sensor::setRotation(float degrees, std::function<void(int8_t)> callback, 
 //}
 //
 //
+
+#endif

@@ -1,6 +1,8 @@
 //
 // Created by colin on 2/17/2022.
 //
+#ifndef robotControl_cpp
+#define robotControl_cpp
 
 #include "robotControl.h"
 #define dist(A, B, N) A - B > N - (A - B - 1) ? fmin(A - B, N - (A - B - 1)) : -fmin(A - B, N - (A - B - 1))
@@ -218,3 +220,5 @@ void navigate() {
 //
 //
 //}
+
+#endif
