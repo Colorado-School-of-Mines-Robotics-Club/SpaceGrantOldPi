@@ -8,8 +8,6 @@
 #include <unistd.h>  /* only for sleep() */
 
 #include "robotControl.cpp"
-#include "SensorLib.cpp"
-#include "SensorLib.h"
 #include "robotControl.h"
 
 
