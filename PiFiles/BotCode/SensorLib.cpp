@@ -116,7 +116,7 @@ void Sensor::constructorUni(){
 
 Vector3 Sensor::getRotation(){
 	Vector3 output;
-	readRegister(SENSOR_GET_ROTATION_REGISTER, (char*)&output, sizeof(output));
+	readRegister(GET_ROTATION_REGISTER, (char*)&output, sizeof(output));
 
 	if(    output.x == 0   ||     output.y == 0   ||     output.z == 0 ||
 	   abs(output.x) > 180 || abs(output.y) > 180 || abs(output.z) > 360){ // Bad data
