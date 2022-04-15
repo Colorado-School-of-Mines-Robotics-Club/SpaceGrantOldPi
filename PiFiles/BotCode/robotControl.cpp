@@ -28,6 +28,7 @@ int direction = -1; //Really bad way to do this but for now if this is -1 we def
 //Movement stuff
 bool obstacleInFront = false; //Is there an Obstacle in front of us
 bool moving = false; //are we moving
+bool avoiding = false; //If this is triggered we should not be navigating
 
 //Wheel diameter = 0.16
 float perMeter = 2; //This is the number of revolutions per meter
@@ -144,6 +145,7 @@ void gyroControl(){
 
 //This is called anytime we get a bump and its going to go backwards a fourth of a meter
 void gotBumped(){
+    avoiding = true;
     stopWheels();
     obstacleInFront = true;
     powerWheels(perMeter/4,-1,-1,-1,-1);
@@ -177,6 +179,7 @@ void avoidObstacle(){
     powerWheels(perMeter/2,1,1,1,1);
     direction = -direction; //flipDirection
     turnBot(-90*direction); //Turn back to forward
+    avoiding = false;
 }
 //This should adjust to Beacon test a little to make sure its not turning the opposite direction
 void adjustToBeacon(){
@@ -198,6 +201,7 @@ void navigate() {
     else {
         //we want to move half a meter
         powerWheels(perMeter / 2, 1, 1, 1, 1);
+        while(moving);
     }
 
 
@@ -207,7 +211,7 @@ int main(){
     setup();
     std::thread sensorThread(gyroControl);// set up thread for bumpers and gyros we want this always going
     while(!atBeacon){
-        if(!moving){ //if we aren't currently moving run our navigation again
+        if(!avoiding){ //if we aren't currently moving run our navigation again
             navigate();
         }
     }
