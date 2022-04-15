@@ -208,7 +208,7 @@ void Sensor::handleScan(int pin, int level, uint32_t tick) {
 
 void Sensor::intHandler(int pin, int level, uint32_t tick){
     uint16_t status = 0;
-    readRegister(RESPONSE_REGISTER,(char*)&status, 2) //Status gets set to the response_register
+    readRegister(RESPONSE_REGISTER,(char*)&status, 2); //Status gets set to the response_register
     if(status & STATUS_SCAN_DONE){
         handleScan(pin,level,tick); //handles scan
     }
