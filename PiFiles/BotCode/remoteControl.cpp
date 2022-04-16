@@ -50,6 +50,7 @@ int main(void)
         cin >> cmd;
         cout << cmd << endl;
         chooseAction(cmd);
+        cout << "Action done." << endl;
     }
 }
 
