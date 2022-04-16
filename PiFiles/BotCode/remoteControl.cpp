@@ -16,7 +16,7 @@ void rMove(int direction) {
 }
 
 void bigMove(int direction) {
-    powerWheels(2 * direction,1,1,1,1);
+    powerWheels(2.0 * direction,1,1,1,1);
 }
 
 void rTurn(int direction) {
@@ -24,7 +24,7 @@ void rTurn(int direction) {
 }
 
 void bigTurn(int direction) {
-    powerWheels(2,-1 * direction, -1 * direction, 1 * direction, 1  * direction);
+    powerWheels(2.0,-1 * direction, -1 * direction, 1 * direction, 1  * direction);
 }
 
 bool chooseAction(char cmd) {
