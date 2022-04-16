@@ -28,7 +28,7 @@
 #define RESET_ROTATION_REGISTER 0x0A
 #define SET_ROTATION_REGISTER 0x0B
 #define GET_WHEEL_ROTATION_REGISTER 0x0C
-#define MOVE_REGISTER 0x0D
+#define MOVE_REGISTER 0x0D 
 #define DRIVE_REGISTER 0x0E
 #define STOP_REGISTER 0x0F
 #define GET_POSITION_REGISTER 0x10
@@ -73,6 +73,7 @@
 #define DRIVE_ENCODER(n) (29 + n*8)
 
 #define dist(A, B, N) A - B > N - (A - B - 1) ? min(A - B, N - (A - B - 1)) : -min(A - B, N - (A - B - 1))
+
 
 //#define CALIBRATION_MODE
 
@@ -382,13 +383,13 @@ void loop() {
 
       driveDirection[i] = reverseDriveEncoder[i];
 
-    }else if(driveMotorPosition < targetDrive - DRIVE_ERROR){
+    }else if(driveMotorPosition[i] < targetDrive[i] - DRIVE_ERROR){
       digitalWrite(DRIVE_MOTORA(i), HIGH);
       digitalWrite(DRIVE_MOTORB(i), LOW);
 
       driveDirection[i] = reverseDriveEncoder[i];
 
-    }else if(driveMotorPosition < targetDrive - DRIVE_ERROR){
+    }else if(driveMotorPosition[i] > targetDrive[i] + DRIVE_ERROR){
       digitalWrite(DRIVE_MOTORA(i), LOW);
       digitalWrite(DRIVE_MOTORB(i), HIGH);
       
@@ -566,6 +567,13 @@ void serialEvent(){
 
   case PRESSURE_REGISTER:
     piSerial.write(!digitalRead(PUSH_PIN(data[1])));
+    break;
+
+  case MOVE_REGISTER:
+    driveState[data[1]] = DRIVE_STATE_MOVE;
+
+    float angle = *(float*)(data + 2);
+    targetDrive[data[1]] += angle*DRIVE_TICKS_PER_REVOLUTION; 
     break;
 
   }
