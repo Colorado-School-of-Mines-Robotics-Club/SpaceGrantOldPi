@@ -47,7 +47,7 @@ int main(void)
     char cmd;
     while(true) {
         cout << "WASD to drive; e to exit" << endl;
-        cin << cmd;
+        cin >> cmd;
         if(chooseAction(cmd)) {
             exit(0);
         }
