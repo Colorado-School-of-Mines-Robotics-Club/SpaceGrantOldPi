@@ -49,9 +49,7 @@ int main(void)
         cout << "wasd to drive; e to exit" << endl;
         cin >> cmd;
         cout << cmd << endl;
-        if(chooseAction(cmd)) {
-            break;
-        }
+        chooseAction(cmd);
     }
 }
 
