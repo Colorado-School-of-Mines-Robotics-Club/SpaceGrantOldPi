@@ -19,7 +19,7 @@ void rTurn(int direction) {
     powerWheels(0.1,1 * direction, 1 * direction, -1 * direction, -1  * direction);
 }
 
-int chooseAction(char cmd) {
+bool chooseAction(char cmd) {
     switch(cmd) {
         case 'a':
             rTurn(1);
@@ -34,10 +34,10 @@ int chooseAction(char cmd) {
             rMove(-1);
             break;
         case 'e':
-            return 1;
+            return true;
             break;
     }
-    return 0;
+    return false;
 }
 
 int main(void)
@@ -50,7 +50,7 @@ int main(void)
         cin >> cmd;
         cout << cmd << endl;
         if(chooseAction(cmd)) {
-            exit(0);
+            break;
         }
     }
 }
