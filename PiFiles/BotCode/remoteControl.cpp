@@ -3,11 +3,12 @@
 //
 #ifndef remoteControl_cpp
 #define remoteControl_cpp
-#include <ncurses.h>
 #include <iostream>
 #include <unistd.h>  /* only for sleep() */
 
 #include "robotControl.h"
+
+using namespace std;
 
 
 void rMove(int direction) {
@@ -45,6 +46,7 @@ int main(void)
     setup();
     char cmd;
     while(true) {
+        cout << "WASD to drive; e to exit" << endl;
         cin << cmd;
         if(chooseAction(cmd)) {
             exit(0);
