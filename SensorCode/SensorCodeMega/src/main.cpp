@@ -293,7 +293,7 @@ void loop() {
       lastDriveEncoder[i] = newDrive;
 
       if(newDrive == HIGH){
-        if(driveDirection){
+        if(driveDirection[i]){
           driveMotorPosition[i]++;
         }else{
           driveMotorPosition[i]--;
@@ -305,7 +305,7 @@ void loop() {
       lastTurnEncoder[i] = newTurn;
 
       if(newTurn == HIGH){
-        if(turnDirection){
+        if(turnDirection[i]){
           turnMotorPosition[i]++;
         }else{
           turnMotorPosition[i]--;
@@ -539,11 +539,15 @@ void serialEvent(){
     float angle = *(float*)(data + 2);
 
     targetTurn[data[1]] = turnMotorPosition[data[1]] + angle*TURN_TICKS_PER_REVOLUTION;
+
+    piSerial.write(0);
     break;
   }
 
   case RESET_ROTATION_REGISTER:
     turnState[data[1]] = TURN_STATE_RESET;
+
+    piSerial.write(0);
     break;
 
   case SET_ROTATION_REGISTER:{
@@ -551,11 +555,15 @@ void serialEvent(){
     float angle = *(float*)(data + 2);
 
     targetTurn[data[1]] = angle*TURN_TICKS_PER_REVOLUTION;
+
+    piSerial.write(0);
     break;
   }
 
   case DRIVE_REGISTER:
     driveState[data[1]] = DRIVE_STATE_DRIVE;
+
+    piSerial.write(0);
     break;
 
   case STOP_REGISTER:
@@ -563,6 +571,8 @@ void serialEvent(){
     targetDrive[data[1]] = driveMotorPosition[data[1]];
     digitalWrite(DRIVE_MOTORA(data[1]), LOW);  
     digitalWrite(DRIVE_MOTORB(data[1]), LOW);  
+
+    piSerial.write(0);
     break;
 
   case PRESSURE_REGISTER:
@@ -574,6 +584,8 @@ void serialEvent(){
 
     float angle = *(float*)(data + 2);
     targetDrive[data[1]] += angle*DRIVE_TICKS_PER_REVOLUTION; 
+
+    piSerial.write(0);
     break;
 
   }

@@ -53,6 +53,8 @@ uint8_t Sensor::writeRegister(uint8_t reg, char* data, uint8_t length){
 	txBuffer[1] = reg;
 	memcpy(txBuffer + 2, data, length);
 
+	std::cout << "Writing... ";
+
 	write(arduinoPort, txBuffer, length + 2);
 
 	std::cout << "Write done, reading... ";
@@ -66,11 +68,13 @@ uint8_t Sensor::writeRegister(uint8_t reg, char* data, uint8_t length){
 }
 
 void Sensor::constructorUni(){
+	std::cout << "Opening port" << std::endl;
 	arduinoPort = open("/dev/ttyACM0", O_RDWR);
 
 	if (arduinoPort < 0) {
     	printf("Error %i from open: %s\n", errno, strerror(errno));
 	}
+	std::cout << "Port open" << std::endl;
 
 	struct termios tty;
 	if(tcgetattr(arduinoPort, &tty) != 0) {
@@ -100,9 +104,14 @@ void Sensor::constructorUni(){
 	if (tcsetattr(arduinoPort, TCSANOW, &tty) != 0) {
 		printf("Error %i from tcsetattr: %s\n", errno, strerror(errno));
 	}
+
+	std::cout << "Configured port" << std::endl;
 	sleep(5);
+	std::cout << "Delay done" << std::endl;
+
 
 	uint8_t data = readRegister(HANDSHAKE_REGISTER);
+	std::cout << "Register read" << std::endl;
 
 	// Make sure data is correct
 	if(data != _addr){
