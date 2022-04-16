@@ -50,12 +50,12 @@ void setup() {
 //    Wheel3 = new Wheel(0x1C,1,8);
 //    Wheel4 = new Wheel(0x1D,1,23);
      
-    sensor->setPressureAlertFunction(gotBumped);
+//    sensor->setPressureAlertFunction(gotBumped);
 
-    Vector3 initial = sensor->getRotation();
-    initialX = initial.x;
-    initialY = initial.y;
-    initialZ = initial.z;
+//    Vector3 initial = sensor->getRotation();
+//    initialX = initial.x;
+//    initialY = initial.y;
+//    initialZ = initial.z;
 
 }
 
