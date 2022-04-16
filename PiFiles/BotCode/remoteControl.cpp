@@ -68,15 +68,13 @@ int main(void)
 
     scrollok(stdscr, TRUE);
     while (1) {
-        if(moving) {
-            continue;
-        }
+        sleep(2);
         if (kbhit()) {
             chooseAction(getch());
             refresh();
         } else {
             refresh();
-            sleep(1);
+            sleep(2);
         }
     }
 }
