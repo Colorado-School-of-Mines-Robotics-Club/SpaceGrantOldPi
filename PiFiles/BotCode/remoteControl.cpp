@@ -12,69 +12,42 @@
 
 void rMove(int direction) {
     powerWheels(0.25 * direction,1,1,1,1);
-    printw("Moving!\n");
-
 }
 
 void rTurn(int direction) {
     powerWheels(0.1,1 * direction, 1 * direction, -1 * direction, -1  * direction);
-    printw("Turning!\n");
 }
 
-void chooseAction(int cmd) {
+int chooseAction(char cmd) {
     switch(cmd) {
-        case 97:
+        case 'a':
             rTurn(1);
             break;
-        case 100:
+        case 'd':
             rTurn(-1);
             break;
-        case 119:
+        case 'w':
             rMove(1);
             break;
-        case 115:
+        case 's':
             rMove(-1);
             break;
-        case 48:
-            endwin();
-            _exit(0);
+        case 'e':
+            return 1;
+            break;
     }
+    return 0;
 }
-
-
-
-int kbhit(void)
-{
-    int ch = getch();
-
-    if (ch != ERR) {
-        ungetch(ch);
-        return 1;
-    } else {
-        return 0;
-    }
-}
-
 
 int main(void)
 {
 
     setup();
-    initscr();
-
-    cbreak();
-    noecho();
-    nodelay(stdscr, TRUE);
-
-    scrollok(stdscr, TRUE);
-    while (1) {
-        sleep(2);
-        if (kbhit()) {
-            chooseAction(getch());
-            refresh();
-        } else {
-            refresh();
-            sleep(2);
+    char cmd;
+    while(true) {
+        cin << cmd;
+        if(chooseAction(cmd)) {
+            exit(0);
         }
     }
 }
