@@ -333,7 +333,7 @@ void loop() {
 
         // Trigger interrupt to tell pi the operation was completed
         statusResponse |= STATUS_TURN_DONE(i);
-        digitalWrite(INT_PIN, HIGH);
+        //digitalWrite(INT_PIN, HIGH);
         turnState[i] = STATE_NONE;
       }else{
         // Havent hit limit switch yet, keep turning
@@ -358,7 +358,7 @@ void loop() {
     }else{
       if(turnState[i] != STATE_NONE){
         statusResponse |= STATUS_TURN_DONE(i);
-        digitalWrite(INT_PIN, HIGH);
+        //digitalWrite(INT_PIN, HIGH);
         turnState[i] = STATE_NONE;
       }
 
@@ -370,7 +370,7 @@ void loop() {
     if(digitalRead(PUSH_PIN(i)) && !lastPressureSensor){
       statusResponse |= STATUS_PUSH_BUTTON(i);
       lastPressureSensor[i] = HIGH;
-      digitalWrite(INT_PIN, HIGH);
+      //digitalWrite(INT_PIN, HIGH);
 
     }else{
       lastPressureSensor[i] = LOW;
@@ -399,8 +399,8 @@ void loop() {
       // If we just reached the target position, tell the Pi everything is ok
       if(driveState[i] != STATE_NONE){
         statusResponse |= STATUS_DRIVE_DONE(i);
-        digitalWrite(INT_PIN, HIGH);
         driveState[i] = STATE_NONE;
+        //digitalWrite(INT_PIN, HIGH);
 
       }
       
@@ -502,7 +502,7 @@ void serialEvent(){
 
     scanPoints = 0;
     free(rangeFinderBuffer);
-    digitalWrite(INT_PIN, LOW);
+    //digitalWrite(INT_PIN, LOW);
     break;
   }
 
@@ -532,6 +532,7 @@ void serialEvent(){
 
   case RESPONSE_REGISTER:
     piSerial.write((uint8_t*)&statusResponse, sizeof(statusResponse));
+    //digitalWrite(INT_PIN, LOW);
     break;
 
   case TURN_REGISTER:{
@@ -632,7 +633,7 @@ void serialEvent2(){ // Rangefinder response
     setServo(SERVO_POSITION_MID);
 
     statusResponse |= STATUS_SCAN_DONE;
-    digitalWrite(INT_PIN, HIGH);
+    //digitalWrite(INT_PIN, HIGH);
   }else{
     angle += 2*(scanAngleLimit - SERVO_POSITION_MID)/scanPoints;
     setServo(angle);
