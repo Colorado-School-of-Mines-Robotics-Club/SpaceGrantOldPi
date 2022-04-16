@@ -55,8 +55,12 @@ uint8_t Sensor::writeRegister(uint8_t reg, char* data, uint8_t length){
 
 	write(arduinoPort, txBuffer, length + 2);
 
+	std::cout << "Write done, reading... ";
+
 	uint8_t output;
 	read(arduinoPort, &output, 1);
+
+	std::cout << "Read done" << std::endl;
 	
 	return output;
 }

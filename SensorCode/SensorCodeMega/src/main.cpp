@@ -46,7 +46,7 @@
 #define RANGEFINDER_TIMEOUT 5000
 
 #define TURN_TICKS_PER_REVOLUTION 16100
-#define DRIVE_TICKS_PER_REVOLUTION 2600
+#define DRIVE_TICKS_PER_REVOLUTION 217
 
 #define STATUS_SCAN_DONE 0b0001
 #define STATUS_TURN_DONE(motor) (0b001 << (motor*3 + 1))
@@ -118,8 +118,8 @@ struct Vector3{
 uint8_t driveState[4] = {STATE_NONE};
 uint8_t turnState[4] = {STATE_NONE};
 
-int32_t targetTurn[4] = {0};
-int32_t targetDrive[4] = {0};
+int32_t targetTurn[4] = {0, 0, 0, 0};
+int32_t targetDrive[4] = {0, 0, 0, 0};
 
 
 int32_t turnMotorPosition[4] = {0};
@@ -133,7 +133,7 @@ bool turnDirection[4];
 bool driveDirection[4];
 
 bool reverseTurnEncoder[4] = {0, 0, 0, 0};
-bool reverseDriveEncoder[4] = {0, 0, 0, 0};
+bool reverseDriveEncoder[4] = {1, 1, 1, 1};
 
 Vector3 rotation;
 void setServo(uint16_t angle);

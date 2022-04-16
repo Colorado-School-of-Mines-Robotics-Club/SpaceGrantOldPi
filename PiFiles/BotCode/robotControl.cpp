@@ -68,13 +68,9 @@ void wheelCallback(int8_t){
 void powerWheels(float revolutions, int first, int second, int third, int fourth) {
     moving = true;
     sensor->moveWheel(first * revolutions, wheelCallback,0);
-    usleep(1000);
     sensor->moveWheel(second * revolutions, wheelCallback,1);
-    usleep(1000);
     sensor->moveWheel(third * revolutions, wheelCallback,2);
-    usleep(1000);
     sensor->moveWheel(fourth * revolutions, wheelCallback,3);
-    usleep(1000);
 }
 
 
