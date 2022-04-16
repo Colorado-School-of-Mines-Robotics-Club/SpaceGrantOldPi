@@ -12,11 +12,11 @@ using namespace std;
 
 
 void rMove(int direction) {
-    powerWheels(0.25 * direction,1,1,1,1);
+    powerWheels(0.5 * direction,1,1,1,1);
 }
 
 void rTurn(int direction) {
-    powerWheels(0.1,1 * direction, 1 * direction, -1 * direction, -1  * direction);
+    powerWheels(0.5,1 * direction, 1 * direction, -1 * direction, -1  * direction);
 }
 
 bool chooseAction(char cmd) {
